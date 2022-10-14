@@ -1,7 +1,8 @@
 import React from 'react'
+import { RouterApp } from './routes/RouterApp'
 
 export const App = () => {
   return (
-    <div>App</div>
+    <RouterApp/>
   )
 }

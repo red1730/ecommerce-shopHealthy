@@ -1,11 +1,22 @@
-import React from 'react'
+
 import { Route, Routes } from 'react-router-dom'
-import { Home } from '../pages/Home'
+import { Admin, Contact, Home, Login, ProductDetails, Register, Shopping, User } from '../pages/index'
+
 
 export const RouterApp = () => {
   return (
     <Routes>
       <Route path='/' element={< Home />} />
+      <Route path='/product/:id' element={< ProductDetails />} />
+      <Route path='/login' element={< Login />} />
+      <Route path='/register' element={< Register />} />
+      <Route path='/shopping' element={< Shopping />} />
+      <Route path='/contact' element={< Contact />} />
+      
+      <Route path='/user/:id' element={< User />} />
+
+      <Route path='/admin' element={<Admin />} />
+
     </Routes>
   )
 }
