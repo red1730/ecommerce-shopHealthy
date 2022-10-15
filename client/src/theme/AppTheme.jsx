@@ -1,16 +1,19 @@
-import {ThemeProvider} from '@emotion/react'
-import {CssBaseline} from '@mui/material'
+// import {ThemeProvider} from '@emotion/react'
+// import {CssBaseline} from '@mui/material'
 
-import { greenTheme } from './'
+// import { greenTheme } from './'
 
 
 
-export const appTheme = ({children}) => {
-  return (
+// export const appTheme = ({children}) => {
+//   return (
 
-    <ThemeProvider theme={greenTheme}>
-      <CssBaseline />
-      {children}
-    </ThemeProvider>
-  )
-}
+//     <ThemeProvider theme={greenTheme}>
+//       <CssBaseline />
+//       {children}
+//     </ThemeProvider>
+//   )
+// }
+
+
+//provider personalizado modularizado no me funciono

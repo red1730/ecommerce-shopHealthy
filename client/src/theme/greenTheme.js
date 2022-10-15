@@ -5,10 +5,10 @@ export const greenTheme = createTheme ({
 
   palette: {
     primary: {
-      main: ' 64B98B'
+      main: '#64B98B'
     },
     secondary: {
-      main:'4B9B6F'
+      main:'#4B9B6F'
     },
     error: {
       main: red.A400
