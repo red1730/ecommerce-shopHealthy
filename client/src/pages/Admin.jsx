@@ -1,7 +1,8 @@
+import { Typography } from '@mui/material'
 import React from 'react'
 
 export const Admin = () => {
   return (
-    <div>Admin</div>
+    <Typography>Admin</Typography>
   )
 }
