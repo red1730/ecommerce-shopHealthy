@@ -1,7 +1,7 @@
 
 import { Route, Routes } from 'react-router-dom'
 import { NavBar } from '../components/NavBar'
-import { Admin, Contact, Home, Login, ProductDetails, Register, Shopping, User } from '../pages/index'
+import { Admin, Contact, Home, LandingPage, Login, ProductDetails, Register, Shopping, User } from '../pages/index'
 
 
 export const RouterApp = () => {
@@ -9,12 +9,13 @@ export const RouterApp = () => {
     <>
       <NavBar />
       <Routes>
-        <Route path='/' element={< Home />} />
-        <Route path='/product/:id' element={< ProductDetails />} />
+        <Route path='/' element={< LandingPage />} />
+        <Route path='/catalogo' element={< Home />} />
+        <Route path='/catalogo/:id' element={< ProductDetails />} />
         <Route path='/login' element={< Login />} />
-        <Route path='/register' element={< Register />} />
-        <Route path='/shopping' element={< Shopping />} />
-        <Route path='/contact' element={< Contact />} />
+        <Route path='/registro' element={< Register />} />
+        <Route path='/comprar' element={< Shopping />} />
+        <Route path='/contacto' element={< Contact />} />
         
         <Route path='/user/:id' element={< User />} />
 

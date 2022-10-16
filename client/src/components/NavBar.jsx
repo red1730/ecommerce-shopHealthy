@@ -1,61 +1,182 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import Logo from '../assets/logo.png'
-import './style.css';
 
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import { useState } from 'react';
+import logo from '../assets/logo.png';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Link as RouterLink} from 'react-router-dom';
+import { FilterAcordion} from './FilterAcordion';
+import { FilterSelect } from './FilterSelect';
+
+const pages = ['Catálogo', 'Comprar', 'Contacto'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export const NavBar = () => {
+  const [anchorElNav, setAnchorElNav] = useState (null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark bg-dark p-2">
-      <Link className="navbar-brand" to="/">
-        {<img src={Logo} alt="logo" className="logos" />}
-      </Link>
-
-      <div className="navbar-collapse">
-        <div className="navbar-nav">
-
-        <NavLink
-            className={({ isActive }) =>
-              `nav-item nav-link ${isActive ? "active" : ""}`
-            }
-            to="/contact"
+    <AppBar position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <IconButton component={RouterLink} to='/' >
+            <Avatar alt='logo' src={logo} sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          </IconButton>
+          <Typography
+            variant="h6"
+            noWrap
+            component={RouterLink}
+            to="/"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
           >
-           Inicio
-          </NavLink>
+            HEALTHY FOOD
+          </Typography>
 
-        <select onChange={()=>true}>
-          <option value="All">All</option>
-          <option value="Only_Pokedex">Only Pokedex</option>
-          <option value="MyPokemons">My Pokemons</option>
-        </select>
-
-
-          <NavLink
-            className={({ isActive }) =>
-              `nav-item nav-link ${isActive ? "active" : ""}`
-            }
-            to="/contact"
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+              }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography 
+                    textAlign="center"
+                    component={RouterLink}
+                    sx={{textDecoration:'none', color:'inherit'}}
+                    to={page.toLowerCase()}
+                    >{page}</Typography>
+                </MenuItem>
+              ))}
+              
+                <FilterAcordion/>         
+              
+            </Menu>
+          </Box>
+          <IconButton component={RouterLink} to='/' >
+          <Avatar alt='logo' src={logo} sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          </IconButton>
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
           >
-            Contacto
-          </NavLink>
-          <NavLink
-            className={({ isActive }) =>
-              `nav-item nav-link ${isActive ? "active" : ""}`
-            }
-            to="/login"
-          >
-            Identificate
-          </NavLink>
-        </div>
-      </div>
+            HEALTHY FOOD
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+                component={RouterLink}
+                to={page.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase()}
+              >
+                {page}
+              </Button>
+            ))}
+            <FilterSelect/>
+            <FilterSelect/>
+            <FilterSelect/>
+          </Box>
 
-      <div className="navbar-collapse collapse w-100 order-3 dual-collapse2 d-flex justify-content-end">
-        <ul className="navbar-nav ml-auto">
-          <span className="nav-item nav-link text-success">Christian</span>
-          <button className="nav-link nav-item btn" onClick={() => onLoguot()}>
-            logout
-          </button>
-        </ul>
-      </div>
-    </nav>
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <AccountCircleIcon />{/*TODO: COLOCAR AVATAR DE FORMA DINAMICA*/}
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 };

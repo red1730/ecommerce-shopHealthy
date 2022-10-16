@@ -1,8 +1,12 @@
-import { Typography } from '@mui/material'
-import React from 'react'
+import Container from '@mui/material/Container';
+import { ListImages } from '../components/ListImages'
 
 export const Home = () => {
   return (
-    <Typography>Home</Typography>
+    <>
+    <Container maxWidth="md">
+      <ListImages/>
+    </Container>
+    </>
   )
 }
