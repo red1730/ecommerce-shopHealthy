@@ -1,4 +1,6 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize } = require('sequelize')
+const fs = require('fs')
+const path = require('path')
 // const sequelize = require('sequelize')
 // const consolog = require('debug')('dev')
 // const { Videogame, Genre } = require('./models/index')
@@ -11,44 +13,50 @@ const { Sequelize } = require('sequelize');
 // const { Query, QueryAndCount } = require('./controllers/videogameController');
 // const QueryByGenre = require('./controllers/genresController');
 // const db = require('./db/index');
+const sequelize = new Sequelize('u381026178_eCommerceSalud', 'u381026178_admin', 'Qu&df=#;E2', {
+  host: 'sql811.main-hosting.eu',
+  dialect: 'mysql'
+})  
+sequelize.authenticate().then(() => {
+  console.log('Nos conectamos a la base de hostinger!!!')
+})
+.catch(err => console.error(err))
+const basename = path.basename(__filename);
+
+const modelDefiners = [];
+
+// Leemos todos los archivos de la carpeta Models, los requerimos y agregamos al arreglo modelDefiners
+fs.readdirSync(path.join(__dirname, '/models')) 
+  .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
+  .forEach((file) => {
+    modelDefiners.push(require(path.join(__dirname, '/models', file)));
+  });
+
+// Injectamos la conexion (sequelize) a todos los modelos
+modelDefiners.forEach(model => model(sequelize));
+// Capitalizamos los nombres de los modelos ie: product => Product
+let entries = Object.entries(sequelize.models);
+let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
+sequelize.models = Object.fromEntries(capsEntries);
+
+// En sequelize.models están todos los modelos importados como propiedades
+// Para relacionarlos hacemos un destructuring
+
+const { Categoria } = sequelize.models;
 
 (
   async () => {
     console.log('Cargando datos iniciales...')
     
-    const sequelize = new Sequelize('u381026178_eCommerceSalud', 'u381026178_admin', 'Qu&df=#;E2', {
-      host: 'sql811.main-hosting.eu',
-      dialect: 'mysql'
-    })
-  
-    const Categoria = sequelize.define('categoria', {
-      "idCategoria": {
-        type: Sequelize.INTEGER,
-        primaryKey: true
-      },
-      "nombre": Sequelize.STRING
-    }, {
-      timestamps: false
-    })
-    const Marca = sequelize.define('Marca', {
-      "idMarca": {
-        type: Sequelize.INTEGER,
-        primaryKey: true
-      },
-      "nombre": Sequelize.STRING
-    }, {
-      timestamps: false
-    })
-    sequelize.authenticate().then(() => {
-      console.log('Nos conectamos a la base de hostinger!!!')
-    })
-    .catch(err => console.error(err))
 
-    
+
+
+
+    const { Categoria } = sequelize.models;
+
     const chiringuito = await Categoria.findAll()
 
     console.log(JSON.stringify(chiringuito))
-    
 })()
   
   

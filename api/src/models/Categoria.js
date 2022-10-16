@@ -1,13 +1,13 @@
-const { DataTypes }= require('sequelize')
+const { DataTypes } = require('sequelize')
 
-const Categoria = sequelize.define('categoria', {
-  "idCategoria": {
-    type: DataTypes.INTEGER,
-    primaryKey: true
-  },
-  "nombre": DataTypes.STRING
-}, {
-  timestamps: false
-})
-
-module.exports = Categoria
+module.exports = (sequelize) => {
+  sequelize.define('categoria', {
+    "idCategoria": {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+    },
+    "nombre": DataTypes.STRING
+  }, {
+    timestamps: false
+  })
+}
