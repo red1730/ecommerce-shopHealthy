@@ -3,8 +3,10 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
-
+const Sequelize = require('sequelize') 
 require('./db.js');
+
+const sequelize = require
 
 const server = express();
 //OJO VER BODY PARSER SI HAY Q REEMPLAZAR POR EXPRESS.JSON//
@@ -21,6 +23,7 @@ server.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   next();
 });
+
 
 server.use('/', routes);
 

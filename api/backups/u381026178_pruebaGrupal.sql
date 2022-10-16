@@ -60,19 +60,19 @@ INSERT INTO `categoria` (`idCategoria`, `nombre`) VALUES
 
 
 --
--- Table structure for table `marcas`
+-- Table structure for table `marca`
 --
 
-CREATE TABLE `marcas` (
+CREATE TABLE `marca` (
   `idMarca` int(11) NOT NULL,
-  `marca` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `marcas`
+-- Dumping data for table `marca`
 --
 
-INSERT INTO `marcas` (`idMarca`, `marca`) VALUES
+INSERT INTO `marca` (`idMarca`, `nombre`) VALUES
 (1, 'aguara'),
 (2, 'ajedrez'),
 (3, 'almadre'),
@@ -131,10 +131,10 @@ INSERT INTO `marcas` (`idMarca`, `marca`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `productos`
+-- Table structure for table `producto`
 --
 
-CREATE TABLE `productos` (
+CREATE TABLE `producto` (
   `idProducto` int(11) NOT NULL,
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `precio` int(11) NOT NULL,
@@ -146,10 +146,10 @@ CREATE TABLE `productos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `productos`
+-- Dumping data for table `producto`
 --
 
-INSERT INTO `productos` (`idProducto`, `nombre`, `precio`, `idMarca`, `descripcion`, `img`, `idCategoria`, `stock`) VALUES
+INSERT INTO `producto` (`idProducto`, `nombre`, `precio`, `idMarca`, `descripcion`, `img`, `idCategoria`, `stock`) VALUES
 (1, 'nueces orgánicas 500gr', 1592, 13, 'Organicas', 'DEMETER-EL-PAMPA-ORGANICO-NUECES-PECAN-ORGANICAS-500G.jpg', '1, 19', 1),
 (2, 'almendras tostadas c/azúcar orgánica y coco 90g', 375, 48, 'Envase de 90gr. Producto orgánico. Envase «Doypack» (Puede volver a cerrarse herméticamente una vez abierto)', 'SCHATZI-ALMENDRAS-CON-AZUCAR-Y-COCO-sin-peso.jpg', '1, 19', 1),
 (3, 'mix de frutos secos caramelizados 70gr', 340, 29, 'Con azucar orgánica', 'ISLA-XOCOLATL-MIX-DE-FRUTOS-SECOS-CARAMELIZADOS-70G.jpg', '1, 19', 1),
@@ -251,15 +251,15 @@ ALTER TABLE `categoria`
   ADD PRIMARY KEY (`idCategoria`);
 
 --
--- Indexes for table `marcas`
+-- Indexes for table `marca`
 --
-ALTER TABLE `marcas`
+ALTER TABLE `marca`
   ADD PRIMARY KEY (`idMarca`);
 
 --
--- Indexes for table `productos`
+-- Indexes for table `producto`
 --
-ALTER TABLE `productos`
+ALTER TABLE `producto`
   ADD PRIMARY KEY (`idProducto`);
 
 --
@@ -273,15 +273,15 @@ ALTER TABLE `categoria`
   MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT for table `marcas`
+-- AUTO_INCREMENT for table `marca`
 --
-ALTER TABLE `marcas`
+ALTER TABLE `marca`
   MODIFY `idMarca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
--- AUTO_INCREMENT for table `productos`
+-- AUTO_INCREMENT for table `producto`
 --
-ALTER TABLE `productos`
+ALTER TABLE `producto`
   MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 COMMIT;
 
