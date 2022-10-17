@@ -14,28 +14,34 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Skeleton } from '@mui/material';
+import { Box, Skeleton } from '@mui/material';
 import { RatingProduct } from './RatingProduct';
+import {Link as RouterLink} from 'react-router-dom'
+import { Contador } from './Contador';
 
 
-export const ProductCard = ({imgCard, prodName, prodPrice})=> {
+export const ProductCard = ({imgCard, prodName, prodPrice,id})=> {
 
   return (
-    <Card sx={{ width: 345, height:330 }}>
-      {imgCard? <CardMedia
+    <Card sx={{ width: 345, height:450, }} >
+      <Box component={RouterLink} to={`/catalogo/${id}`} >
+      <CardMedia
         component="img"
         height="194"
-        image={imgCard}
+        image={`https://dkndrd.com/pf-healthyShop/${imgCard}`}
         alt={prodName}
-      /> : <Skeleton/>}
+        sx={{width:194, margin:"0 auto"}}
+      /> 
+      </Box>
       <CardContent>
-        <RatingProduct/>
+        <RatingProduct sx={{alingItems:"center"}} />
         <Typography variant="body2" color="text.primary"  >
           {prodName}
         </Typography>
-        <Typography variant="body1" color="text.primary" textAlign='center' sx={{fontWeight:600, marginTop: 3}} >
+        <Typography variant="body1" color="text.primary" textAlign='center' sx={{fontWeight:600, margin: "20px 0"}} >
           {prodPrice+'$'}
         </Typography>
+        <Contador sx={{marginTop:4}}  />
       </CardContent>
       
     </Card>
