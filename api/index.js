@@ -31,15 +31,19 @@ async function marcasCarga(){
 
 
 async function productosCarga(){
-    
+
     productos.forEach( async c =>{ 
+        const producto = await Producto.create(c)
+        console.log(JSON.stringify(producto))
+    })
 
-        const {nombre, precio, descripcion, img, stock,idMarca} = c
-
-            const producto = await Producto.findOrCreate({
-                where:{nombre: c.nombre},
-                defaults:{ precio: c.precio , descripcion: c.descripcion , img: "https://dkndrd.com/" +  + c.img, stock:c.stock}
-            }) 
+        // const {nombre, precio, descripcion, img, stock,idMarca} = c
+        
+        
+            // const producto = await Producto.findOrCreate({
+            //     where:{nombre: c.nombre},
+            //     defaults:{ precio: c.precio , descripcion: c.descripcion , img: `https://dkndrd.com/pf-healthyShop/${img}`, stock:c.stock}
+            // }) 
 
             // c.idCategoria.split(',').forEach(eCategoria =>{
             //     producto.addCategoria(eCategoria, {through: 'producto_categoria'} )
@@ -48,7 +52,6 @@ async function productosCarga(){
             // const estaMarca =  await Marca.findByPk(parseInt(idMarca))
             // estaMarca.belongsTo(productoLoco.idMarca)
 
-        })
     }
 
 
@@ -64,7 +67,9 @@ async function productosCarga(){
 
 
 // Syncing all the models at once.
-conn.sync({ force: false }).then( async function () {
+conn.dropAllSchemas();
+console.log(`Estás loco, borraste todos los esquemas`)
+conn.sync({ force: true }).then( async function () {
     await categoriaCarga();   //busca datos de la api y carga a BD
     await marcasCarga()
     await productosCarga()

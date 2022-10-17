@@ -10,43 +10,45 @@ const { Producto, Marca, Categoria } = require("../db");
 const router = Router();
 
 router.get("/", async (req, res) => {
-  try {
-    const { nombre } = req.query;
-    if (nombre) {
-      //traigo datos de BD filtrado por nombre. AGREGAR LA CONDICION DE ACTIVO.
-      const productos = await Producto.findAll({
-        attributes: ["id", "nombre", "precio", "img", "stock", "descripcion"],
-        include: [Marca, Categoria],
-        where: {
-          nombre: { [Op.iLike]: "%" + nombre + "%" },
-        },
-      });
+  const productos = await Producto.findAll()
+  res.status(200).json(productos)
+  // try {
+  //   const { nombre } = req.query;
+  //   if (nombre) { 
+  //     //traigo datos de BD filtrado por nombre. AGREGAR LA CONDICION DE ACTIVO.
+  //     const productos = await Producto.findAll({
+  //       attributes: ["id", "nombre", "precio", "img", "stock", "descripcion"],
+  //       include: [Marca, Categoria],
+  //       where: {
+  //         nombre: { [Op.iLike]: "%" + nombre + "%" },
+  //       },
+  //     });
 
-      if (productos.length > 0) {
-        res.status(201).send(productos);
-      } else {
-        res.status(404).json("No existen datos del producto ingresado");
-      }
-    } else {
-      //traigo datos de BD  //const allCountries = await Country.findAll({ attributes: ['id', 'name','continent','image','population']});
-      const productos = await Producto.findAll({
-        attributes: ["id", "nombre", "precio", "img", "stock", "descripcion"],
-        include: [Marca, Categoria],
-        order: [["nombre", "ASC"]],
-      });
+  //     if (productos.length > 0) {
+  //       res.status(201).send(productos);
+  //     } else {
+  //       res.status(404).json("No existen datos del producto ingresado");
+  //     }
+  //   } else {
+  //     //traigo datos de BD  //const allCountries = await Country.findAll({ attributes: ['id', 'name','continent','image','population']});
+  //     const productos = await Producto.findAll({
+  //       attributes: ["id", "nombre", "precio", "img", "stock", "descripcion"],
+  //       include: [Marca, Categoria],
+  //       order: [["nombre", "ASC"]],
+  //     });
 
-      if (productos.length > 0) {
-        res.status(201).send(productos);
-      } else {
-        res.status(404).json("No existen productos");
-      }
-    }
-  } catch (error) {
-    console.log(error);
-    res
-      .status(404)
-      .json("No se pueden mostrar los productos, gracias vuelva pronto");
-  }
+  //     if (productos.length > 0) {
+  //       res.status(201).send(productos);
+  //     } else {
+  //       res.status(404).json("No existen productos");
+  //     }
+  //   }
+  // } catch (error) {
+  //   console.log(error);
+  //   res
+  //     .status(404)
+  //     .json("No se pueden mostrar los productos, gracias vuelva pronto");
+  // }
 });
 
 // TRAER PRODUCTOS POR MARCA... DEBE FUNCIONAR BIEN.... VIDEO AZR MEDIA VIDEO#5
@@ -90,20 +92,19 @@ router.get("/marca/:nombre", async (req, res) => {
 router.get("/categoria", async (res, req) => {
   try {
     const { nombre } = req.query;
-    const productos = await Producto.findAll({
-      attributes: ["id", "nombre", "precio", "img", "stock", "descripcion"],
-      include: [{
-        model: Marca,
-        attributes: []
-      },{
-          model: Categoria,
-          attributes:[],
-        where:{
-          nombre: nombre
-        }
-        }
-    ],     
-    })
+    const productos = await Producto.findAll()
+    //   attributes: ["id", "nombre", "precio", "img", "stock", "descripcion"],
+    //   include: [{
+    //     model: Marca,
+    //     attributes: []
+    //   },{
+    //       model: Categoria,
+    //       attributes:[],
+    //     where:{
+    //       nombre: nombre
+    //     }
+    //     }
+    // ],     
     res.status(201).send(productos);
   }
   catch (error) {

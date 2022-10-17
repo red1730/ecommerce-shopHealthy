@@ -2,13 +2,16 @@ const { Sequelize } = require('sequelize')
 const fs = require('fs')
 const path = require('path')
 
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
-    host: process.env.DB_HOST,
-    dialect: 'mysql',
-    logging: false, // set to console.log to see the raw SQL queries
-    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-  }) 
-
+// const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+//     host: process.env.DB_HOST,
+//     dialect: 'mysql',
+//   }) 
+const sequelize = new Sequelize('u381026178_eCommerceSalud', 'u381026178_admin', 'Qu&df=#;E2', {
+  host: 'sql811.main-hosting.eu',
+  dialect: 'mysql',
+      logging: false, // set to console.log to see the raw SQL queries
+      native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+}) 
 sequelize.authenticate().then(() => {
   console.log('Nos conectamos a la base de hostinger!!!')
 })
