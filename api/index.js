@@ -8,34 +8,50 @@ const productos = require('../api/src/data/productos')
 
 async function categoriaCarga(){
     try{
-        categoria.forEach(c =>{Categoria.create(c)}) 
-      }catch(error){
+        categoria.forEach(category =>{Categoria.findOrCreate({
+            where:{nombre: category.nombre}
+        })}) 
+    }
+    catch(error){
         console.log('No se cargaron los datos a la BD')
-      }
+    }
 
     }
+    
 async function marcasCarga(){
     try{
-        marcas.forEach(c =>{Marca.create(c)}) 
+        marcas.forEach(c =>{Marca.findOrCreate({
+            where:{nombre: c.nombre}
+        })}) 
         }catch(error){
             console.log('No se cargaron los datos a la BD')
         }
     
         }
-  
+
+
 async function productosCarga(){
+    
     productos.forEach( async c =>{ 
+
         const {nombre, precio, descripcion, img, stock,idMarca} = c
-            const productoLoco = await Producto.create({nombre, precio, descripcion, img, stock,idMarca}) 
-            c.idCategoria.split(',').forEach(eCategoria =>{
-                productoLoco.addCategoria(eCategoria, {through: 'producto_categoria'} )
-            })
+
+            const producto = await Producto.findOrCreate({
+                where:{nombre: c.nombre},
+                defaults:{ precio: c.precio , descripcion: c.descripcion , img: c.img, stock:c.stock}
+            }) 
+
+            // c.idCategoria.split(',').forEach(eCategoria =>{
+            //     producto.addCategoria(eCategoria, {through: 'producto_categoria'} )
+            // })
             // console.log(`Este es el marcaIDDD, ${JSON.stringify(c)}`)
             // const estaMarca =  await Marca.findByPk(parseInt(idMarca))
             // estaMarca.belongsTo(productoLoco.idMarca)
 
         })
     }
+
+
 
         // const newActivity = await Activity.create({name, difficulty, duration, season })
 

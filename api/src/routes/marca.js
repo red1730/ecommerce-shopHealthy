@@ -9,9 +9,9 @@ const { Marca } = require("../db");
 const router = Router();
 router.get("/", async (req, res) => {
   try {
-    const marcas = await Marca.findAll({ attributes: ["nombre", "id"] });
+    const marcas = await Marca.findAll({ attributes: ["id","nombre" ] });
 
-    if (allActivities.length > 0) {
+    if (marcas.length > 0) {
       res.status(200).send(marcas);
     } else {
       res.status(404).json("No existe la marca");
