@@ -108,8 +108,10 @@ router.get("/:id", async (req, res) => {
     let productodetalle = await Producto.findByPk(id.toUpperCase(), {
       include: [Categoria,Marca],
     });
-    productodetalle?
-    res.send(productodetalle) : res.status(404).send('No existe el producto.')
+    if (productodetalle) {
+      productodetalle.img = "dkndrd.com/pf-healthyShop/".concat(productodetalle.img) 
+      res.send(productodetalle) 
+    }
   } catch (error) {
     res.status(404).json("No existe el producto seleccionado");
   }
