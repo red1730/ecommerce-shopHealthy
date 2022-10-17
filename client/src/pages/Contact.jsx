@@ -1,8 +1,8 @@
 import React from 'react'
-import { Typography } from '@mui/material'
+import { Contact_comp } from '../components/Contact'
 
 export const Contact = () => {
   return (
-    <Typography>Contact</Typography>
+    <Contact_comp/>
   )
 }
