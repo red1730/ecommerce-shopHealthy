@@ -1,23 +1,27 @@
-require('dotenv').config();
-const { Sequelize } = require('sequelize');
-const fs = require('fs');
-const path = require('path');
-//LLAVES DE ENTORNO, VAR DE ENTORNO.
-const {
-  DB_USER, DB_PASSWORD, DB_HOST,
-} = process.env;
+const { Sequelize } = require('sequelize')
+const fs = require('fs')
+const path = require('path')
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/pi-dogs`, {
+// const sequelize = new Sequelize('u381026178_eCommerceSalud', 'u381026178_admin', 'Qu&df=#;E2', {
+//   host: 'sql811.main-hosting.eu',
+//   dialect: 'mysql'
+// }) 
+const sequelize = new Sequelize(`postgres://postgres:12345678@localhost/pf-demo`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
 
-const basename = path.basename(__filename);
 
+sequelize.authenticate().then(() => {
+  console.log('Nos conectamos a la base de hostinger!!!')
+})
+.catch(err => console.error(err))
+
+const basename = path.basename(__filename);
 const modelDefiners = [];
 
 // Leemos todos los archivos de la carpeta Models, los requerimos y agregamos al arreglo modelDefiners
-fs.readdirSync(path.join(__dirname, '/models'))
+fs.readdirSync(path.join(__dirname, '/models')) 
   .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
   .forEach((file) => {
     modelDefiners.push(require(path.join(__dirname, '/models', file)));
@@ -33,19 +37,29 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 
-const { Dog,Temperament } = sequelize.models;
+const { Categoria, Marca, Producto } = sequelize.models;
 
 // Aca vendrian las relaciones
-// Product.hasMany(Reviews);
 
-Dog.belongsToMany(Temperament, {through: 'dog_temperament'}); // 1 perro--> varios temperamentos
-Temperament.belongsToMany(Dog, {through: 'dog_temperament'}); // 1 temperamento --->corresponde a varios perros
+Producto.belongsToMany(Categoria, {through: 'producto_categoria'});
+Categoria.belongsToMany(Producto, {through: 'producto_categoria'}); 
+Marca.hasMany(Producto)  
+Producto.belongsTo(Marca)
 
 
+
+// (
+//   async () => {
+//     console.log('Cargando datos iniciales...')
+//     const { Categoria } = sequelize.models;
+
+//     const chiringuito = await Categoria.findAll()
+
+//     console.log(JSON.stringify(chiringuito))
+// })()
 
 
 module.exports = {
-  ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
-  conn: sequelize,     // para importart la conexión { conn } = require('./db.js');
-};
-
+  ...sequelize.models,
+  conn:sequelize
+}

@@ -1,13 +1,15 @@
-const { DataTypes }= require('sequelize')
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  const Marca = sequelize.define('Marca', {
-    "idMarca": {
-      type: DataTypes.INTEGER,
-      primaryKey: true
+  sequelize.define("marca",
+    {
+      nombre: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
     },
-    "nombre": DataTypes.STRING
-  }, {
-    timestamps: false
-  })
-}
+    {
+      timestamps: false,
+    }
+  );
+};
