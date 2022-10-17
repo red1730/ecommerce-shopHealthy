@@ -11,7 +11,6 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Home, Register } from "../pages";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -33,7 +32,6 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
 
 export const Login_comp = () => {
   const handleSubmit = (event) => {
@@ -46,8 +44,7 @@ export const Login_comp = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" sx={{marginTop:"100px"}}>
         <CssBaseline />
         <Box
           sx={{
@@ -122,6 +119,5 @@ export const Login_comp = () => {
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
-    </ThemeProvider>
   );
 };
