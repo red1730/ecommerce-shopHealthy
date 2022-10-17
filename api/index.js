@@ -38,7 +38,7 @@ async function productosCarga(){
 
             const producto = await Producto.findOrCreate({
                 where:{nombre: c.nombre},
-                defaults:{ precio: c.precio , descripcion: c.descripcion , img: c.img, stock:c.stock}
+                defaults:{ precio: c.precio , descripcion: c.descripcion , img: "https://dkndrd.com/" +  + c.img, stock:c.stock}
             }) 
 
             // c.idCategoria.split(',').forEach(eCategoria =>{
