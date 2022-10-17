@@ -39,7 +39,7 @@ export const Contact_comp = () => {
             <MarkunreadMailboxIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Contact
+            Contacto
           </Typography>
           <Box
             component="form"
@@ -55,7 +55,7 @@ export const Contact_comp = () => {
                   required
                   fullWidth
                   id="firstName"
-                  label="Name"
+                  label="Nombre"
                   autoFocus
                 />
               </Grid>
@@ -65,7 +65,7 @@ export const Contact_comp = () => {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Email"
                   name="email"
                   autoComplete="email"
                 />
@@ -74,7 +74,7 @@ export const Contact_comp = () => {
                 <TextField
                   fullWidth
                   name="comment"
-                  label="Message..."
+                  label="Mensaje..."
                   type="comment"
                   id="comment"
                 />
@@ -86,7 +86,7 @@ export const Contact_comp = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Send
+              Enviar
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item></Grid>

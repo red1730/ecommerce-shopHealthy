@@ -57,7 +57,7 @@ export const Register_comp = () =>{
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Register
+            Registro
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -68,7 +68,7 @@ export const Register_comp = () =>{
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label="Nombre"
                   autoFocus
                 />
               </Grid>
@@ -77,7 +77,7 @@ export const Register_comp = () =>{
                   required
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  label="Apellido"
                   name="lastName"
                   autoComplete="family-name"
                 />
@@ -87,7 +87,7 @@ export const Register_comp = () =>{
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Email"
                   name="email"
                   autoComplete="email"
                 />
@@ -106,7 +106,7 @@ export const Register_comp = () =>{
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive information, promotions and updates via email."
+                  label="Quiero recibir ofertas y novedades via email."
                 />
               </Grid>
             </Grid>
@@ -116,12 +116,12 @@ export const Register_comp = () =>{
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Register
+              Registrarse
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link component={RouterLink} to = '/login' variant="body2">
-                  Already have an account? Login
+                  Ya tenes una cuenta? Login
                 </Link>
               </Grid>
             </Grid>
