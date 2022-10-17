@@ -108,10 +108,9 @@ router.get("/:id", async (req, res) => {
     let productodetalle = await Producto.findByPk(id.toUpperCase(), {
       include: [Categoria,Marca],
     });
-
-    res.send(productodetalle);
+    productodetalle?
+    res.send(productodetalle) : res.status(404).send('No existe el producto.')
   } catch (error) {
-    console.log(error);
     res.status(404).json("No existe el producto seleccionado");
   }
 });
