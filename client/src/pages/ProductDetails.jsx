@@ -1,8 +1,7 @@
 import { Typography } from '@mui/material'
-import React from 'react'
 
 export const ProductDetails = () => {
   return (
-    <Typography>ProductDetails</Typography>
+    <Typography sx={{marginTop:'120px'}}>ProductDetails</Typography>
   )
 }

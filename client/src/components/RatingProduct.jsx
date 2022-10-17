@@ -4,7 +4,7 @@ import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 
 export const RatingProduct = ()=> {
-  const [value, setValue] = React.useState(2);
+  const [value, setValue] = React.useState(0);
 
   return (
     <Box

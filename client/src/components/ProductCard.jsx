@@ -20,15 +20,14 @@ import { RatingProduct } from './RatingProduct';
 
 export const ProductCard = ({imgCard, prodName, prodPrice})=> {
 
-
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: 345, height:330 }}>
       {imgCard? <CardMedia
         component="img"
         height="194"
-        image='https://www.helpguide.org/wp-content/uploads/calories-counting-diet-food-control-and-weight-loss-concept-calorie-768.jpg'
-        alt="Paella dish"
-      />: <Skeleton/>}
+        image={imgCard}
+        alt={prodName}
+      /> : <Skeleton/>}
       <CardContent>
         <RatingProduct/>
         <Typography variant="body2" color="text.primary"  >
