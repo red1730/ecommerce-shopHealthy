@@ -50,31 +50,43 @@ router.get("/", async (req, res) => {
 });
 
 // TRAER PRODUCTOS POR MARCA... DEBE FUNCIONAR BIEN.... VIDEO AZR MEDIA VIDEO#5
-router.get("/marca", async (res, req) => {
-try {
-  const { nombre } = req.query;
-  const productos = await Producto.findAll({
-    attributes: ["id", "nombre", "precio", "img", "stock", "descripcion"],
-    include: [{
-      model: Categoria,
-      attributes: []
-    },{
-        model: Marca,
-        attributes:[],
+router.get("/marca/:nombre", async (req, res) => {
+  try {
+    console.log(`Tengo el param: ${JSON.stringify(req.params)}`)
+    const { nombre } = req.params; 
+    const unaMarca = await Marca.findOne({
+      where: { nombre: nombre}
+    })
+    let prodPorMarca = await Producto.findAll({
+      // attributes: ["id", "nombre", "precio", "img", "stock", "descripcion", "marcaId"],
       where:{
-        nombre: nombre
+        marcaId: unaMarca.id
       }
-      }
-  ],     
-  })
+    })
+    // include: [{ 
+        console.log(`Encontré la marca ${JSON.stringify(unaMarca.id)} y el prod tiene ${prodPorMarca.marcaId}`)
+      //   model: Categoria,
+      //   attributes: []
+      // },{
+      //   model: Marca,
+      //   attributes:[]
+      // }],     
+    // .then(() => {
+    //   if (prodPorMarca) {
+    //     res.status(201).send(prodPorMarca)
+    //   } 
+    //   res.status(404).send('No se encontró ningún producto de la marca ' + nombre)
+    // })
+  } catch (error) {
+    console.log(error)
+  }
   
-} 
-catch (error) {
-  console.log(error)
-}
-});
-// TRAER PRODUCTOS POR CATEGORIA.
+  res.status(201).send(prodPorMarca)
 
+});
+
+
+// TRAER PRODUCTOS POR CATEGORIA.
 router.get("/categoria", async (res, req) => {
   try {
     const { nombre } = req.query;
@@ -98,7 +110,6 @@ router.get("/categoria", async (res, req) => {
     res.status(404).send(error)
   }
 });
-
 
 //GET DETAILS :ID
 router.get("/:id", async (req, res) => {
