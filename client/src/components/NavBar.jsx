@@ -41,7 +41,7 @@ export const NavBar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <IconButton component={RouterLink} to='/' >
@@ -94,18 +94,26 @@ export const NavBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+              
+                <MenuItem onClick={handleCloseNavMenu}>
                   <Typography 
                     textAlign="center"
                     component={RouterLink}
                     sx={{textDecoration:'none', color:'inherit'}}
-                    to={page.toLowerCase()}
-                    >{page}</Typography>
+                    to='catalogo'
+                    >Catálogo</Typography>
                 </MenuItem>
-              ))}
-              
-                <FilterAcordion/>         
+
+                <FilterAcordion/>   
+
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography 
+                    textAlign="center"
+                    component={RouterLink}
+                    sx={{textDecoration:'none', color:'inherit'}}
+                    to='contacto'
+                    >Contacto</Typography>
+                </MenuItem>      
               
             </Menu>
           </Box>
@@ -130,20 +138,26 @@ export const NavBar = () => {
             HEALTHY FOOD
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            
               <Button
-                key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
                 component={RouterLink}
-                to={page.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase()}
+                to='catalogo'
               >
-                {page}
+                Catálogo
               </Button>
-            ))}
-            <FilterSelect/>
-            <FilterSelect/>
-            <FilterSelect/>
+              <FilterSelect categTitle='MERCADO NATURAL' />
+              <FilterSelect categTitle='BEBIDAS E INFUSIONES'/>
+              <FilterSelect categTitle='COSMETICA Y PERFUMERIA'/>
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+                component={RouterLink}
+                to='contacto'
+              >
+                Contacto
+              </Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

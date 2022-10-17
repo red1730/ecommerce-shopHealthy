@@ -27,7 +27,7 @@ const StyledSelect = styled(Select)(({ theme }) => ({
 
   }));
 
-export const FilterSelect = ()=> {
+export const FilterSelect = ({categTitle})=> {
   const [age, setAge] = React.useState('');
 
   const handleChange = (event) => {
@@ -48,7 +48,7 @@ export const FilterSelect = ()=> {
           <Typography 
                     textAlign="center"                    
                     sx={{textDecoration:'none', color:'inherit', fontSize:'0.875rem'}}
-                    >CATEGORIA</Typography>
+                    >{categTitle}</Typography>
           </MenuItem>
           <MenuItem value={10}>Categoria random</MenuItem>
           <MenuItem value={20}>Categoria random</MenuItem>
