@@ -1,11 +1,11 @@
-
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-import { Button, Skeleton } from "@mui/material";
+import { Box, Button, Divider, Grid, Skeleton } from "@mui/material";
 import { RatingProduct } from "./RatingProduct";
+import { Contador } from './Contador';
 
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
@@ -16,70 +16,76 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../helpers/getProductById";
 import { Container } from "@mui/system";
 
+
 export const ProductDetail_comp = () => {
-
-
-  const {id} = useParams();
+  const { id } = useParams();
   const [product, setProduct] = useState({});
-  
-  const dispatch = useDispatch();
-  const {isLoading} = useSelector(state=>state.catalogReducer)
 
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.catalogReducer);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-      const getProduct= async()=>{
-          dispatch({type:'SET_ISLOADING_TRUE'})
-          try {
-              const productAux = await getProductById(id);
-              dispatch({type:'SET_ISLOADING_FALSE'})
-              setProduct(productAux)
-          } catch (error) {
-              console.log("cayo el bendito back otra vez!")
-          }
+    const getProduct = async () => {
+      dispatch({ type: "SET_ISLOADING_TRUE" });
+      try {
+        const productAux = await getProductById(id);
+        dispatch({ type: "SET_ISLOADING_FALSE" });
+        setProduct(productAux);
+      } catch (error) {
+        console.log("cayo el bendito back otra vez!");
       }
-      getProduct()
-  }, [id, dispatch, navigate])
+    };
+    getProduct();
+  }, [id, dispatch, navigate]);
   
   // if(!isLoading) return <Skeleton/>
-
-  const {img, nombre, precio} = product;
-
+  
+  const { img, nombre, precio } = product;
+  
+  console.log(img)
   return (
-    <Container sx={{margin:"90px auto", }}>
-      <Card sx={{ width: 490, height: 410, margin:'0 auto' }}>
-        {img ? (
-          <CardMedia
-            component="img"
-            height="194"
-            image={img}
-            alt={nombre}
-          />
-        ) : (
-          <Skeleton variant="rectangular" sx={{height:"194px"}} />
-        )}
-        <CardContent>
-          <Typography variant="body2" color="text.primary">
+    <Grid container xs="auto">
+      <Grid sx={{ margin: "150px auto", display: "flex" }}>
+        <CardMedia component="img" image={img} alt={nombre} />
+        <Grid sx={{ margin: "150px auto", display: "column" }}>
+          <Typography sx={{fontSize:30}}
+            variant="body2"
+            color="text.primary"
+            textTransform="uppercase"            
+            fontWeight="bold"       
+          >
             {nombre}
+            
           </Typography>
+          <Divider/>
           <Typography
             variant="body1"
             color="text.primary"
             textAlign="center"
-            sx={{ fontWeight: 600, marginTop: 3 }}
+            sx={{ fontWeight: 600, marginTop: 1, fontSize:25 }}
           >
-            {precio + "$"}
+            {precio + " $"}
           </Typography>
-          {/* <RatingProduct/> */}
-          <CreditCardIcon />
-          <Typography>Aceptamos tarjetas con MercadoPago</Typography>
-          <AddShoppingCartIcon />
-          <Typography>Aceptamos pagos en efectivo</Typography>
-          <DeliveryDiningIcon />
-          <Typography>Lo llevamos a la puerta de tu casa</Typography>
-        </CardContent>
-        <Button>Añadir al carrito</Button>
-      </Card>
-    </Container>
+          <Divider/>
+          <RatingProduct sx={{alignItems: "center"}}/>
+          <Divider/>
+          <Typography>
+            <CreditCardIcon color="secondary" sx={{ fontSize: 24 }} /> Aceptamos
+            tarjetas todas las tarjetas.
+          </Typography>
+          <Typography>
+            <AddShoppingCartIcon color="secondary" sx={{ fontSize: 24 }} />
+            Aceptamos pagos en efectivo.
+          </Typography>
+          <Typography>
+            <DeliveryDiningIcon color="secondary" sx={{ fontSize: 24 }} /> Lo
+            llevamos a la puerta de tu casa.
+          </Typography>
+          <Contador  sx={{marginTop:4}}  />
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
