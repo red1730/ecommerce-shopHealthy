@@ -5,6 +5,7 @@ const {Categoria,Marca, Producto}=conn.models
 const categoria= require('../api/src/data/categorias')
 const marcas= require('../api/src/data/marcas')
 const productos = require('../api/src/data/productos')
+const { Op } = require('sequelize');
 
 async function categoriaCarga(){
     try{
@@ -34,15 +35,23 @@ async function productosCarga(){
     
     productos.forEach( async c =>{ 
 
-        const {nombre, precio, descripcion, img, stock,idMarca} = c
+        const {nombre, precio, descripcion, img, stock,idMarca, idCategoria} = c
 
             const producto = await Producto.findOrCreate({
                 where:{nombre: c.nombre},
-                defaults:{ precio: c.precio , descripcion: c.descripcion , img: "https://dkndrd.com/" +  + c.img, stock:c.stock}
+                defaults:{ precio: c.precio, descripcion: c.descripcion , img: `https://dkndrd.com/pf-healthyShop/${img}`, stock:c.stock}
             }) 
 
+            // const categ = await Categoria.findAll({
+            //     where: {
+            //         id: {
+            //             [Op.or]: idCategoria
+            //         }
+            //     }
+            // } )
+            // producto.addCategoria(categ);
             // c.idCategoria.split(',').forEach(eCategoria =>{
-            //     producto.addCategoria(eCategoria, {through: 'producto_categoria'} )
+            //     producto.addcategoria(eCategoria, {through: 'producto_categoria'} )
             // })
             // console.log(`Este es el marcaIDDD, ${JSON.stringify(c)}`)
             // const estaMarca =  await Marca.findByPk(parseInt(idMarca))

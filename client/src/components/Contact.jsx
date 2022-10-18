@@ -8,10 +8,7 @@ import Box from "@mui/material/Box";
 import MarkunreadMailboxIcon from "@mui/icons-material/MarkunreadMailbox";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-
-const theme = createTheme();
 
 export const Contact_comp = () => {
   const handleSubmit = (event) => {
@@ -24,8 +21,8 @@ export const Contact_comp = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+    // <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="md" sx={{marginTop:"100px"}}>
         <CssBaseline />
         <Box
           sx={{
@@ -94,6 +91,5 @@ export const Contact_comp = () => {
           </Box>
         </Box>
       </Container>
-    </ThemeProvider>
   );
 };
