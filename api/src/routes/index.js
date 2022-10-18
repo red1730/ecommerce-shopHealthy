@@ -3,6 +3,7 @@ const categoriasRuta= require('./categoria')
 const productosRuta= require('./producto')
 const marcasRuta= require('./marca')
 const path = require('path');
+const { conn } = require('../db');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -10,6 +11,11 @@ const path = require('path');
 const router = Router();
 router.get("/", async (req, res) => {
     res.sendFile(path.join(__dirname+'/index.html'))
+})
+
+router.get("/droptodo", async (req, res) => {
+    conn.dropAllSchemas()
+    res.status(418).json({mensaje: 'Volaste todo a la miercoles!'})
 })
 
 // Configurar los routers

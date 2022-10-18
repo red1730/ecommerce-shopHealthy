@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { Op } = require('sequelize')
 //Instalo e importo axios//
 const axios = require("axios");
 // Importar todos los routers;
@@ -9,48 +10,50 @@ const { Producto, Marca, Categoria } = require("../db");
 //FALTA CONFIGURAR LA MODULARIZACION....
 const router = Router();
 
+
+router.get("/marca", async (req, res) => {
+  try {
+    const { nombre } = req.query;
+    const productos = await Producto.findAll({
+      attributes: ["id", "nombre", "precio", "img", "stock", "descripcion"],
+      include: [{
+          model: Marca,
+          attributes:[],
+        where:{
+          nombre: nombre
+        }
+        }
+    ],
+    }).then((prod)=>res.json(prod))
+    
+  } 
+  catch (error) {
+    console.log(error)
+  }
+  });
+
+
 router.get("/", async (req, res) => {
-  const productos = await Producto.findAll()
-  res.status(200).json(productos)
-  // try {
-  //   const { nombre } = req.query;
-  //   if (nombre) { 
-  //     //traigo datos de BD filtrado por nombre. AGREGAR LA CONDICION DE ACTIVO.
-  //     const productos = await Producto.findAll({
-  //       attributes: ["id", "nombre", "precio", "img", "stock", "descripcion"],
-  //       include: [Marca, Categoria],
-  //       where: {
-  //         nombre: { [Op.iLike]: "%" + nombre + "%" },
-  //       },
-  //     });
+  const {nombre,marca } = req.query
 
-  //     if (productos.length > 0) {
-  //       res.status(201).send(productos);
-  //     } else {
-  //       res.status(404).json("No existen datos del producto ingresado");
-  //     }
-  //   } else {
-  //     //traigo datos de BD  //const allCountries = await Country.findAll({ attributes: ['id', 'name','continent','image','population']});
-  //     const productos = await Producto.findAll({
-  //       attributes: ["id", "nombre", "precio", "img", "stock", "descripcion"],
-  //       include: [Marca, Categoria],
-  //       order: [["nombre", "ASC"]],
-  //     });
+  let todosLosProductos = await Producto.findAll()
+  if (nombre) {
+    let productoFiltrado = todosLosProductos.filter( prod => prod.nombre.toLowerCase().includes(nombre.toLowerCase()))
+    productoFiltrado.length ? 
+    res.status(200).send(productoFiltrado) : res.status(404).send('Not found or does not exist 😥') // trae un perro q buscas especificamente.
+  }else{
+    // res.status(201).send(todosLosProductos) //trae todos los perros
+    Producto.findAll({
+      include: { 
+        model: Marca,
+        attributes: ['nombre']
+      }, 
+    }).then(prods => res.json(prods))
+  }
 
-  //     if (productos.length > 0) {
-  //       res.status(201).send(productos);
-  //     } else {
-  //       res.status(404).json("No existen productos");
-  //     }
-  //   }
-  // } catch (error) {
-  //   console.log(error);
-  //   res
-  //     .status(404)
-  //     .json("No se pueden mostrar los productos, gracias vuelva pronto");
-  // }
-});
+})
 
+/* 
 // TRAER PRODUCTOS POR MARCA... DEBE FUNCIONAR BIEN.... VIDEO AZR MEDIA VIDEO#5
 router.get("/marca/:nombre", async (req, res) => {
   try {
@@ -60,7 +63,6 @@ router.get("/marca/:nombre", async (req, res) => {
       where: { nombre: nombre}
     })
     let prodPorMarca = await Producto.findAll({
-      // attributes: ["id", "nombre", "precio", "img", "stock", "descripcion", "marcaId"],
       where:{
         marcaId: unaMarca.id
       }
@@ -86,7 +88,7 @@ router.get("/marca/:nombre", async (req, res) => {
   res.status(201).send(prodPorMarca)
 
 });
-
+*/
 
 // TRAER PRODUCTOS POR CATEGORIA.
 router.get("/categoria", async (res, req) => {
@@ -130,3 +132,47 @@ router.get("/:id", async (req, res) => {
 });
 
 module.exports = router
+
+
+// (productos.length > 0) {
+  //       res.status(201).send(productos);
+  //     } else {
+  //       res.status(404).json("No existen datos del producto ingresado");
+  //     }
+  //   } else {
+  //     //traigo datos de BD  //const allCountries = await Country.findAll({ attributes: ['id', 'name','continent','image','population']});
+  //     const productos = await Producto.findAll({
+  //       attributes: ["id", "nombre", "precio", "img", "stock", "descripcion"],
+  //       include: [Marca, Categoria],
+  //       order: [["nombre", "ASC"]],
+  //     });
+
+  //     if (productos.length > 0) {
+  //       res.status(201).send(productos);
+  //     } else {
+  //       res.status(404).json("No existen productos");
+  //     }
+  //   }
+  // } catch (error) {
+  //   console.log(error);
+  //   res
+  //     .status(404)
+  //     .json("No se pueden mostrar los productos, gracias vuelva pronto");
+  // }
+  //traigo datos de BD filtrado por nombre. AGREGAR LA CONDICION DE ACTIVO.
+  // attributes: ["id", "nombre", "precio", "img", "stock", "descripcion"],
+  // const productos = await Producto.findAll()
+  // res.status(200).json(productos)
+  // try {
+    // const { nombre } = req.query;
+    // if (nombre) { 
+    //   const productos = await Producto.findAll({
+    //     where: {
+    //       nombre: { [Op.iLike]: "%" + nombre + "%" },
+    //     },
+    //     include: {
+    //       model: Marca,
+    //       attributes: ['nombre']
+    //     },
+    //   });
+    // }
