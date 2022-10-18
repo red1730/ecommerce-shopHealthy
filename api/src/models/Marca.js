@@ -7,9 +7,17 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false
       },
+      marcaId:{ 
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true
+      }
     },
     {
       timestamps: false,
     }
   );
 };
+
+// Marca --< Productos 

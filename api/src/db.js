@@ -49,8 +49,12 @@ Producto.belongsTo(Marca)
 
 Producto.belongsToMany(Categoria, {through: 'producto_categoria'});
 Categoria.belongsToMany(Producto, {through: 'producto_categoria'}); 
-Marca.hasMany(Producto)  
-Producto.belongsTo(Marca) 
+
+Marca.hasMany(Producto, {
+  as: "productos",
+  foreignKey: 'marcaId'
+});
+Producto.belongsTo(Marca, {as: "marca"})
 
 // (
 //   async () => {
