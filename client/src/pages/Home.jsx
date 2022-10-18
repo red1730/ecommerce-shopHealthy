@@ -1,15 +1,16 @@
 import { ListImages } from '../components/ListImages'
 import { Box, CardMedia, Container, Grid } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
-import {usePagination} from "../Hooks/usePagination";
-import Banner from '../assets/banner.jpg'
+import {usePagination} from "../hooks/usePagination";
+import Banner from '../assets/banner.png'
 import { useState, useEffect } from 'react';
 import {useDispatch, useSelector,} from 'react-redux'
 import { initProducts } from '../actions/getInitProducts';
+import { ShoppingCartBadge } from '../components/ShoppingCardBadge';
 
 export const Home = () => {
 
-  const {allProducts} = useSelector(state=>{console.log(state); return state.catalogReducer})
+  const {allProducts} = useSelector(state=> state.catalogReducer)
   const dispatch = useDispatch();
 
   let [page, setPage] = useState(1);
@@ -31,7 +32,8 @@ export const Home = () => {
           <CardMedia
             component="img"
             image={Banner}
-            alt="Paella dish"
+            alt="Portada"
+            height='400'
           />
         </Box>
         <ListImages data={_DATA}/>
@@ -45,6 +47,7 @@ export const Home = () => {
           shape="rounded"
           onChange={handleChange}
         />
+        <ShoppingCartBadge position='fixed'/>
         </Grid>
     </Container>
   )
