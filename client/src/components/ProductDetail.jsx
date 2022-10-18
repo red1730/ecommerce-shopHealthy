@@ -1,6 +1,4 @@
-import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
 import { Box, Button, Divider, Grid, Skeleton } from "@mui/material";
@@ -14,7 +12,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../helpers/getProductById";
-import { Container } from "@mui/system";
 
 
 export const ProductDetail_comp = () => {
@@ -42,13 +39,13 @@ export const ProductDetail_comp = () => {
   
   // if(!isLoading) return <Skeleton/>
   
-  const { img, nombre, precio } = product;
+  const { nombre, precio, img } = product;
   
-  console.log(img)
+
   return (
-    <Grid container xs="auto">
+    <Grid container >
       <Grid sx={{ margin: "150px auto", display: "flex" }}>
-        <CardMedia component="img" image={img} alt={nombre} />
+        <CardMedia  component="img" sx={{height:"500px"}} image={`https://dkndrd.com/pf-healthyShop/${img}`} alt={nombre}/>
         <Grid sx={{ margin: "150px auto", display: "column" }}>
           <Typography sx={{fontSize:30}}
             variant="body2"
