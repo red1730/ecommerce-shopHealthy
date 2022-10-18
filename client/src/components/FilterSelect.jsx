@@ -1,5 +1,5 @@
 import * as React from 'react';
-import InputLabel from '@mui/material/InputLabel';
+import queryString from 'query-string';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -8,6 +8,8 @@ import { styled } from '@mui/material/styles';
 import {categorias} from '../helpers/categoriasPrueba'
 import { useDispatch, useSelector } from 'react-redux';
 import { filterByCateg } from '../actions/filterProductByCateg';
+import {  useLocation, useNavigate } from "react-router-dom";
+
 
 
 const StyledSelect = styled(Select)(({ theme }) => ({
@@ -41,6 +43,15 @@ export const FilterSelect = ({categTitle})=> {
   
   
   const [categoria, setCategoria] = React.useState(categTitle);
+  
+
+
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const { q = '' } = queryString.parse( location.search );
+
 
 
   const dispatch = useDispatch();
@@ -61,6 +72,7 @@ export const FilterSelect = ({categTitle})=> {
   
   const handleChange = (event) => {
     if (event.target.value.toLocaleLowerCase() !== categTitle.toLocaleLowerCase()) dispatch(filterByCateg(event.target.value));
+    navigate(`/catalogo`);
     setCategoria(event.target.value);
     setCategoria(categTitle)
   };

@@ -155,7 +155,7 @@ export const NavBar = () => {
                 Catálogo
               </Button>
 
-              {categName.map(el=> <FilterSelect categTitle={el} />) }
+              {categName.map((el, i)=> <FilterSelect key={i} categTitle={el} />) }
               
               <Button
                 onClick={handleCloseNavMenu}
