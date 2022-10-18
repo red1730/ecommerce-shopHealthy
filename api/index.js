@@ -73,7 +73,7 @@ async function productosCarga(){
 
 
 // Syncing all the models at once.
-conn.sync({ force: false }).then( async function () {
+conn.sync({ force: true }).then( async function () {
     await categoriaCarga();   //busca datos de la api y carga a BD
     await marcasCarga()
     await productosCarga()
