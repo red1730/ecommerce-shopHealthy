@@ -27,6 +27,16 @@ export const catalogReducer = (state= initialState, action)=>{
                 products:[],
                 isLoading: false
             }
+        case 'SET_ISLOADING_TRUE':
+            return{
+                ...state,
+                isLoading: true
+            }   
+        case 'SET_ISLOADING_FALSE':
+            return{
+                ...state,
+                isLoading: false
+            }
         default:
             return state;
     }
