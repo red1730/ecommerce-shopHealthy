@@ -146,6 +146,8 @@ router.put("/categoria/:id", async (req, res) => {
 });
 //? POST crear PRODUCTO
 
+
+
 router.post("/admin/crear", async (req, res) => {
   const categoriasAux = await Categoria.findAll({
     include: [{ model: Producto }],
@@ -184,7 +186,6 @@ router.post("/admin/crear", async (req, res) => {
     res.status(400).send(error);
   }
 });
-
 
 //* PUT Producto
 
