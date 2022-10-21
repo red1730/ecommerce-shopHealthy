@@ -19,7 +19,7 @@ import { FilterSelect } from "./FilterSelect";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthContext } from "../auth/AuthContext";
 import { type } from '../../types/index'
-
+import HandleLogOut from "../helpers/HandleLogOut";
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export const NavBar = () => {
@@ -45,13 +45,13 @@ export const NavBar = () => {
     setAnchorElNav(null);
   };
 
-  const HandleLogout = () => {
-   dispatch({ type: type.logout})
+//   const HandleLogout = () => {
+//   dispatch({ type: type.logout})
 
-   navigate('/catalogo', { 
-    replace: true
- })
-}
+//   navigate('/catalogo', { 
+//     replace: true
+//   })
+// }
 
   const HandleLogin = () => {
     dispatch({ type: type.login})
@@ -191,14 +191,16 @@ export const NavBar = () => {
 
 
             {user.logged  ?
-            <Button
-              onClick={HandleLogout}
-              sx={{ my: 2, color: "white", display: "block" }}
-              component={RouterLink}
-              to="login"
-            >
-              Logout
-            </Button> :
+            // <Button
+            //   onClick={HandleLogout}
+            //   sx={{ my: 2, color: "white", display: "block" }}
+            //   component={RouterLink}
+            //   to="login"
+            // >
+            //   Logout
+            // </Button> 
+            <HandleLogOut/>
+            :
             <Button
               onClick={HandleLogin}
               sx={{ my: 2, color: "white", display: "block" }}
