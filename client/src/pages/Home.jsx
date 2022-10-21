@@ -8,6 +8,7 @@ import {useDispatch, useSelector,} from 'react-redux'
 import { initProducts } from '../actions/getInitProducts';
 import { ShoppingCartBadge } from '../components/ShoppingCardBadge';
 import { ActionAlerts } from '../components/AlertCategoria';
+import { OrderSelect } from '../components/OrderSelect';
 
 export const Home = () => {
 
@@ -34,14 +35,15 @@ export const Home = () => {
   };
   return (
     <Container sx={{marginTop:'30px'}} >
-        {setBanner? <Box sx={{margin:'90px 0 25px', marginRight:4}}>
+        { setBanner? <Box sx={{margin:'90px 0 25px', marginRight:4}}>
           <CardMedia
             component="img"
             image={Banner}
             alt="Portada"
             height='400'
           />
-        </Box> : <ActionAlerts categoria={categ}/>}
+        </Box> : <ActionAlerts categoria={categ}/> }
+        <OrderSelect />
         <ListImages data={_DATA}/>
         <Grid container sx={{width:'98%',justifyContent:'center', margin:'30px 0'}}>
           <Pagination
