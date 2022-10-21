@@ -43,7 +43,7 @@ export const Home = () => {
             height='400'
           />
         </Box> : <ActionAlerts categoria={categ}/> }
-        <OrderSelect />
+        <OrderSelect setPage={setPage}/>
         <ListImages data={_DATA}/>
         <Grid container sx={{width:'98%',justifyContent:'center', margin:'30px 0'}}>
           <Pagination
