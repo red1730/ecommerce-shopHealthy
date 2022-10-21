@@ -20,7 +20,7 @@ import { FilterSelect } from './FilterSelect';
 import { useDispatch, useSelector } from 'react-redux';
 
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState (null);
@@ -161,16 +161,16 @@ export const NavBar = () => {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
                 component={RouterLink}
-                to='contacto'
+                to='login'
               >
-                Contacto
+                Login
               </Button>
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          {/* <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <AccountCircleIcon />{/*TODO: COLOCAR AVATAR DE FORMA DINAMICA*/}
+                <AccountCircleIcon />
               </IconButton>
             </Tooltip>
             <Menu
@@ -195,7 +195,7 @@ export const NavBar = () => {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box> */}
         </Toolbar>
       </Container>
     </AppBar>
