@@ -12,7 +12,11 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Home, Register } from "../pages";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { AuthContext } from "../auth/AuthContext";
+import { useContext } from "react";
+import { type } from '../../types/index'
+
 
 function Copyright(props) {
   return (
@@ -34,14 +38,33 @@ function Copyright(props) {
 
 
 export const Login_comp = () => {
-  const handleSubmit = (event) => {
+
+  const navigate = useNavigate();
+  const { dispatch } = useContext( AuthContext )
+
+
+   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const action = {
+      type: type.login ,
+      payload: { name: 'Henry' }
+      }
+       dispatch(action)
+
+       navigate('/catalogo', { 
+       replace: true
+    })
+    // const data = new FormData(event.currentTarget);
+
+
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
   };
+
+
+
 
   return (
       <Container component="main" maxWidth="xs" sx={{marginTop:"100px"}}>
