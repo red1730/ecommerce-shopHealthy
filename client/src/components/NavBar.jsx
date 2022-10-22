@@ -19,6 +19,9 @@ import { FilterAcordion} from './FilterAcordion';
 import { FilterSelect } from './FilterSelect';
 import { useDispatch, useSelector } from 'react-redux';
 
+import firebaseApp from '../credenciales'
+import {getAuth, signOut} from 'firebase/auth'
+const auth= getAuth(firebaseApp)
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -164,6 +167,13 @@ export const NavBar = () => {
                 to='contacto'
               >
                 Contacto
+              </Button>
+              <Button 
+                onClick={() => console.log(signOut(auth))}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+                component={RouterLink}
+                to='catalogo'
+              >Cerrar sesión
               </Button>
           </Box>
 
