@@ -9,24 +9,24 @@ const path = require('path')
 //     dialect: 'mysql',
 //   }) 
 
-// const sequelize = new Sequelize('u381026178_eCommerceSalud', 'u381026178_admin', 'Qu&df=#;E2', {
-//   host: 'sql811.main-hosting.eu',
-//   dialect: 'mysql',
+const sequelize = new Sequelize('u381026178_eCommerceSalud', 'u381026178_admin', 'Qu&df=#;E2', {
+  host: 'sql811.main-hosting.eu',
+  dialect: 'mysql',
 
 
-//   logging: false, 
-//   native: false,
+  logging: false, 
+  native: false,
 
-// }) 
+}) 
 
-const {
-  DB_USER, DB_PASSWORD, DB_HOST,
-} = process.env;
+// const {
+//   DB_USER, DB_PASSWORD, DB_HOST,
+// } = process.env;
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/pf-demo`, {
-  logging: false, // set to console.log to see the raw SQL queries
-  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-});
+// const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/pf-demo`, {
+//   logging: false, // set to console.log to see the raw SQL queries
+//   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+// });
 
 sequelize.authenticate().then(() => {
   console.log('Nos conectamos a la base de hostinger!!!')

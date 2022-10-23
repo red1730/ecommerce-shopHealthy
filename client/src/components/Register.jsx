@@ -13,11 +13,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Home } from '../pages';
 import{Link as RouterLink} from 'react-router-dom'
-import { useNavigate } from "react-router-dom";
-
 import firebaseApp from '../credenciales'
-import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth'
+import { useNavigate } from "react-router-dom";
+import {getAuth, signInWithEmailAndPassword,signInWithRedirect,GoogleAuthProvider,} from 'firebase/auth'
+
 const auth= getAuth(firebaseApp)
+const googleProvider = new GoogleAuthProvider();
 
 function Copyright(props) {
   return (
@@ -128,6 +129,7 @@ export const Register_comp = () =>{
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={() => console.log(signInWithRedirect(auth, googleProvider))}
             >
              Registrate con Google
             </Button>

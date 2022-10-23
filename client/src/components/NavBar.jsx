@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import firebaseApp from '../credenciales'
 import {getAuth, signOut} from 'firebase/auth'
 const auth= getAuth(firebaseApp)
-
+console.dir(auth)
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export const NavBar = () => {
@@ -192,12 +192,34 @@ export const NavBar = () => {
               >
                 Contacto
               </Button>
+              {/* <Button 
+                onClick={() => console.dir(auth.currentUser)}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+                component={RouterLink}
+                to={'login'}
+              >{(auth.currentUser === null )? 'Inicia Sesión' : 'Bienvenido ' + auth.currentUser.email}
+              </Button> */}
+              {
+                (! auth.accessToken == null) ? 
               <Button 
-                onClick={() => console.log(signOut(auth))}
+                onClick={signOut(auth)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
                 component={RouterLink}
                 to='catalogo'
-              >Cerrar sesión
+              >Cerrar Sesión
+              </Button> :
+              <Button 
+               sx={{ my: 2, color: 'white', display: 'block' }}
+               component={RouterLink}
+               to='login'
+              > Iniciar sesión
+             </Button>
+              }
+              <Button 
+                sx={{ my: 2, color: 'white', display: 'block' }}
+                component={RouterLink}
+                to='registro'
+              >Regístrate
               </Button>
           </Box>
 
