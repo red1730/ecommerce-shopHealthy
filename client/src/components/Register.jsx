@@ -13,6 +13,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Home } from '../pages';
 import{Link as RouterLink} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+
+import firebaseApp from '../credenciales'
+import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth'
+const auth= getAuth(firebaseApp)
 
 function Copyright(props) {
   return (
@@ -29,14 +34,25 @@ function Copyright(props) {
 
 
 export const Register_comp = () =>{
-  
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  let navigate = useNavigate();
+
+  const handleSubmit =  async  (e) => {
+    e.preventDefault();
+    const correo= e.target.email.value
+    const contraseña= e.target.password.value
+    console.log(correo,contraseña)
+    const usuario = await createUserWithEmailAndPassword(auth,correo,contraseña)
+    console.log(usuario)
+    alert('EXITO, falta componente MATERIAL UI')
+    
+    navigate('/catalogo')
+    
+    // const data = new FormData(event.currentTarget);
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
+
   };
 
   return (
@@ -58,7 +74,7 @@ export const Register_comp = () =>{
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
@@ -68,8 +84,8 @@ export const Register_comp = () =>{
                   label="Nombre"
                   autoFocus
                 />
-              </Grid>
-              <Grid item xs={12} sm={6}>
+              </Grid> */}
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
@@ -78,7 +94,7 @@ export const Register_comp = () =>{
                   name="lastName"
                   autoComplete="family-name"
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   required
@@ -107,6 +123,14 @@ export const Register_comp = () =>{
                 />
               </Grid>
             </Grid>
+            <Button
+              // type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+             Registrate con Google
+            </Button>
             <Button
               type="submit"
               fullWidth

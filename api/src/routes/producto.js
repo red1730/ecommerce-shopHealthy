@@ -45,7 +45,7 @@ router.get("/", async (req, res) => {
     // res.status(201).send(todosLosProductos) //trae todos los perros
     Producto.findAll({
       include: { 
-        model: Marca,
+        model: Categoria,
         attributes: ['nombre']
       }, 
     }).then(prods => res.json(prods))

@@ -13,6 +13,11 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Home, Register } from "../pages";
 import { Link as RouterLink } from "react-router-dom";
+import firebaseApp from '../credenciales'
+import { useNavigate } from "react-router-dom";
+
+import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
+const auth= getAuth(firebaseApp)
 
 function Copyright(props) {
   return (
@@ -33,15 +38,31 @@ function Copyright(props) {
 }
 
 
-export const Login_comp = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+export const Login_comp =  () => {
+  let navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const correo= e.target.email.value
+    const contraseña= e.target.password.value
+    // console.log(correo,contraseña)
+    const usuario = await signInWithEmailAndPassword(auth,correo,contraseña)
+    console.log(usuario)
+    alert('EXITO, Inicio correcto')
+    navigate('/catalogo')
+    
+
+
+    // const data = new FormData(event.currentTarget);
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
   };
+
+
+
 
   return (
       <Container component="main" maxWidth="xs" sx={{marginTop:"100px"}}>

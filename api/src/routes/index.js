@@ -18,10 +18,10 @@ router.get("/", async (req, res) => {
 })
 
 router.get("/droptodo", async (req, res) => {
-    await conn.query('SET FOREIGN_KEY_CHECKS = 0')
+    // await conn.query('SET FOREIGN_KEY_CHECKS = 0')
     await conn.drop()
-    await conn.sync({force: true})
-    await conn.query('SET FOREIGN_KEY_CHECKS = 1')
+    await conn.sync({force: false})
+    // await conn.query('SET FOREIGN_KEY_CHECKS = 1')
     res.status(418).json({mensaje: 'Volaste todo a la miercoles!'})
     categoriaCarga()
     marcasCarga()
