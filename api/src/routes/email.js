@@ -2,7 +2,8 @@ const { Router } = require('express')
 const nodemailer = require('nodemailer')
 const router = Router()
 
-
+const { MAIL_PASS } = process.env; 
+  
 router.post('/', async (req,res)=>{
     console.log(req.body)
 
@@ -12,7 +13,7 @@ router.post('/', async (req,res)=>{
         secure: false,
         auth: {
             user: 'healthyshophenry@outlook.com',
-            pass: 'proyectogripal7'
+            pass: MAIL_PASS
         },
         tls: {
             rejectUnauthorized: false   //permite mandar mails desde otro lado q no sea el localhost
