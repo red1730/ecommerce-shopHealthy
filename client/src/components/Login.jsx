@@ -15,10 +15,9 @@ import { Home, Register } from "../pages";
 import { Link as RouterLink } from "react-router-dom";
 import firebaseApp from '../credenciales'
 import { useNavigate } from "react-router-dom";
-
-import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
+import {getAuth, signInWithEmailAndPassword,signInWithRedirect,GoogleAuthProvider,} from 'firebase/auth'
 const auth= getAuth(firebaseApp)
-
+const googleProvider = new GoogleAuthProvider();
 function Copyright(props) {
   return (
     <Typography
@@ -42,8 +41,7 @@ export const Login_comp =  () => {
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    
+    e.preventDefault();    
     const correo= e.target.email.value
     const contraseña= e.target.password.value
     // console.log(correo,contraseña)
@@ -52,8 +50,6 @@ export const Login_comp =  () => {
     alert('EXITO, Inicio correcto')
     navigate('/catalogo')
     
-
-
     // const data = new FormData(event.currentTarget);
     // console.log({
     //   email: data.get("email"),
@@ -120,7 +116,7 @@ export const Login_comp =  () => {
               Login In
             </Button>
 
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 1 }}>
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 1 }} onClick={() => console.log(signInWithRedirect(auth, googleProvider))}>
               Google
             </Button>
 
