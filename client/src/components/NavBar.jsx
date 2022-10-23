@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 import logo from '../assets/logo.png';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Link as RouterLink, Navigate} from 'react-router-dom';
+import { Link as RouterLink, useNavigate} from 'react-router-dom';
 import { FilterAcordion} from './FilterAcordion';
 import { FilterSelect } from './FilterSelect';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,7 +28,6 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 export const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const { user } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
