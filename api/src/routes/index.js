@@ -2,6 +2,7 @@ const { Router } = require('express');
 const categoriasRuta= require('./categoria')
 const productosRuta= require('./producto')
 const marcasRuta= require('./marca')
+const emailRuta = require('./email')
 const path = require('path');
 const { conn } = require('../db');
 const cargadores = require('../controlers/cargadores');
@@ -18,10 +19,10 @@ router.get("/", async (req, res) => {
 })
 
 router.get("/droptodo", async (req, res) => {
-    await conn.query('SET FOREIGN_KEY_CHECKS = 0')
+    //await conn.query('SET FOREIGN_KEY_CHECKS = 0')
     await conn.drop()
     await conn.sync({force: true})
-    await conn.query('SET FOREIGN_KEY_CHECKS = 1')
+    //await conn.query('SET FOREIGN_KEY_CHECKS = 1')
     res.status(418).json({mensaje: 'Volaste todo a la miercoles!'})
     categoriaCarga()
     marcasCarga()
@@ -35,5 +36,6 @@ router.get("/droptodo", async (req, res) => {
 router.use('/productos', productosRuta)
 router.use('/categorias', categoriasRuta)
 router.use('/marcas',marcasRuta)
+router.use('/email', emailRuta)
 
 module.exports = router;
