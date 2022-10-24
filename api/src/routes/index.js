@@ -3,6 +3,7 @@ const categoriasRuta= require('./categoria')
 const productosRuta= require('./producto')
 const marcasRuta= require('./marca')
 const usuarioruta = require('./usuarios')
+const emailruta = require('./usuarios')
 const path = require('path');
 const { conn } = require('../db');
 const cargadores = require('../controlers/cargadores');
@@ -40,6 +41,6 @@ router.get("/droptodo", async (req, res) => {
 router.use('/productos', productosRuta)
 router.use('/categorias', categoriasRuta)
 router.use('/marcas',marcasRuta)
-router.use('/crear',usuarioruta)
-
+router.use('/usuario',usuarioruta)
+router.use('/email',emailruta)
 module.exports = router;
