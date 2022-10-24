@@ -18,6 +18,7 @@ import { Link as RouterLink, useNavigate} from 'react-router-dom';
 import { FilterAcordion} from './FilterAcordion';
 import { FilterSelect } from './FilterSelect';
 import { useDispatch, useSelector } from 'react-redux';
+import { Login_comp } from './Login';
 
 import firebaseApp from '../credenciales'
 import {getAuth, signOut} from 'firebase/auth'
@@ -28,6 +29,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 export const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [logeado, setLogeado] = useState(false)
 
   const navigate = useNavigate();
 
@@ -45,22 +47,6 @@ export const NavBar = () => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-  };
-
-//   const HandleLogout = () => {
-//   dispatch({ type: type.logout})
-
-//   navigate('/catalogo', { 
-//     replace: true
-//   })
-// }
-
-  const HandleLogin = () => {
-    dispatch({ type: type.login})
-
-    navigate('/catalogo', { 
-     replace: true
-  })
   };
 
   return (
@@ -192,35 +178,25 @@ export const NavBar = () => {
               >
                 Contacto
               </Button>
-              {/* <Button 
-                onClick={() => console.dir(auth.currentUser)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-                component={RouterLink}
-                to={'login'}
-              >{(auth.currentUser === null )? 'Inicia Sesión' : 'Bienvenido ' + auth.currentUser.email}
-              </Button> */}
-              {
-                (! auth.accessToken == null) ? 
+              
+              {console.log(logeado)}
+              { logeado? 
               <Button 
                 onClick={signOut(auth)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
                 component={RouterLink}
                 to='catalogo'
-              >Cerrar Sesión
-              </Button> :
-              <Button 
-               sx={{ my: 2, color: 'white', display: 'block' }}
-               component={RouterLink}
-               to='login'
-              > Iniciar sesión
-             </Button>
-              }
+              >Cerrar sesión
+              </Button>
+              
+              :
               <Button 
                 sx={{ my: 2, color: 'white', display: 'block' }}
                 component={RouterLink}
-                to='registro'
-              >Regístrate
+                to={'login'}
+              >Iniciar sesión
               </Button>
+                }
           </Box>
 
           {/* <Box sx={{ flexGrow: 0 }}>
