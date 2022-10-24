@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useContext } from "react";
 import { AuthContext } from "../auth/AuthContext";
-import {getAuth, signInWithEmailAndPassword,signInWithRedirect,GoogleAuthProvider,} from 'firebase/auth'
+import {getAuth, createUserWithEmailAndPassword, signInWithRedirect,GoogleAuthProvider,signInWithPopup } from 'firebase/auth'
 import { type } from "../../types";
 const auth= getAuth(firebaseApp)
 const googleProvider = new GoogleAuthProvider();
@@ -77,6 +77,54 @@ export const Login_comp =  (props) => {
     // });
   };
 
+  const handleSubmitGoogle =  async  (e) => {
+    signInWithPopup(auth, googleProvider)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      console.log(token, 'token....')
+      console.log(result , 'resultado...de google.')
+      // The signed-in user info.
+      const user = result.user;
+      const action = {
+        type: type.login,
+        payload: {
+          name: user.email
+        }
+      }
+      dispatch(action)
+      // ...
+      console.log(user, 'Usuario.')
+    }).then( navigate('/catalogo')
+    )
+    .catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+    });
+
+    // const result = await getRedirectResult(auth);
+    // console.log(result)
+    // if (result) {
+    //   // This is the signed-in user
+    //   const user = result.user;
+    //   // This gives you a Facebook Access Token.
+    //   const credential = provider.credentialFromResult(auth, result);
+    //   const token = credential.accessToken;
+    // }
+
+  
+    // console.log(action)
+    alert('EXITO, falta componente MATERIAL UI')
+   
+
+  };
 
 
 
@@ -137,7 +185,7 @@ export const Login_comp =  (props) => {
             </Button>
 
 
-            <Button onClick={() => console.log(signInWithRedirect(auth, googleProvider))} 
+            <Button onClick={handleSubmitGoogle} 
             type="submit" fullWidth variant="contained" to='/catalogo' sx={{ mt: 1 }} >
              Inicia Sesión con Google
 

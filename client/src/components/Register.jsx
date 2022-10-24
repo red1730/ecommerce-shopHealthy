@@ -19,11 +19,10 @@ import { useContext } from "react";
 import { AuthContext } from "../auth/AuthContext";
 import { type } from "../../types";
 import firebaseApp from '../credenciales'
-import {getAuth, createUserWithEmailAndPassword, signInWithRedirect,GoogleAuthProvider } from 'firebase/auth'
+import {getAuth, createUserWithEmailAndPassword, signInWithRedirect,GoogleAuthProvider,signInWithPopup } from 'firebase/auth'
 const auth= getAuth(firebaseApp)
 const googleProvider = new GoogleAuthProvider();
 
-//import {getAuth, signInWithEmailAndPassword,signInWithRedirect,GoogleAuthProvider,} from 'firebase/auth'
 
 function Copyright(props) {
   return (
@@ -50,7 +49,6 @@ export const Register_comp = () =>{
     console.log(correo,contraseña)
     
     const usuario = await createUserWithEmailAndPassword(auth,correo,contraseña)
-    console.log(usuario)
 
     const action = {
       type: type.login,
@@ -63,14 +61,67 @@ export const Register_comp = () =>{
     alert('EXITO, falta componente MATERIAL UI')
     
     navigate('/catalogo')
-    
-    // const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
+
 
   };
+
+  const handleSubmitGoogle =  async  (e) => {
+    signInWithPopup(auth, googleProvider)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      console.log(token, 'token....')
+      console.log(result , 'resultado...de google.')
+      // The signed-in user info.
+      const user = result.user;
+      const action = {
+        type: type.login,
+        payload: {
+          name: user.email
+        }
+      }
+      dispatch(action)
+      // ...
+      console.log(user, 'Usuario.')
+    }).then( navigate('/catalogo')
+    )
+    .catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+    });
+
+    // const result = await getRedirectResult(auth);
+    // console.log(result)
+    // if (result) {
+    //   // This is the signed-in user
+    //   const user = result.user;
+    //   // This gives you a Facebook Access Token.
+    //   const credential = provider.credentialFromResult(auth, result);
+    //   const token = credential.accessToken;
+    // }
+
+  
+    // console.log(action)
+    alert('EXITO, falta componente MATERIAL UI')
+   
+
+  };
+
+
+
+
+
+
+
+
+
 
   return (
       <Container component="main" maxWidth="xs" sx={{marginTop:"100px"}}>
@@ -138,10 +189,10 @@ export const Register_comp = () =>{
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="Quiero recibir ofertas y novedades via email."
                 />
-              </Grid>
+              </Grid> 
             </Grid>
             <Button
-            onClick={() => console.log(signInWithRedirect(auth, googleProvider))} 
+            onClick={handleSubmitGoogle} 
               type="submit"
               fullWidth
               variant="contained"

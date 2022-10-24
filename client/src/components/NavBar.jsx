@@ -175,7 +175,7 @@ const handleCloseUserMenu = () => {
                     component={RouterLink}
                     sx={{textDecoration:'none', color:'inherit'}}
                     to='catalogo'
-                    onClick={()=> dispatch({type:'RESET_CATALOG', payload:allProducts})}
+                    onClick={()=> dispatch({type:'RESET_CATALOG'})}
                     replace={true}
                     >Catálogo</Typography>
                 </MenuItem>
@@ -223,7 +223,7 @@ const handleCloseUserMenu = () => {
 
           <Box alignItems="center" justifyContent="center"spacing={0} sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent:'space-around', p:0 }}>
               <Button
-                onClick={()=> dispatch({type:'RESET_CATALOG'})}
+                onClick={(e)=> {e.preventDefault; dispatch({type:'RESET_CATALOG'})}}
                 sx={{  color: 'white',  }}
                 component={RouterLink}
                 to='catalogo'
