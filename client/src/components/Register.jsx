@@ -13,7 +13,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Home } from '../pages';
 import{Link as RouterLink} from 'react-router-dom'
-
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../auth/AuthContext";
+import { type } from "../../types";
+import firebaseApp from '../credenciales'
+import {getAuth, createUserWithEmailAndPassword, signInWithRedirect,GoogleAuthProvider } from 'firebase/auth'
+const auth= getAuth(firebaseApp)
+const googleProvider = new GoogleAuthProvider();
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -29,14 +36,36 @@ function Copyright(props) {
 
 
 export const Register_comp = () =>{
-  
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const {dispatch} = useContext(AuthContext); 
+  let navigate = useNavigate();
+
+  const handleSubmit =  async  (e) => {
+    e.preventDefault();
+    const correo= e.target.email.value
+    const contraseña= e.target.password.value
+    console.log(correo,contraseña)
+    
+    const usuario = await createUserWithEmailAndPassword(auth,correo,contraseña)
+    console.log(usuario)
+
+    const action = {
+      type: type.login,
+      payload: {
+        name: usuario.user.email
+      }
+    }
+    dispatch(action)
+    console.log(action)
+    alert('EXITO, falta componente MATERIAL UI')
+    
+    navigate('/catalogo')
+    
+    // const data = new FormData(event.currentTarget);
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
+
   };
 
   return (
@@ -54,37 +83,37 @@ export const Register_comp = () =>{
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Register
+            Registro
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label="Nombre"
                   autoFocus
                 />
-              </Grid>
-              <Grid item xs={12} sm={6}>
+              </Grid> */}
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  label="Apellido"
                   name="lastName"
                   autoComplete="family-name"
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Email"
                   name="email"
                   autoComplete="email"
                 />
@@ -103,22 +132,32 @@ export const Register_comp = () =>{
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive information, promotions and updates via email."
+                  label="Quiero recibir ofertas y novedades via email."
                 />
               </Grid>
             </Grid>
+            <Button
+            onClick={() => console.log(signInWithRedirect(auth, googleProvider))} 
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+             Registrate con Google
+            </Button>
+
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Register
+              Registrarse
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link component={RouterLink} to = '/login' variant="body2">
-                  Already have an account? Login
+                  Ya tenes una cuenta? Login
                 </Link>
               </Grid>
             </Grid>

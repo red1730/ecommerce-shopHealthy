@@ -1,18 +1,32 @@
+require('dotenv').config();
 const { Sequelize } = require('sequelize')
 const fs = require('fs')
 const path = require('path')
 
-const sequelize = new Sequelize('u381026178_eCommerceSalud', 'u381026178_admin', 'Qu&df=#;E2', {
-  host: 'sql811.main-hosting.eu',
-  dialect: 'mysql',
-  logging: false, 
-  native: false,
-}) 
-// const sequelize = new Sequelize(`postgres://postgres:12345678@localhost/pf-demo`, {
-//   logging: false, // set to console.log to see the raw SQL queries
-//   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-// });
 
+// const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+//     host: process.env.DB_HOST,
+//     dialect: 'mysql',
+//   }) 
+
+// const sequelize = new Sequelize('u381026178_eCommerceSalud', 'u381026178_admin', 'Qu&df=#;E2', {
+//   host: 'sql811.main-hosting.eu',
+//   dialect: 'mysql',
+
+
+//   logging: false, 
+//   native: false,
+
+// }) 
+
+const {
+  DB_USER, DB_PASSWORD, DB_HOST,
+} = process.env;
+
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/pf-demo`, {
+  logging: false, // set to console.log to see the raw SQL queries
+  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+});
 
 sequelize.authenticate().then(() => {
   console.log('Nos conectamos a la base de hostinger!!!')
@@ -31,39 +45,17 @@ fs.readdirSync(path.join(__dirname, '/models'))
 
 // Injectamos la conexion (sequelize) a todos los modelos
 modelDefiners.forEach(model => model(sequelize));
-// Capitalizamos los nombres de los modelos ie: product => Product
 let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-// En sequelize.models están todos los modelos importados como propiedades
-// Para relacionarlos hacemos un destructuring
-
 const { Categoria, Marca, Producto } = sequelize.models;
-
-// Aca vendrian las relaciones
-
-Producto.belongsToMany(Categoria, {through: 'producto_categoria'});
-Categoria.belongsToMany(Producto, {through: 'producto_categoria'}); 
-Marca.hasMany(Producto)  
+Producto.belongsToMany(Categoria, {through: 'productosPorCategoria', timestamps: false})
+Categoria.belongsToMany(Producto, {through: 'productosPorCategoria', timestamps: false})
 Producto.belongsTo(Marca)
-
-
-Producto.belongsToMany(Categoria, {through: 'producto_categoria'});
-Categoria.belongsToMany(Producto, {through: 'producto_categoria'}); 
-Marca.hasMany(Producto)  
-Producto.belongsTo(Marca) 
-
-// (
-//   async () => {
-//     console.log('Cargando datos iniciales...')
-//     const { Categoria } = sequelize.models;
-
-//     const chiringuito = await Categoria.findAll()
-
-//     console.log(JSON.stringify(chiringuito))
-// })()
-
+Marca.hasMany(Producto, {
+  foreignKey: 'marcaId'
+});
 
 module.exports = {
   ...sequelize.models,
