@@ -1,4 +1,5 @@
-import * as React from "react";
+// import { AuthContext } from "../auth/AuthContext";
+import { useContext } from 'react';
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -36,8 +37,10 @@ function Copyright(props) {
   );
 }
 
-
 export const Login_comp =  () => {
+  const { estadoGlobal, manejarUsuario } = useContext(ContextoGlobal)
+  console.log(`El estado global: ${estadoGlobal}`)
+  console.dir(estadoGlobal)
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -47,6 +50,9 @@ export const Login_comp =  () => {
     // console.log(correo,contraseña)
     const usuario = await signInWithEmailAndPassword(auth,correo,contraseña)
     console.log(usuario)
+    debugger
+    manejarUsuario(usuario.current)
+    console.log(`Ahora contiene: ${estaLogueado}`)
     alert('EXITO, Inicio correcto')
     navigate('/catalogo')
     
@@ -56,9 +62,6 @@ export const Login_comp =  () => {
     //   password: data.get("password"),
     // });
   };
-
-
-
 
   return (
       <Container component="main" maxWidth="xs" sx={{marginTop:"100px"}}>
