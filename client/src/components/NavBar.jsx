@@ -28,9 +28,19 @@ import { Link as RouterLink, Navigate, useNavigate} from 'react-router-dom';
 import { FilterAcordion} from './FilterAcordion';
 import { FilterSelect } from './FilterSelect';
 import { useDispatch, useSelector } from 'react-redux';
+
+import HandleLogout from '../helpers/HandleLogOut'
+import { useContext } from "react";
+import { AuthContext } from "../auth/AuthContext";
+import { type } from '../../types/index'
+import firebaseApp from '../credenciales'
+import {getAuth, signOut} from 'firebase/auth'
+const auth= getAuth(firebaseApp)
+
 import { Checkbox, Grid } from '@mui/material';
 import { Filters } from './Filters';
 import { SearchBar } from './Search';
+
 
 const logged = [
   {
@@ -65,9 +75,16 @@ const admin =[
   },
 ]
 
+
 export const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const [logeado, setLogeado] = useState(false)
+  const {user} = useContext(AuthContext)
+  const navigate = useNavigate();
+
+
 
 
   const dispatch = useDispatch();
@@ -87,6 +104,7 @@ export const NavBar = () => {
     setAnchorElNav(null);
   };
 
+
 //   const HandleLogout = () => {
 //   dispatch({ type: type.logout})
 
@@ -104,6 +122,7 @@ const handleCloseUserMenu = () => {
      replace: true
   })
   };
+
 
   return (
     <div >
@@ -246,6 +265,26 @@ const handleCloseUserMenu = () => {
                 Contacto
               </Button>
 
+              //a partir de aqui checkear
+              {console.log(user)}
+              { user.logged? 
+              // <Button 
+              //   onClick={() => console.log(signOut(auth))}
+              //   sx={{ my: 2, color: 'white', display: 'block' }}
+              //   component={RouterLink}
+              //   to='catalogo'
+              // >Cerrar sesión
+              // </Button>
+              <HandleLogout/>
+              :
+              <Button 
+                sx={{ my: 2, color: 'white', display: 'block' }}
+                component={RouterLink}
+                to={'login'}
+              >Iniciar sesión
+              //hasta aqui
+
+
               {/* <Button 
                 onClick={() => console.dir(auth.currentUser)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
@@ -275,8 +314,12 @@ const handleCloseUserMenu = () => {
                 component={RouterLink}
                 to='registro'
               >Regístrate
-              </Button> */}
-          {/* </Box> */}
+//revisar
+
+              </Button>
+                }
+          </Box>
+
 
           {/* <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings"> */}

@@ -10,8 +10,11 @@ function handleLogOut() {
     const { user,dispatch } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const HandleLogout = () => {
+    const HandleLogout = (e) => {
+        e.preventDefault();
         dispatch({ type: type.logout})
+        signOut(auth)
+        console.log(`En el handlerOut, ${auth}`)
         navigate('/catalogo', { 
             replace: true
         })
@@ -26,7 +29,7 @@ function handleLogOut() {
                 component={RouterLink}
                 // to="login"
             >
-                Logout
+                Cerrar Sesión
             </Button>
         </div>
 )
