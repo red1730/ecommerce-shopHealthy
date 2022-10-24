@@ -13,29 +13,19 @@ import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 import logo from '../assets/logo.png';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
-//import { Link as RouterLink, useNavigate} from 'react-router-dom';
-//import { FilterAcordion} from './FilterAcordion';
-//import { FilterSelect } from './FilterSelect';
-//import { useDispatch, useSelector } from 'react-redux';
-
 import firebaseApp from '../credenciales'
-import {getAuth, signOut} from 'firebase/auth'
 const auth= getAuth(firebaseApp)
 console.dir(auth)
 
 import { Link as RouterLink, Navigate, useNavigate} from 'react-router-dom';
 import { FilterAcordion} from './FilterAcordion';
-import { FilterSelect } from './FilterSelect';
 import { useDispatch, useSelector } from 'react-redux';
 
 import HandleLogout from '../helpers/HandleLogOut'
 import { useContext } from "react";
 import { AuthContext } from "../auth/AuthContext";
 import { type } from '../../types/index'
-import firebaseApp from '../credenciales'
 import {getAuth, signOut} from 'firebase/auth'
-const auth= getAuth(firebaseApp)
 
 import { Checkbox, Grid } from '@mui/material';
 import { Filters } from './Filters';
@@ -84,11 +74,6 @@ export const NavBar = () => {
   const {user} = useContext(AuthContext)
   const navigate = useNavigate();
 
-
-
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   
   const {categName, allProducts} = useSelector(state=> state.catalogReducer)
 
@@ -237,8 +222,6 @@ const handleCloseUserMenu = () => {
           </Typography>
 
           <Box alignItems="center" justifyContent="center"spacing={0} sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent:'space-around', p:0 }}>
-            
-            <Box  >
               <Button
                 onClick={()=> dispatch({type:'RESET_CATALOG'})}
                 sx={{  color: 'white',  }}
@@ -247,14 +230,14 @@ const handleCloseUserMenu = () => {
               >
                 Catálogo
               </Button>
-            </Box>
+            
                   {categName.map((el, i)=> (
                     <Box  key={i} sx={{float:'inline-end'}} >
                       <Filters categTitle={el} handleCloseNavMenu={handleCloseNavMenu}  />
                     </Box>
                     ) )
                   }
-            <Box>
+            
 
               <Button
                 onClick={handleCloseNavMenu}
@@ -265,7 +248,7 @@ const handleCloseUserMenu = () => {
                 Contacto
               </Button>
 
-              //a partir de aqui checkear
+              {/* //a partir de aqui checkear
               {console.log(user)}
               { user.logged? 
               // <Button 
@@ -282,7 +265,8 @@ const handleCloseUserMenu = () => {
                 component={RouterLink}
                 to={'login'}
               >Iniciar sesión
-              //hasta aqui
+              <Button />
+              //hasta aqui */}
 
 
               {/* <Button 
@@ -315,20 +299,16 @@ const handleCloseUserMenu = () => {
                 to='registro'
               >Regístrate
 //revisar
-
               </Button>
                 }
           </Box>
-
-
           {/* <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings"> */}
 
            </Box>
-          </Box>
 
           <Box sx={{ flexGrow: 0, position:'relative' }}>
-            <Tooltip title={(auth.accessToken == null)? 'Iniciar Sesión': 'Mi perfil'}>
+            <Tooltip title={(!user.logged)? 'Iniciar Sesión': 'Mi perfil'}>
 
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <AccountCircleIcon />
@@ -350,25 +330,31 @@ const handleCloseUserMenu = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {(auth.accessToken == null)
+              {(!user.logged)
                   ? <Button 
                   component={RouterLink}
                   to='login'
                  > Iniciar sesión
                   </Button>
                   :
-                  logged.map( (el, i) => (
-                  <MenuItem key={i} onClick={handleCloseUserMenu}>
-                    <Typography 
-                      textAlign="center"
-                      component={RouterLink}
-                      to={el.link}
-                      >
-  
-                      {el.label}
-                      </Typography>
-                  </MenuItem>
-                  ))
+                  <Box>
+                    {logged.map( (el, i) => (
+                    <MenuItem key={i} onClick={handleCloseUserMenu}>
+                        <Typography 
+                        textAlign="center"
+                        component={RouterLink}
+                        to={el.link}
+                        >
+                        {el.label}
+                        </Typography>
+                    </MenuItem>
+                    ))}
+                    <MenuItem onClick={handleCloseUserMenu}>
+                        <HandleLogout />
+                    </MenuItem>
+                  </Box>
+                  
+
                 
               }
               </Menu>

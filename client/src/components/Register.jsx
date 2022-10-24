@@ -23,7 +23,7 @@ import {getAuth, createUserWithEmailAndPassword, signInWithRedirect,GoogleAuthPr
 const auth= getAuth(firebaseApp)
 const googleProvider = new GoogleAuthProvider();
 
-import {getAuth, signInWithEmailAndPassword,signInWithRedirect,GoogleAuthProvider,} from 'firebase/auth'
+//import {getAuth, signInWithEmailAndPassword,signInWithRedirect,GoogleAuthProvider,} from 'firebase/auth'
 
 function Copyright(props) {
   return (
