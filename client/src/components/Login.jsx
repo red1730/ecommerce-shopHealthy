@@ -15,9 +15,12 @@ import { Home, Register } from "../pages";
 import { Link as RouterLink } from "react-router-dom";
 import firebaseApp from '../credenciales'
 import { useNavigate } from "react-router-dom";
-
-import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
+import { useContext } from "react";
+import { AuthContext } from "../auth/AuthContext";
+import {getAuth, signInWithEmailAndPassword,signInWithRedirect,GoogleAuthProvider,} from 'firebase/auth'
+import { type } from "../../types";
 const auth= getAuth(firebaseApp)
+const googleProvider = new GoogleAuthProvider();
 
 function Copyright(props) {
   return (
@@ -38,7 +41,9 @@ function Copyright(props) {
 }
 
 
-export const Login_comp =  () => {
+export const Login_comp =  (props) => {
+  const {dispatch} = useContext(AuthContext); 
+  // console.log(user)
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -48,7 +53,19 @@ export const Login_comp =  () => {
     const contraseña= e.target.password.value
     // console.log(correo,contraseña)
     const usuario = await signInWithEmailAndPassword(auth,correo,contraseña)
-    console.log(usuario)
+
+    const action = {
+      type: type.login,
+      payload: {
+        name: usuario.user.email
+      }
+    }
+    dispatch(action)
+    console.log(action)
+    // console.log(usuario)
+    // let valor = true;
+    // updateState(valor)
+    // console.log(logeado, 'estado en el Login')
     alert('EXITO, Inicio correcto')
     navigate('/catalogo')
     
@@ -117,11 +134,12 @@ export const Login_comp =  () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Login In
+              Iniciar Sesión
             </Button>
 
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 1 }}>
-              Google
+            <Button onClick={() => console.log(signInWithRedirect(auth, googleProvider))} 
+            type="submit" fullWidth variant="contained" to='/catalogo' sx={{ mt: 1 }} >
+             Inicia Sesión con Google
             </Button>
 
             <Grid container>
