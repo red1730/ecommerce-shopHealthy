@@ -12,6 +12,8 @@ function handleLogOut() {
 
     const HandleLogout = () => {
         dispatch({ type: type.logout})
+        signOut(auth)
+        console.log(`En el handlerOut, ${auth}`)
         navigate('/catalogo', { 
             replace: true
         })
@@ -26,7 +28,7 @@ function handleLogOut() {
                 component={RouterLink}
                 // to="login"
             >
-                Logout
+                Cerrar Sesión
             </Button>
         </div>
 )
