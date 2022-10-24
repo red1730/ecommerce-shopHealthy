@@ -1,4 +1,4 @@
-
+// import { AuthContext } from "../auth/AuthContext";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,7 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import logo from '../assets/logo.png';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link as RouterLink, useNavigate} from 'react-router-dom';
@@ -24,8 +24,10 @@ import {getAuth, signOut} from 'firebase/auth'
 const auth= getAuth(firebaseApp)
 console.dir(auth)
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 export const NavBar = () => {
+  const { estadoGlobal, manejarUsuario } = useContext(ContextoGlobal)
+
+  console.dir(estadoGlobal)
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
