@@ -18,8 +18,10 @@ import { Link as RouterLink, useNavigate} from 'react-router-dom';
 import { FilterAcordion} from './FilterAcordion';
 import { FilterSelect } from './FilterSelect';
 import { useDispatch, useSelector } from 'react-redux';
-import { Login_comp } from './Login';
-
+import HandleLogout from '../helpers/HandleLogOut'
+import { useContext } from "react";
+import { AuthContext } from "../auth/AuthContext";
+import { type } from '../../types/index'
 import firebaseApp from '../credenciales'
 import {getAuth, signOut} from 'firebase/auth'
 const auth= getAuth(firebaseApp)
@@ -32,7 +34,7 @@ export const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [logeado, setLogeado] = useState(false)
-
+  const {user} = useContext(AuthContext)
   const navigate = useNavigate();
 
 
@@ -181,16 +183,16 @@ export const NavBar = () => {
                 Contacto
               </Button>
               
-              {console.log(logeado)}
-              { logeado? 
-              <Button 
-                onClick={signOut(auth)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-                component={RouterLink}
-                to='catalogo'
-              >Cerrar sesión
-              </Button>
-              
+              {console.log(user)}
+              { user.logged? 
+              // <Button 
+              //   onClick={() => console.log(signOut(auth))}
+              //   sx={{ my: 2, color: 'white', display: 'block' }}
+              //   component={RouterLink}
+              //   to='catalogo'
+              // >Cerrar sesión
+              // </Button>
+              <HandleLogout/>
               :
               <Button 
                 sx={{ my: 2, color: 'white', display: 'block' }}
