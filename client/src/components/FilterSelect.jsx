@@ -6,12 +6,13 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import {categorias} from '../helpers/categoriasPrueba'
 import { useDispatch, useSelector } from 'react-redux';
-import { filterByCateg } from '../actions/filterProductByCateg';
+import { addNestedFilter, filterByCateg, removeNestedFilter } from '../actions/filterProductByCateg';
 import {  useLocation, useNavigate } from "react-router-dom";
 import Checkbox from '@mui/material/Checkbox';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import ListItemText from '@mui/material/ListItemText';
+import { Menu } from '@mui/material';
 
 
 
@@ -64,6 +65,9 @@ export const FilterSelect = ({categTitle})=> {
   const [categoriaCheckBox, setCategoriaCheckBox] = useState([categTitle]);
   const [categoria, setCategoria] = useState(categTitle);
   const [subCategoria, setSubCategoria] = useState([]);
+  const [len, setLen] = useState(1);
+  const [valueUnchecked, setValueUnchecked] = useState([]);
+  const [checked, setChecked] = useState({check: null, unCheck: null});
   
   useEffect(() => {
     const getCategs = ()=>{
@@ -86,19 +90,28 @@ export const FilterSelect = ({categTitle})=> {
     setCategoria(event.target.value);
     setCategoria(categTitle)
   };
-  const {categ}=useSelector(s=> s.catalogReducer)
-  const handleChangeMultiple = (event) => {
-    const {
-      target: { value },
-    } = event;
+
+  const handleChangeMultiple = (event) => { 
+    const {target: { value }} = event;
+    const valueLen = value.length;
+    const unchecked = valueUnchecked.filter(el => !value.includes(el)).join('')
+
+    if (valueLen > len) {setChecked({check: value[value.length-1], unCheck: null});}
+    else setChecked({check: null, unCheck: unchecked});
+    setLen(value.length);
+    setValueUnchecked(value); 
     setCategoriaCheckBox(
-      // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
-    console.log(event.target.value);
-    console.log(categoriaCheckBox)
-    // if (event.target.value.toLocaleLowerCase() !== categTitle.toLocaleLowerCase()) dispatch(filterByCateg(event.target.value));
   };
+
+
+  useEffect(() => {
+    console.log(checked)
+    if (checked.check) dispatch(addNestedFilter(checked.check));
+    else if (checked.unCheck) dispatch(removeNestedFilter(checked.unCheck))
+  }, [dispatch, checked])
+  
 
   return (
     <div>
@@ -139,7 +152,7 @@ export const FilterSelect = ({categTitle})=> {
               renderValue={() => categTitle}
               onChange={handleChangeMultiple}
               MenuProps={MenuProps}
-              inputProps={{ 'aria-label': 'Without label' }}
+              // inputProps={{ 'aria-label': 'Without label' }}
           >
             <MenuItem value={categTitle} disabled >
                 <Typography 
@@ -148,7 +161,7 @@ export const FilterSelect = ({categTitle})=> {
                     >{categTitle}</Typography>
               </MenuItem>
             {subCategoria?.map(el => (
-              <MenuItem key={el.id} value={el.nombre} onChange={e=>console.log(e)} >
+              <MenuItem key={el.id} value={el.nombre}  >
                 <Checkbox checked={categoriaCheckBox.indexOf(el.nombre) > -1} />
                 <ListItemText primary={el.nombre} />
               </MenuItem>

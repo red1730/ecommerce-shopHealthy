@@ -34,8 +34,8 @@ export const Home = () => {
     _DATA.jump(p);
   };
   return (
-    <Container sx={{marginTop:'30px'}} >
-        { setBanner? <Box sx={{margin:'90px 0 25px', marginRight:4}}>
+    <Container sx={{marginTop:'1px'}} >
+        { setBanner? <Box sx={{margin:'90px 0 25px'}}>
           <CardMedia
             component="img"
             image={Banner}

@@ -1,4 +1,3 @@
-
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,10 +13,13 @@ import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 import logo from '../assets/logo.png';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Link as RouterLink, Navigate} from 'react-router-dom';
+import { Link as RouterLink, Navigate, useNavigate} from 'react-router-dom';
 import { FilterAcordion} from './FilterAcordion';
 import { FilterSelect } from './FilterSelect';
 import { useDispatch, useSelector } from 'react-redux';
+import { Checkbox, Grid } from '@mui/material';
+import { Filters } from './Filters';
+import { SearchBar } from './Search';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -25,9 +27,10 @@ export const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState (null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   
-  const {categName} = useSelector(state=> state.catalogReducer)
+  const {categName, allProducts} = useSelector(state=> state.catalogReducer)
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -45,9 +48,11 @@ export const NavBar = () => {
   };
 
   return (
-    <AppBar position="fixed">
+    <div >
+    <SearchBar sx={{zIndex:0}} />
+    <AppBar sx={{ position:'-webkit-sticky',top:0 }} >
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar >
           <IconButton component={RouterLink} to='/' >
             <Avatar alt='logo' src={logo} sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           </IconButton>
@@ -57,12 +62,11 @@ export const NavBar = () => {
             component={RouterLink}
             to="/"
             sx={{
-              mr: 2,
+              mr: 1,
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
+              fontWeight: 800,
+              color: 'white',
               textDecoration: 'none',
             }}
           >
@@ -105,7 +109,7 @@ export const NavBar = () => {
                     component={RouterLink}
                     sx={{textDecoration:'none', color:'inherit'}}
                     to='catalogo'
-                    onClick={()=>dispatch({type: 'RESET_CATEG_NAME'})}
+                    onClick={()=> dispatch({type:'RESET_CATALOG', payload:allProducts})}
                     replace={true}
                     >Catálogo</Typography>
                 </MenuItem>
@@ -136,38 +140,45 @@ export const NavBar = () => {
               flexGrow: 1,
               fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
+              letterSpacing: '.1rem',
+              color: 'white',
               textDecoration: 'none',
             }}
           >
             HEALTHY FOOD
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box alignItems="center" justifyContent="center"spacing={0} sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent:'space-around', p:0 }}>
             
+            <Box  >
               <Button
-                onClick={()=>dispatch({type: 'RESET_CATEG_NAME'})}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                onClick={()=> dispatch({type:'RESET_CATALOG'})}
+                sx={{  color: 'white',  }}
                 component={RouterLink}
                 to='catalogo'
               >
                 Catálogo
               </Button>
-
-              {categName.map((el, i)=> <FilterSelect key={i} categTitle={el} />) }
-              
+            </Box>
+                  {categName.map((el, i)=> (
+                    <Box  key={i} sx={{float:'inline-end'}} >
+                      <Filters categTitle={el} handleCloseNavMenu={handleCloseNavMenu}  />
+                    </Box>
+                    ) )
+                  }
+            <Box>
               <Button
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'white',   }}
                 component={RouterLink}
                 to='contacto'
               >
                 Contacto
               </Button>
+            </Box>
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+          <Box sx={{ flexGrow: 0, position:'relative' }}>
+            <Tooltip title="User settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <AccountCircleIcon />{/*TODO: COLOCAR AVATAR DE FORMA DINAMICA*/}
               </IconButton>
@@ -198,5 +209,6 @@ export const NavBar = () => {
         </Toolbar>
       </Container>
     </AppBar>
+    </div>
   );
 };
