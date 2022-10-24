@@ -6,7 +6,7 @@ const axios = require("axios");
 // Ejemplo: const authRouter = require('./auth.js');
 const { Producto, Marca, Categoria } = require("../db");
 // const {API_KEY} = process.env;
-
+const { getProductos } = require('../controllers/firebase') 
 //FALTA CONFIGURAR LA MODULARIZACION....
 const router = Router();
 
@@ -34,8 +34,8 @@ router.get("/marca", async (req, res) => {
 
 
 router.get("/", async (req, res) => {
+  /*
   const {nombre,marca } = req.query
-
   let todosLosProductos = await Producto.findAll()
   if (nombre) {
     let productoFiltrado = todosLosProductos.filter( prod => prod.nombre.toLowerCase().includes(nombre.toLowerCase()))
@@ -45,12 +45,13 @@ router.get("/", async (req, res) => {
     // res.status(201).send(todosLosProductos) //trae todos los perros
     Producto.findAll({
       include: { 
-        model: Marca,
+        model: Categoria,
         attributes: ['nombre']
       }, 
     }).then(prods => res.json(prods))
   }
-
+*/
+  res.json(getProductos())
 })
 
 /* 
