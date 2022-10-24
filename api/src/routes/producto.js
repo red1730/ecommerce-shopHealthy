@@ -6,8 +6,7 @@ const axios = require("axios");
 // Ejemplo: const authRouter = require('./auth.js');
 const { Producto, Marca, Categoria } = require("../db");
 // const {API_KEY} = process.env;
-const { getProductos } = require('../controllers/firebase') 
-//FALTA CONFIGURAR LA MODULARIZACION....
+
 const router = Router();
 
 

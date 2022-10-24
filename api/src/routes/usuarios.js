@@ -37,12 +37,12 @@ const {nombre, apellido, email, telefono, mensaje}=req.body;
         to: 'healthyshophenry@outlook.com',     
         subject: `Consulta de ${email}`,
        
-       html: `<p>
+       html: (`<p>
        Nombre:${nombre}<br> 
        Apellido:${apellido}<br> 
        Email:${email}<br> 
        Telefono:${telefono}<br> 
-       Mensaje:${mensaje}</p>`
+       Mensaje:${mensaje}</p>`)
     })
 
     console.log('Message sent', info.messageId)
