@@ -1,4 +1,4 @@
-// import { AuthContext } from "../auth/AuthContext";
+import { AuthContext } from "../auth/AuthContext";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -26,7 +26,7 @@ const auth= getAuth(firebaseApp)
 console.dir(auth)
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 export const NavBar = () => {
-  const { estadoGlobal, manejarUsuario } = useContext(ContextoGlobal)
+  const { estadoGlobal, manejarUsuario } = useContext(AuthContext)
 
   console.dir(estadoGlobal)
   const [anchorElNav, setAnchorElNav] = useState(null);

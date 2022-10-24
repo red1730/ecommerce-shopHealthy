@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useReducer } from "react";
-// import { AuthContext } from "./auth/AuthContext";
+import { AuthContext } from "./auth/AuthContext";
 import { RouterApp } from "./routes/RouterApp";
 import { authReducer } from "./auth/authReducer";
 
@@ -35,6 +35,6 @@ export const App = () => {
     }}>
 
       <RouterApp />
-    </ContextoGlobal.Provider>
+    </AuthContext.Provider>
   );
 };

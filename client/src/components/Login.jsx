@@ -16,7 +16,7 @@ import { Home, Register } from "../pages";
 import { Link as RouterLink } from "react-router-dom";
 import firebaseApp from '../credenciales'
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+// import { useContext } from "react";
 import { AuthContext } from "../auth/AuthContext";
 import {getAuth, signInWithEmailAndPassword,signInWithRedirect,GoogleAuthProvider,} from 'firebase/auth'
 import { type } from "../../types";
