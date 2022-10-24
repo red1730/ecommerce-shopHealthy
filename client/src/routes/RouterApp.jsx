@@ -24,7 +24,7 @@ export const RouterApp = () => {
         <Route path="/registro" element={<Register />} />
         <Route path="/comprar" element={<Shopping />} />
         <Route path="/contacto" element={<Contact />} />
-        <Route path="/user/:id" element={<User />} />
+        <Route path="/user" element={<User />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </>

@@ -55,6 +55,19 @@ export const catalogReducer = (state= initialState, action)=>{
                 categName: action.payload,
                 products: allProducts
             }
+        case 'ORDER_ASC':
+            return {
+                ...state,
+                products: action.payload.orderedProducts,
+                allProducts: action.payload.orderedAllProducts
+            }
+        case 'ORDER_DESC':
+            return {
+                ...state,
+                products: action.payload.orderedProducts,
+                allProducts: action.payload.orderedAllProducts
+            }
+            
         default:
             return state;
     }
