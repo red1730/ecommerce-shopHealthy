@@ -13,13 +13,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Home } from '../pages';
 import{Link as RouterLink} from 'react-router-dom'
-import firebaseApp from '../credenciales'
 import { useNavigate } from "react-router-dom";
-import {getAuth, signInWithEmailAndPassword,signInWithRedirect,GoogleAuthProvider,} from 'firebase/auth'
-
+import { useContext } from "react";
+import { AuthContext } from "../auth/AuthContext";
+import { type } from "../../types";
+import firebaseApp from '../credenciales'
+import {getAuth, createUserWithEmailAndPassword, signInWithRedirect,GoogleAuthProvider } from 'firebase/auth'
 const auth= getAuth(firebaseApp)
 const googleProvider = new GoogleAuthProvider();
-
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -35,6 +36,7 @@ function Copyright(props) {
 
 
 export const Register_comp = () =>{
+  const {dispatch} = useContext(AuthContext); 
   let navigate = useNavigate();
 
   const handleSubmit =  async  (e) => {
@@ -42,8 +44,18 @@ export const Register_comp = () =>{
     const correo= e.target.email.value
     const contraseña= e.target.password.value
     console.log(correo,contraseña)
+    
     const usuario = await createUserWithEmailAndPassword(auth,correo,contraseña)
     console.log(usuario)
+
+    const action = {
+      type: type.login,
+      payload: {
+        name: usuario.user.email
+      }
+    }
+    dispatch(action)
+    console.log(action)
     alert('EXITO, falta componente MATERIAL UI')
     
     navigate('/catalogo')
@@ -125,14 +137,15 @@ export const Register_comp = () =>{
               </Grid>
             </Grid>
             <Button
-              // type="submit"
+            onClick={() => console.log(signInWithRedirect(auth, googleProvider))} 
+              type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={() => console.log(signInWithRedirect(auth, googleProvider))}
             >
              Registrate con Google
             </Button>
+
             <Button
               type="submit"
               fullWidth
