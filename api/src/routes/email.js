@@ -2,7 +2,7 @@ const { Router } = require('express')
 const nodemailer = require('nodemailer')
 const router = Router()
 
-const { MAIL_PASS } = process.env; 
+const { MAIL_USER, MAIL_PASS } = process.env; 
   
 router.post('/', async (req,res)=>{
     console.log(req.body)
@@ -12,7 +12,7 @@ router.post('/', async (req,res)=>{
         port: 587,   //con ssl o 25 sin ssl
         secure: false,
         auth: {
-            user: 'healthyshophenry@outlook.com',
+            user: MAIL_USER,
             pass: MAIL_PASS
         },
         tls: {
@@ -22,8 +22,8 @@ router.post('/', async (req,res)=>{
 
     const info = await transport.sendMail({
         from: 'healthyshophenry@outlook.com',
-        to: 'mceciliasosa@gmail.com',
-        subject: 'Prueba de almacén saludable con mati',
+        to: 'healthyshophenry@outlook.com',     //
+        subject: 'Prueba de almacén saludable autoemail',
         text: 'anduvo el envio del correo nodemailer'
     })
 
