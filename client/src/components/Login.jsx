@@ -41,7 +41,7 @@ function Copyright(props) {
 }
 
 
-export const Login_comp =  (props) => {
+export const Login_comp =  () => {
   const {dispatch} = useContext(AuthContext); 
   // console.log(user)
   let navigate = useNavigate();
@@ -66,8 +66,8 @@ export const Login_comp =  (props) => {
     // let valor = true;
     // updateState(valor)
     // console.log(logeado, 'estado en el Login')
-    alert('EXITO, Inicio correcto')
-    navigate('/catalogo')
+    
+    navigate('/producto')
     
 
 
@@ -137,7 +137,7 @@ export const Login_comp =  (props) => {
               Iniciar Sesión
             </Button>
 
-            <Button onClick={() => console.log(signInWithRedirect(auth, googleProvider))} 
+            <Button onClick={() => signInWithRedirect(auth, googleProvider)} 
             type="submit" fullWidth variant="contained" to='/catalogo' sx={{ mt: 1 }} >
              Inicia Sesión con Google
             </Button>
