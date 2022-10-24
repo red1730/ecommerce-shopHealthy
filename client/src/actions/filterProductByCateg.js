@@ -2,14 +2,9 @@
 
 export const filterByCateg = categName => (dispatch, getState) =>{
     const {allProducts} = getState().catalogReducer;
-    const filtered = allProducts.filter(el => el.categoria.find(ele => ele.nombre.toLowerCase() === categName ));
-    // dispatch( {type: 'ADD'})
+    const filtered = allProducts.filter(el => el.categoria.find(ele => ele.nombre.toLowerCase() === categName.toLowerCase() ));
     console.log(filtered)
     dispatch( {type: 'FILTER_BY_CATEGORY', payload: {data:filtered, cat: categName}});
-}
-
-export const resetCateg = () => (dispatch) =>{
-    dispatch({type: 'RESET_CATEG_NAME', payload:['TENTACION SALUDABLE','ALACENA SALUDABLE','ESTILO DE VIDA','BEBIDAS']})
 }
 
 export const addNestedFilter = categName => (dispatch, getState) =>{

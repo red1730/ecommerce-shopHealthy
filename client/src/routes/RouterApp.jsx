@@ -1,7 +1,6 @@
 import Search from "@mui/icons-material/Search";
 import { Route, Routes } from "react-router-dom";
 import { NavBar } from "../components/NavBar";
-import { SearchBar } from "../components/Search";
 import {
   Admin,
   Contact,
