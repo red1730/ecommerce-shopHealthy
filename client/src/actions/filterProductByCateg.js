@@ -1,3 +1,4 @@
+import { orderAsc, orderDesc } from "./order";
 
 
 export const filterByCateg = categName => (dispatch, getState) =>{
@@ -9,28 +10,35 @@ export const filterByCateg = categName => (dispatch, getState) =>{
 
 export const addNestedFilter = categName => (dispatch, getState) =>{
     if(categName === null) return;
-    const { filteredProducts, nestedFilter, allProducts } = getState().catalogReducer;
+    const { filteredProducts, nestedFilter, allProducts, categ, order, orderKey } = getState().catalogReducer;
+    let label = categ;
+
     let dataToFilter = filteredProducts;
-    if ( filteredProducts.length < 1 ) dataToFilter = allProducts;
+
+    if ( filteredProducts.length < 1 ) {dataToFilter = allProducts; label=''}
     
     let filtered = nestedFilter.concat( dataToFilter.filter( el => el.categoria.find( categ => categ.nombre.toLowerCase() === categName.toLowerCase())));
+    let map ={}
+    let maped = filtered.filter(el => map[el.id] ? false : map[el.id] = true);
     
-    dispatch( {type: 'ADD_NESTED_FILTER', payload: { data:filtered, cat: categName } });
+    dispatch( {type: 'ADD_NESTED_FILTER', payload: { data:maped, cat: `${label} - ${categName}` } });
+    if (order){
+        dispatch(orderAsc(orderKey))
+    }else dispatch(orderDesc(orderKey))
 }
 export const removeNestedFilter = categName => (dispatch, getState) =>{
     // if(categName === null) return;
-    const { nestedFilter, filteredProducts, allProducts } = getState().catalogReducer;
+    const { nestedFilter, filteredProducts, allProducts, order, orderKey } = getState().catalogReducer;
     let filtered = nestedFilter.filter( el => {
                                                 let isValid = true;
                                                 el.categoria.map( categ => {
-                                                    if (categ.nombre.toLowerCase() !== categName.toLowerCase()) isValid = false;
+                                                    if (categ.nombre.toLowerCase() === categName.toLowerCase()) isValid = false;
                                                 } );
                                                 if ( isValid ) return el;
 
     });
     let map ={}
     let maped = filtered.filter(el => map[el.id] ? false : map[el.id] = true);
-    console.log(maped)
     let dataToShow = maped;
     let newNestedFilter = maped;
 
@@ -42,4 +50,7 @@ export const removeNestedFilter = categName => (dispatch, getState) =>{
 
 
     dispatch( {type: 'REMOVE_FILTER', payload: { data: dataToShow, newNested: newNestedFilter, cat: categName }});
+    if (order){
+        dispatch(orderAsc(orderKey))
+    }else dispatch(orderDesc(orderKey))
 }
