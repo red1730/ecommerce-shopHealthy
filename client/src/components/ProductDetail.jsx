@@ -39,13 +39,13 @@ export const ProductDetail_comp = () => {
   
   // if(!isLoading) return <Skeleton/>
   
-  const { nombre, precio, imagen } = product;
+  const { nombre, precio, img:coso } = product;
   
 
   return (
     <Grid container >
       <Grid sx={{ margin: "150px auto", display: "flex" }}>
-        <CardMedia  component="img" sx={{height:"500px"}} image={`https://dkndrd.com/pf-healthyShop/${imagen}`} alt={nombre}/>
+        <CardMedia  component="img" sx={{height:"500px"}} image={`https://${coso}`} alt={nombre}/>
         <Grid sx={{ margin: "150px auto", display: "column" }}>
           <Typography sx={{fontSize:30}}
             variant="body2"

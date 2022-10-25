@@ -20,9 +20,9 @@ router.get("/tresmiluno/", async (req, res) => {
 })
 
 router.get("/tresmiluno/droptodo", async (req, res) => {
-    // await conn.query('SET FOREIGN_KEY_CHECKS = 0')
+    await conn.query('SET FOREIGN_KEY_CHECKS = 0')
     await conn.drop()
-    await conn.sync({force: true})
+    await conn.sync({force: false})
     await conn.query('SET FOREIGN_KEY_CHECKS = 1')
     res.status(418).json({mensaje: 'Volaste todo a la miercoles!'})
     categoriaCarga()
@@ -37,12 +37,9 @@ router.get("/tresmiluno/droptodo", async (req, res) => {
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-router.use('/productos', productosRuta)
-router.use('/categorias', categoriasRuta)
-router.use('/marcas',marcasRuta)
 router.use('/tresmiluno/usuario',usuarioruta)
-router.use('/tresmiluno/productos', productosRuta)
-router.use('/tresmiluno/categorias', categoriasRuta)
-router.use('/tresmiluno/marcas',marcasRuta)
+router.use('/tresmiluno/producto', productosRuta)
+router.use('/tresmiluno/categoria', categoriasRuta)
+router.use('/tresmiluno/marca',marcasRuta)
 
 module.exports = router;

@@ -1,4 +1,4 @@
-import * as React from "react";
+// import { AuthContext } from "../auth/AuthContext";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,9 +15,15 @@ import { Home, Register } from "../pages";
 import { Link as RouterLink } from "react-router-dom";
 import firebaseApp from '../credenciales'
 import { useNavigate } from "react-router-dom";
-import {getAuth, signInWithEmailAndPassword,signInWithRedirect,GoogleAuthProvider,} from 'firebase/auth'
+
+import { useContext } from "react";
+import { AuthContext } from "../auth/AuthContext";
+import {getAuth, createUserWithEmailAndPassword, signInWithRedirect,GoogleAuthProvider,signInWithPopup } from 'firebase/auth'
+import { type } from "../../types";
 const auth= getAuth(firebaseApp)
 const googleProvider = new GoogleAuthProvider();
+
+
 function Copyright(props) {
   return (
     <Typography
@@ -38,6 +44,8 @@ function Copyright(props) {
 
 
 export const Login_comp =  () => {
+  const {dispatch} = useContext(AuthContext); 
+  // console.log(user)
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -46,9 +54,21 @@ export const Login_comp =  () => {
     const contraseña= e.target.password.value
     // console.log(correo,contraseña)
     const usuario = await signInWithEmailAndPassword(auth,correo,contraseña)
-    console.log(usuario)
-    alert('EXITO, Inicio correcto')
-    navigate('/catalogo')
+
+    const action = {
+      type: type.login,
+      payload: {
+        name: usuario.user.email
+      }
+    }
+    dispatch(action)
+    console.log(action)
+    // console.log(usuario)
+    // let valor = true;
+    // updateState(valor)
+    // console.log(logeado, 'estado en el Login')
+    
+    navigate('/producto')
     
     // const data = new FormData(event.currentTarget);
     // console.log({
@@ -57,6 +77,54 @@ export const Login_comp =  () => {
     // });
   };
 
+  const handleSubmitGoogle =  async  (e) => {
+    signInWithPopup(auth, googleProvider)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      console.log(token, 'token....')
+      console.log(result , 'resultado...de google.')
+      // The signed-in user info.
+      const user = result.user;
+      const action = {
+        type: type.login,
+        payload: {
+          name: user.email
+        }
+      }
+      dispatch(action)
+      // ...
+      console.log(user, 'Usuario.')
+    }).then( navigate('/catalogo')
+    )
+    .catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+    });
+
+    // const result = await getRedirectResult(auth);
+    // console.log(result)
+    // if (result) {
+    //   // This is the signed-in user
+    //   const user = result.user;
+    //   // This gives you a Facebook Access Token.
+    //   const credential = provider.credentialFromResult(auth, result);
+    //   const token = credential.accessToken;
+    // }
+
+  
+    // console.log(action)
+    alert('EXITO, falta componente MATERIAL UI')
+   
+
+  };
 
 
 
@@ -113,11 +181,14 @@ export const Login_comp =  () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Login In
+              Iniciar Sesión
             </Button>
 
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 1 }} onClick={() => console.log(signInWithRedirect(auth, googleProvider))}>
-              Google
+
+            <Button onClick={handleSubmitGoogle} 
+            type="submit" fullWidth variant="contained" to='/catalogo' sx={{ mt: 1 }} >
+             Inicia Sesión con Google
+
             </Button>
 
             <Grid container>

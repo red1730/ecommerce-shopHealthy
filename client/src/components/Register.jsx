@@ -13,48 +13,119 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Home } from '../pages';
 import{Link as RouterLink} from 'react-router-dom'
-import firebaseApp from '../credenciales'
 import { useNavigate } from "react-router-dom";
-import {getAuth, signInWithEmailAndPassword,signInWithRedirect,GoogleAuthProvider,} from 'firebase/auth'
 
+import { useContext } from "react";
+import { AuthContext } from "../auth/AuthContext";
+import { type } from "../../types";
+import firebaseApp from '../credenciales'
+import {getAuth, createUserWithEmailAndPassword, signInWithRedirect,GoogleAuthProvider,signInWithPopup } from 'firebase/auth'
 const auth= getAuth(firebaseApp)
 const googleProvider = new GoogleAuthProvider();
 
+
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href={<Home/>}>
-      Henry Proyecto Grupal 
-      </Link>{' '}
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href={<Home />}>
+        Henry Proyecto Grupal
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
-
-export const Register_comp = () =>{
+export const Register_comp = () => {
+  const { dispatch } = useContext(AuthContext);
   let navigate = useNavigate();
 
-  const handleSubmit =  async  (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const correo= e.target.email.value
     const contraseña= e.target.password.value
     console.log(correo,contraseña)
+    
     const usuario = await createUserWithEmailAndPassword(auth,correo,contraseña)
-    console.log(usuario)
+
+    const action = {
+      type: type.login,
+      payload: {
+        name: usuario.user.email
+      }
+    }
+    dispatch(action)
+    console.log(action)
     alert('EXITO, falta componente MATERIAL UI')
     
     navigate('/catalogo')
-    
-    // const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
+
 
   };
+
+  const handleSubmitGoogle =  async  (e) => {
+    signInWithPopup(auth, googleProvider)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      console.log(token, 'token....')
+      console.log(result , 'resultado...de google.')
+      // The signed-in user info.
+      const user = result.user;
+      const action = {
+        type: type.login,
+        payload: {
+          name: user.email
+        }
+      }
+      dispatch(action)
+      // ...
+      console.log(user, 'Usuario.')
+    }).then( navigate('/catalogo')
+    )
+    .catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+    });
+
+    // const result = await getRedirectResult(auth);
+    // console.log(result)
+    // if (result) {
+    //   // This is the signed-in user
+    //   const user = result.user;
+    //   // This gives you a Facebook Access Token.
+    //   const credential = provider.credentialFromResult(auth, result);
+    //   const token = credential.accessToken;
+    // }
+
+  
+    // console.log(action)
+    alert('EXITO, falta componente MATERIAL UI')
+   
+
+  };
+
+
+
+
+
+
+
+
+
 
   return (
       <Container component="main" maxWidth="xs" sx={{marginTop:"100px"}}>
@@ -122,17 +193,18 @@ export const Register_comp = () =>{
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="Quiero recibir ofertas y novedades via email."
                 />
-              </Grid>
+              </Grid> 
             </Grid>
             <Button
-              // type="submit"
+            onClick={handleSubmitGoogle} 
+              type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={() => console.log(signInWithRedirect(auth, googleProvider))}
             >
              Registrate con Google
             </Button>
+
             <Button
               type="submit"
               fullWidth
@@ -153,4 +225,4 @@ export const Register_comp = () =>{
         <Copyright sx={{ mt: 5 }} />
       </Container>
   );
-}
+};
