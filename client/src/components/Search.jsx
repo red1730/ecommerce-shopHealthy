@@ -47,7 +47,7 @@ export const SearchBar = ()=> {
       
     }
     const handleClickButton = () =>{
-      if(search.length > 3)dispatch(generalSearch(search))
+      if(search.length > 1)dispatch(generalSearch(search))
 
     }
 

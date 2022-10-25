@@ -26,7 +26,9 @@ function handleLogOut() {
     return (
             <Typography
                 onClick={HandleLogout}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{ my: 0, color: '#64B98B', 
+                      fontFamily: 'roboto', textDecoration:'none', 
+                      "&:hover":{color:'tomato', fontWeight:600} }}
                 component={RouterLink}
             >
                 Cerrar Sesión

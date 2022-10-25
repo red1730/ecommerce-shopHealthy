@@ -7,14 +7,16 @@ import { useOrder } from '../Hooks/useOrder';
 import { Stack } from '@mui/system';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { orderAsc, orderDesc } from '../actions/order';
 
 
 export const OrderSelect = ({setPage})=> {
 
-const { keyToOrder, order, setOrder, onChangeFilterType, onChangeOrderKey,} = useOrder(setPage);
+const { onChangeFilterType, onChangeOrderKey,} = useOrder(setPage);
 const dispatch = useDispatch();
+const {order, orderKey} = useSelector(s => s.catalogReducer);
+
 const keys = ['nombre', 'precio'];
 
   return (
@@ -25,9 +27,9 @@ const keys = ['nombre', 'precio'];
                 <Select
                 labelId="demo-simple-select-standard-label"
                 id="demo-simple-select-standard"
-                value={keyToOrder}
+                value={orderKey}
                 onChange={onChangeOrderKey}
-                label={keyToOrder}
+                label={orderKey}
                 >
 
                 { keys.map( el => <MenuItem key={el} value={el}  sx={{backgroundColor:'transparent'}} >{ capitalize(el) }</MenuItem> ) }
@@ -41,10 +43,10 @@ const keys = ['nombre', 'precio'];
             variant="contained"
             sx={{padding:0,height:35,mt:3, boxShadow:'none'}}
             >
-                <IconButton  sx={{ width:"20px", height:"10px", margin:0, color:order?'#64B98B':'black'}} onClick={ ()=> {setOrder(true); dispatch(orderAsc(keyToOrder))}}>
+                <IconButton  sx={{ width:"20px", height:"10px", margin:0, color:order?'#64B98B':'black'}} onClick={ ()=> {dispatch({type:'SET_ORDER', payload:true}) ;dispatch(orderAsc(orderKey))}}>
                     <KeyboardArrowUpIcon />
                 </IconButton>
-                <IconButton  sx={{ width:"20px", height:"10px", margin:0,color:!order?'#64B98B':'black'}} onClick={ ()=> {setOrder(false);dispatch(orderDesc(keyToOrder))}}>
+                <IconButton  sx={{ width:"20px", height:"10px", margin:0,color:!order?'#64B98B':'black'}} onClick={ ()=> {dispatch({type:'SET_ORDER', payload:false}) ;dispatch(orderDesc(orderKey))}}>
                     <KeyboardArrowDownIcon />
                 </IconButton>
             </ButtonGroup>

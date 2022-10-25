@@ -5,6 +5,8 @@ const initialState = {
     nestedFilter: [],
     allProducts: [],
     isLoading: null,
+    order: true,
+    orderKey: 'nombre',
     error: null,
     categ: null,
     categName: ['TENTACION SALUDABLE','ALACENA SALUDABLE','ESTILO DE VIDA','BEBIDAS'],
@@ -85,13 +87,13 @@ export const catalogReducer = (state= initialState, action)=>{
             return {
                 ...state,
                 products: action.payload.orderedProducts,
-                allProducts: action.payload.orderedAllProducts
+                allProducts: action.payload.orderedAllProducts,
             }
         case 'ORDER_DESC':
             return {
                 ...state,
                 products: action.payload.orderedProducts,
-                allProducts: action.payload.orderedAllProducts
+                allProducts: action.payload.orderedAllProducts,
             }
         case 'SEARCH':
             return{
@@ -99,6 +101,16 @@ export const catalogReducer = (state= initialState, action)=>{
                 products: action.payload.data,
                 categ: action.payload.search,
                 setBanner:false
+            }
+        case 'SET_ORDER':
+            return{
+                ...state,   
+                order: action.payload
+            }
+        case 'SET_ORDER_KEY':
+            return{
+                ...state,   
+                orderKey: action.payload
             }
         
         default:
