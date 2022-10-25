@@ -41,7 +41,9 @@ export const ProductCard = ({imgCard, prodName, prodPrice,id})=> {
         <Typography variant="body1" color="text.primary" textAlign='center' sx={{fontWeight:600, margin: "20px 0"}} >
           {prodPrice+'$'}
         </Typography>
-        <Contador sx={{marginTop:4}}  />
+        <Box sx={{display:'flex', justifyContent:'center', alingItems:'center'}}>
+          <Contador sx={{marginTop:4}}  />
+        </Box>
       </CardContent>
       
     </Card>

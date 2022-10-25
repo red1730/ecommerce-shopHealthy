@@ -1,7 +1,7 @@
 import { ListImages } from '../components/ListImages'
 import { Box, CardMedia, Container, Grid } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
-import {usePagination} from "../hooks/usePagination";
+import {usePagination} from "../Hooks/usePagination";
 import Banner from '../assets/banner.png'
 import { useState, useEffect } from 'react';
 import {useDispatch, useSelector,} from 'react-redux'

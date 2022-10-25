@@ -9,6 +9,7 @@ import { Contador } from './Contador';
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,22 +41,20 @@ export const ProductDetail_comp = () => {
   
   // if(!isLoading) return <Skeleton/>
   
-  const { nombre, precio, img } = product;
+  const { nombre, precio, img, stock } = product;
   
 
   return (
-    <Box sx={{alignItems:'center', justifyContent:'center', display: 'flex', minWidth:'100vh'}}>
+    <Box sx={{alignItems:'center', justifyContent:'center', display: 'flex', }}>
     
     <Grid container 
-          spacing={0} 
-          sx={{ alignItems:'center', justifyContent:'center', mt:15, width:'60%' }} >
-      <Grid item xs={6} sx={{margin:"0 auto"}} >
-        <CardMedia  component="img" sx={{width:'auto', maxHeight:"450px"}} src={`https://dkndrd.com/pf-healthyShop/${img}`?NotFound:true} alt={nombre}/>
-
- 
+          spacing={2} 
+          sx={{ alignItems:'center', justifyContent:'space-between', mt:15, width:'65%',  }} >
+      <Grid item xs={12} md={7} sx={{alignItems:'center', justifyContent:'center',}} >
+        <CardMedia  component="img" sx={{width:'auto', maxHeight:{xs:"300px", md:'400px', xl:"450px", margin:'0 auto'}}} src={!`https://dkndrd.com/pf-healthyShop/${img}`?NotFound:`https://dkndrd.com/pf-healthyShop/${img}`} alt={nombre}/>
       </Grid>
-      <Grid item xs={6} sx={{margin:"0 auto"}}>
-        <Typography sx={{fontSize:30}}
+      <Grid item xs={12} md={5} sx={{justifyContent:'center', alignItems:'center', }}>
+        <Typography sx={{fontSize:30, textAlign:'center'}}
           variant="body2"
           color="text.primary"
           textTransform="uppercase"            
@@ -64,7 +63,7 @@ export const ProductDetail_comp = () => {
           {nombre}
           
         </Typography>
-        <Divider/>
+        <Divider sx={{border:'1px solid black', my:2}} />
         <Typography
           variant="body1"
           color="text.primary"
@@ -77,18 +76,20 @@ export const ProductDetail_comp = () => {
         <RatingProduct sx={{alignItems: "center"}}/>
         <Divider/>
         <Typography>
-          <CreditCardIcon color="secondary" sx={{ fontSize: 24 }} /> Aceptamos
-          tarjetas todas las tarjetas.
+          <CreditCardIcon color="secondary" sx={{ fontSize: 24, ml:{md:2, xs:0} }} /> Aceptamos tarjetas todas las tarjetas.
         </Typography>
         <Typography>
-          <AddShoppingCartIcon color="secondary" sx={{ fontSize: 24 }} />
-          Aceptamos pagos en efectivo.
+          <AddShoppingCartIcon color="secondary" sx={{ fontSize: 24, ml:{md:2, xs:0} }} /> Aceptamos pagos en efectivo.
         </Typography>
         <Typography>
-          <DeliveryDiningIcon color="secondary" sx={{ fontSize: 24 }} /> Lo
-          llevamos a la puerta de tu casa.
+          <DeliveryDiningIcon color="secondary" sx={{ fontSize: 24, ml:{md:2, xs:0} }} /> Lo llevamos a la puerta de tu casa.
         </Typography>
-        <Contador  sx={{marginTop:4}}  />
+        <Typography>
+          <Inventory2OutlinedIcon color="secondary" sx={{ fontSize: 24, ml:{md:2, xs:0} }} /> {`En stock: ${stock} udds`}
+        </Typography>
+        <Box sx={{ my:3, justifyContent:'center', alignItems:'certer', display:'flex' }}>
+          <Contador  sx={{marginTop:4}}  />
+        </Box>
       </Grid>
   
     </Grid>
