@@ -13,7 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { useState, useContext } from 'react';
 import logo from '../assets/logo.png';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import firebaseApp from '../credenciales'
+import firebaseApp from '../credenciales';
 const auth= getAuth(firebaseApp)
 console.dir(auth)
 
@@ -230,10 +230,13 @@ const handleCloseUserMenu = () => {
             HEALTHY FOOD
           </Typography>
 
-          <Box alignItems="center" justifyContent="center"spacing={0} sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent:'space-around', p:0 }}>
+          <Box 
+            alignItems="center" 
+            spacing={0} 
+            sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent:'space-around', p:0, }}>
               <Button
                 onClick={()=> {dispatch({type:'RESET_CATALOG'})}}
-                sx={{  color: 'white',  }}
+                sx={{  color: 'white', '&:hover':{color:'#485446'}  }}
                 component={RouterLink}
                 to='catalogo'
               >
@@ -250,7 +253,7 @@ const handleCloseUserMenu = () => {
 
               <Button
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white',   }}
+                sx={{  my:2, color: 'white', '&:hover':{color:'#485446'}  }}
                 component={RouterLink}
                 to='contacto'
               >

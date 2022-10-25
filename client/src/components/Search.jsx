@@ -46,7 +46,8 @@ export const SearchBar = ()=> {
       navigate(`/catalogo/${id}`)
       
     }
-    const handleClickButton = () =>{
+    const handleClickButton = (e) =>{
+      e.preventDefault();
       if(search.length > 1)dispatch(generalSearch(search))
 
     }
@@ -65,6 +66,7 @@ export const SearchBar = ()=> {
                 options={allProducts.map( el => `${el.nombre} de -> ${el.marcaId.nombre} #${el.id}`.toLocaleUpperCase())}
                 onInputChange={hadleInputChange}
                 onChange={handleChangeAutoComplete}
+                onSubmit={handleClickButton}
                 renderInput={(params) => (
                   <TextField
                     sx={{ border: 'transparent', }}
