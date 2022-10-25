@@ -7,3 +7,4 @@ export * from './ProductDetail';
 export * from './Shopping';
 export * from './User';
 export * from './LandingPage';
+export * from './CrearProducto';

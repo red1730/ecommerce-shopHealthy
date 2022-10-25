@@ -10,7 +10,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import logo from '../assets/logo.png';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import firebaseApp from '../credenciales'
@@ -22,7 +22,6 @@ import { FilterAcordion} from './FilterAcordion';
 import { useDispatch, useSelector } from 'react-redux';
 
 import HandleLogout from '../helpers/HandleLogOut'
-import { useContext } from "react";
 import { AuthContext } from "../auth/AuthContext";
 import { type } from '../../types/index'
 import {getAuth, signOut} from 'firebase/auth'
@@ -67,6 +66,9 @@ const admin =[
 
 
 export const NavBar = () => {
+  const { estadoGlobal, manejarUsuario } = useContext(AuthContext)
+
+  console.dir(estadoGlobal)
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const location = useLocation();

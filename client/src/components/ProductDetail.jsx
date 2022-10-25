@@ -51,6 +51,8 @@ export const ProductDetail_comp = () => {
           sx={{ alignItems:'center', justifyContent:'center', mt:15, width:'60%' }} >
       <Grid item xs={6} sx={{margin:"0 auto"}} >
         <CardMedia  component="img" sx={{width:'auto', maxHeight:"450px"}} src={`https://dkndrd.com/pf-healthyShop/${img}`?NotFound:true} alt={nombre}/>
+
+ 
       </Grid>
       <Grid item xs={6} sx={{margin:"0 auto"}}>
         <Typography sx={{fontSize:30}}
