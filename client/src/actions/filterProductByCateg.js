@@ -20,7 +20,14 @@ export const addNestedFilter = categName => (dispatch, getState) =>{
 export const removeNestedFilter = categName => (dispatch, getState) =>{
     // if(categName === null) return;
     const { nestedFilter, filteredProducts, allProducts } = getState().catalogReducer;
-    let filtered = nestedFilter.filter( el => el.categoria.filter( categ => categ.nombre.toLowerCase() !== categName.toLowerCase() ) &&el );
+    let filtered = nestedFilter.filter( el => {
+                                                let isValid = true;
+                                                el.categoria.map( categ => {
+                                                    if (categ.nombre.toLowerCase() !== categName.toLowerCase()) isValid = false;
+                                                } );
+                                                if ( isValid ) return el;
+
+    });
     let map ={}
     let maped = filtered.filter(el => map[el.id] ? false : map[el.id] = true);
     console.log(maped)
