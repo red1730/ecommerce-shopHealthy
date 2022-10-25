@@ -9,7 +9,8 @@ import Checkbox from '@mui/material/Checkbox';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Stack } from "@mui/system";
 import Typography from '@mui/material/Typography';
-import { filterByCateg } from "../actions/filterProductByCateg";
+import { addNestedFilter, filterByCateg, removeNestedFilter } from "../actions/filterProductByCateg";
+import {capitalize} from '../helpers/capitalize'
 
 
 
@@ -29,15 +30,17 @@ export const Filters = ({categTitle, handleCloseNavMenu}) => {
     let nestedFilter = ['estilo de vida'];
 
     const [subCategoria, setSubCategoria] = useState([]); 
-    const [checked, setChecked] = useState(true);  
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-      };
+    const [isChecked, setIsChecked] = useState({
+      'sin tacc': false,
+      'sin azucar': false,
+      'vegano': false,
+      'organico/agroecologico': false
+    });  
+
       const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
       };
-    
-    
+
       const handleCloseUserMenu = () => {
         setAnchorElUser(null);
       };
@@ -62,12 +65,24 @@ export const Filters = ({categTitle, handleCloseNavMenu}) => {
         dispatch(filterByCateg(event.target.innerText));
         navigate(`/catalogo`);
       };
+      const handleChangeMultiple = e => {
 
+        if(e.target.checked) dispatch(addNestedFilter(e.target.name))
+        else if (!e.target.checked) dispatch(removeNestedFilter(e.target.name))
+
+        setIsChecked({
+          ...isChecked,
+          [e.target.name]: e.target.checked
+        });
+        
+      }
+
+      
   return (
     <>
-            <MenuItem  onClick={handleOpenUserMenu} sx={{ fontSize:"0.873rem", color:'white',cursor:'pointer',display:'block' }}>
-            {categTitle}
-            </MenuItem>
+        <MenuItem  onClick={handleOpenUserMenu} sx={{ fontSize:"0.873rem", color:'white',cursor:'pointer',display:'block' }}>
+        {categTitle}
+        </MenuItem>
         <Menu
               sx={{ mt: '45px', }}
               id="menu-appbar"
@@ -90,7 +105,7 @@ export const Filters = ({categTitle, handleCloseNavMenu}) => {
                     {
                         subCategoria.map( (el, i) =>(
                             <Button 
-                                value={el.nombre}
+                                value={el.nombre.capitalize}
                                 onClick={handleChange}
                                 key={i}
                                 sx={{textDecoration:'none', color:'inherit', my:-0.3, justifyContent:'left'}}
@@ -104,7 +119,19 @@ export const Filters = ({categTitle, handleCloseNavMenu}) => {
                     {
                         subCategoria.map( el =>(
                         <FormGroup key={el.id}>
-                            <FormControlLabel sx={{p:1,my:-1, py:0.3}} control={<Checkbox checked={checked} onChange={handleChange} sx={{fontSize:"0.2rem"}} />} label={el.nombre} />
+                            <FormControlLabel 
+                              sx={{p:1,my:-1, py:0.3, mr:1, ml:0}} 
+                              label={capitalize(el.nombre)} 
+                              control={ 
+                                  <Checkbox 
+                                      checked={isChecked[el.nombre]} 
+                                      onChange={handleChangeMultiple} 
+                                      sx={{fontSize:"0.2rem"}} 
+                                      name={el.nombre}
+                                  />
+                                      
+                              } 
+                            />
                         </FormGroup>))
                     }
                 </Stack>

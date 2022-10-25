@@ -17,7 +17,7 @@ import firebaseApp from '../credenciales'
 const auth= getAuth(firebaseApp)
 console.dir(auth)
 
-import { Link as RouterLink, Navigate, useNavigate} from 'react-router-dom';
+import { Link as RouterLink, Navigate, useLocation, useNavigate, useParams} from 'react-router-dom';
 import { FilterAcordion} from './FilterAcordion';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -71,6 +71,7 @@ export const NavBar = () => {
   console.dir(estadoGlobal)
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const location = useLocation();
 
   const [logeado, setLogeado] = useState(false)
   const {user} = useContext(AuthContext)
@@ -113,7 +114,7 @@ const handleCloseUserMenu = () => {
 
   return (
     <div >
-    <SearchBar sx={{zIndex:0}} />
+    {location.pathname =='/catalogo' && <SearchBar sx={{zIndex:0}} />}
     <AppBar sx={{ position:'-webkit-sticky',top:0 }} >
       <Container maxWidth="xl">
 
@@ -177,7 +178,7 @@ const handleCloseUserMenu = () => {
                     component={RouterLink}
                     sx={{textDecoration:'none', color:'inherit'}}
                     to='catalogo'
-                    onClick={()=> dispatch({type:'RESET_CATALOG'})}
+                    onClick={()=> { dispatch({type:'RESET_CATALOG'})}}
                     replace={true}
                     >Catálogo</Typography>
                 </MenuItem>
@@ -225,7 +226,7 @@ const handleCloseUserMenu = () => {
 
           <Box alignItems="center" justifyContent="center"spacing={0} sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent:'space-around', p:0 }}>
               <Button
-                onClick={(e)=> {e.preventDefault; dispatch({type:'RESET_CATALOG'})}}
+                onClick={()=> {dispatch({type:'RESET_CATALOG'})}}
                 sx={{  color: 'white',  }}
                 component={RouterLink}
                 to='catalogo'

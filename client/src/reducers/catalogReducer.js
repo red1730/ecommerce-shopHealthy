@@ -93,7 +93,14 @@ export const catalogReducer = (state= initialState, action)=>{
                 products: action.payload.orderedProducts,
                 allProducts: action.payload.orderedAllProducts
             }
-            
+        case 'SEARCH':
+            return{
+                ...state,
+                products: action.payload.data,
+                categ: action.payload.search,
+                setBanner:false
+            }
+        
         default:
             return state;
     }

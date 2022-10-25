@@ -7,6 +7,11 @@ import Toolbar from '@mui/material/Toolbar';
 import InputBase from '@mui/material/InputBase';
 
 import SearchIcon from '@mui/icons-material/Search';
+import { Autocomplete, capitalize, IconButton, TextField } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { generalSearch } from '../actions/search';
+import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -25,52 +30,58 @@ const Search = styled('div')(({ theme }) => ({
   },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(5)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
 
 export const SearchBar = ()=> {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+    const {allProducts} = useSelector(state => state.catalogReducer);
+    const [search, setSearch] = useState('');
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
+    const hadleInputChange = e =>{
+      e.target.value && setSearch(e.target.value)
+    }
+    const handleChangeAutoComplete = e =>{
+      const id = e.target.innerHTML.match(/(#[\d]+)/g).join().slice(1);
+      navigate(`/catalogo/${id}`)
+      
+    }
+    const handleClickButton = () =>{
+      if(search.length > 3)dispatch(generalSearch(search))
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-  
+    }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="relative" sx={{top:{xs:55, md:68} }}>
-        <Toolbar sx={{margin:'0 auto'}} >
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Buscar..."
-              inputProps={{ 'aria-label': 'search' }}
-            />
+      <AppBar position="relative" sx={{top:{xs:55, md:68}, height:75, alignItems:'center', justifyContent:'center' }}>
+        <Toolbar  >
+          <Search >
+             <Autocomplete
+                freeSolo
+                id="searchBar-ecomerce"
+                disableClearable
+                sx={{paddingLeft:0, }}
+                value={search}
+                options={allProducts.map( el => `${el.nombre} de -> ${el.marcaId.nombre} #${el.id}`.toLocaleUpperCase())}
+                onInputChange={hadleInputChange}
+                onChange={handleChangeAutoComplete}
+                renderInput={(params) => (
+                  <TextField
+                    sx={{ border: 'transparent', }}
+                    {...params}
+                    
+                    InputProps={{
+                      ...params.InputProps,
+                      type: 'search',
+                    }}
+                    
+                  />
+                )}
+              />
           </Search>
+          <IconButton onClick={handleClickButton}>
+            <SearchIcon />
+          </IconButton>
 
         </Toolbar>
       </AppBar>
