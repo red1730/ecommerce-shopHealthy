@@ -12,6 +12,7 @@ import {
   Register,
   Shopping,
   User,
+  CrearProducto,
 } from "../pages/index";
 
 export const RouterApp = () => {
@@ -28,6 +29,7 @@ export const RouterApp = () => {
         <Route path="/contacto" element={<Contact />} />
         <Route path="/user" element={<User />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/producto" element={<CrearProducto />} />
       </Routes>
     </>
   );

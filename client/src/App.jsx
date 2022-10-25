@@ -17,13 +17,9 @@ export const App = () => {
 
 // const [logeado, setLogeado] = useState(false)
   const [user, dispatch] = useReducer( authReducer, {}, init)
-
   useEffect(() =>{
     if (!user) return;
-
     localStorage.setItem('user',JSON.stringify(user))
-    
-
   },[ user ])
 
 // function updateState(value){
@@ -39,7 +35,6 @@ export const App = () => {
     }}>
 
       <RouterApp />
-
     </AuthContext.Provider>
   );
 };
