@@ -17,7 +17,7 @@ import firebaseApp from '../credenciales'
 const auth= getAuth(firebaseApp)
 console.dir(auth)
 
-import { Link as RouterLink, Navigate, useNavigate} from 'react-router-dom';
+import { Link as RouterLink, Navigate, useLocation, useNavigate, useParams} from 'react-router-dom';
 import { FilterAcordion} from './FilterAcordion';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -69,6 +69,8 @@ const admin =[
 export const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const location = useLocation();
+  console.log(location)
 
   const [logeado, setLogeado] = useState(false)
   const {user} = useContext(AuthContext)
@@ -111,7 +113,7 @@ const handleCloseUserMenu = () => {
 
   return (
     <div >
-    <SearchBar sx={{zIndex:0}} />
+    {location.pathname =='/catalogo' && <SearchBar sx={{zIndex:0}} />}
     <AppBar sx={{ position:'-webkit-sticky',top:0 }} >
       <Container maxWidth="xl">
 

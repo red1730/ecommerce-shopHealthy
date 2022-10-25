@@ -31,7 +31,7 @@ export const Filters = ({categTitle, handleCloseNavMenu}) => {
 
     const [subCategoria, setSubCategoria] = useState([]); 
     const [checked, setChecked] = useState({
-      
+
     });  
 
       const handleOpenUserMenu = (event) => {
@@ -114,7 +114,7 @@ export const Filters = ({categTitle, handleCloseNavMenu}) => {
                               label={capitalize(el.nombre)} 
                               control={ 
                                   <Checkbox 
-                                      checked={checked} 
+                                      checked={true} 
                                       onChange={handleChangeMultiple} 
                                       sx={{fontSize:"0.2rem"}} 
                                       name={el.nombre}
