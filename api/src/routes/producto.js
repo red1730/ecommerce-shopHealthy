@@ -33,7 +33,7 @@ router.get("/marca", async (req, res) => {
 
 
 router.get("/", async (req, res) => {
-  /*
+
   const {nombre,marca } = req.query
   let todosLosProductos = await Producto.findAll()
   if (nombre) {
@@ -49,8 +49,7 @@ router.get("/", async (req, res) => {
       }, 
     }).then(prods => res.json(prods))
   }
-*/
-  res.json(getProductos())
+
 })
 
 /* 

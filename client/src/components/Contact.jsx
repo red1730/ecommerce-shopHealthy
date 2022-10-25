@@ -9,8 +9,15 @@ import MarkunreadMailboxIcon from "@mui/icons-material/MarkunreadMailbox";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
+import { postContactoMensaje } from '../actions/contactoMail'
+import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 export const Contact_comp = () => {
+  let navigate = useNavigate();
+  const dispatch = useDispatch()
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -18,6 +25,26 @@ export const Contact_comp = () => {
       email: data.get("email"),
       comment: data.get("comment"),
     });
+
+    const info = {
+      email: data.get("email"),
+      mensaje: data.get("comment"),
+    }
+
+    dispatch(postContactoMensaje(info))
+    
+      Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Tu mensaje ha sido enviado con Exito!',
+      showConfirmButton: false,
+      timer: 2500
+    })
+
+      setTimeout(function(){
+        navigate('/catalogo') 
+      }, 3000);
+
   };
 
   return (
@@ -77,7 +104,7 @@ export const Contact_comp = () => {
                 />
               </Grid>
             </Grid>
-            <Button
+            <Button 
               type="submit"
               fullWidth
               variant="contained"
@@ -85,6 +112,7 @@ export const Contact_comp = () => {
             >
               Enviar
             </Button>
+
             <Grid container justifyContent="flex-end">
               <Grid item></Grid>
             </Grid>
