@@ -18,8 +18,10 @@ import { useNavigate } from "react-router-dom";
 
 import { useContext } from "react";
 import { AuthContext } from "../auth/AuthContext";
-import {getAuth, createUserWithEmailAndPassword, signInWithRedirect,GoogleAuthProvider,signInWithPopup } from 'firebase/auth'
+import {getAuth, createUserWithEmailAndPassword, signInWithRedirect,GoogleAuthProvider,signInWithPopup,signInWithEmailAndPassword } from 'firebase/auth'
 import { type } from "../../types";
+import Swal from 'sweetalert2'
+
 const auth= getAuth(firebaseApp)
 const googleProvider = new GoogleAuthProvider();
 
@@ -67,8 +69,17 @@ export const Login_comp =  () => {
     // let valor = true;
     // updateState(valor)
     // console.log(logeado, 'estado en el Login')
-    
-    navigate('/producto')
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Bienvenido 🥰!',
+      showConfirmButton: false,
+      timer: 1500
+    })
+
+      setTimeout(function(){
+        navigate('/catalogo') 
+      }, 2000);
     
     // const data = new FormData(event.currentTarget);
     // console.log({
@@ -96,8 +107,7 @@ export const Login_comp =  () => {
       dispatch(action)
       // ...
       console.log(user, 'Usuario.')
-    }).then( navigate('/catalogo')
-    )
+    })
     .catch((error) => {
       // Handle Errors here.
       const errorCode = error.code;
@@ -121,8 +131,19 @@ export const Login_comp =  () => {
 
   
     // console.log(action)
-    alert('EXITO, falta componente MATERIAL UI')
-   
+    setTimeout(function(){
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Bienvenido 🥰!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }, 3000);
+
+      setTimeout(function(){
+        navigate('/catalogo') 
+      }, 4500);
 
   };
 
