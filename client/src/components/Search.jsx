@@ -53,7 +53,7 @@ export const SearchBar = ()=> {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="relative" sx={{top:{xs:55, md:68}, height:75, alignItems:'center', justifyContent:'center', color:'secondary' }}>
+      <AppBar position="relative" sx={{top:{xs:55, md:68}, height:75, alignItems:'center', justifyContent:'center' }}>
         <Toolbar  >
           <Search >
              <Autocomplete
