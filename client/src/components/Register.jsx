@@ -19,10 +19,11 @@ import { useContext } from "react";
 import { AuthContext } from "../auth/AuthContext";
 import { type } from "../../types";
 import firebaseApp from '../credenciales'
+
 import {getAuth, createUserWithEmailAndPassword, signInWithRedirect,GoogleAuthProvider,signInWithPopup } from 'firebase/auth'
 const auth= getAuth(firebaseApp)
 const googleProvider = new GoogleAuthProvider();
-
+import Swal from 'sweetalert2'
 
 function Copyright(props) {
   return (
@@ -62,9 +63,18 @@ export const Register_comp = () => {
     }
     dispatch(action)
     console.log(action)
-    alert('EXITO, falta componente MATERIAL UI')
-    
-    navigate('/catalogo')
+   
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Registrado con Exito! ya falta menos 😋!',
+      showConfirmButton: false,
+      timer: 1500
+    })
+
+      setTimeout(function(){
+        navigate('/catalogo') 
+      }, 2000);
 
 
   };
@@ -88,8 +98,7 @@ export const Register_comp = () => {
       dispatch(action)
       // ...
       console.log(user, 'Usuario.')
-    }).then( navigate('/catalogo')
-    )
+    })
     .catch((error) => {
       // Handle Errors here.
       const errorCode = error.code;
@@ -113,8 +122,19 @@ export const Register_comp = () => {
 
   
     // console.log(action)
-    alert('EXITO, falta componente MATERIAL UI')
-   
+    setTimeout(function(){
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Bienvenido 🥰!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }, 3000);
+
+      setTimeout(function(){
+        navigate('/catalogo') 
+      }, 4500);
 
   };
 
@@ -195,15 +215,6 @@ export const Register_comp = () => {
                 />
               </Grid> 
             </Grid>
-            <Button
-            onClick={handleSubmitGoogle} 
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-             Registrate con Google
-            </Button>
 
             <Button
               type="submit"
@@ -213,6 +224,17 @@ export const Register_comp = () => {
             >
               Registrarse
             </Button>
+
+            <Button
+            onClick={handleSubmitGoogle} 
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+            Registrate con Google
+            </Button>
+
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link component={RouterLink} to = '/login' variant="body2">
