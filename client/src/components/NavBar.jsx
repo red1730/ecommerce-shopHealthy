@@ -22,7 +22,6 @@ import { FilterAcordion} from './FilterAcordion';
 import { useDispatch, useSelector } from 'react-redux';
 
 import HandleLogout from '../helpers/HandleLogOut'
-import { useContext } from "react";
 import { AuthContext } from "../auth/AuthContext";
 import { type } from '../../types/index'
 import {getAuth, signOut} from 'firebase/auth'
