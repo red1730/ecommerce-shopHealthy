@@ -11,6 +11,7 @@ import { Stack } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import { addNestedFilter, filterByCateg, removeNestedFilter } from "../actions/filterProductByCateg";
 import {capitalize} from '../helpers/capitalize'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 
 
@@ -83,7 +84,7 @@ export const Filters = ({categTitle, handleCloseNavMenu}) => {
   return (
     <>
         <MenuItem  onClick={handleOpenUserMenu} sx={{ fontSize:"0.873rem", color:'white',cursor:'pointer',display:'block' }}>
-        {categTitle}
+        {categTitle}<ArrowDropDownIcon/>
         </MenuItem>
         <Menu
               sx={{ mt: '45px', }}
@@ -111,7 +112,9 @@ export const Filters = ({categTitle, handleCloseNavMenu}) => {
                                 onClick={handleChange}
                                 key={i}
                                 sx={{textDecoration:'none', color:'inherit', my:-0.3, justifyContent:'left'}}
-                            > <Typography sx={{fontSize:'0.875rem', textAlign:'left', }} >{el.nombre.toUpperCase()}</Typography> 
+                            > 
+                            <Typography sx={{fontSize:'0.875rem', textAlign:'left', }} >{el.nombre.toUpperCase()}</Typography> 
+                                
                             </Button>
                         ))
                     }
