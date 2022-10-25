@@ -30,42 +30,15 @@ const Search = styled('div')(({ theme }) => ({
   },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(5)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
 
 export const SearchBar = ()=> {
-    const [anchorEl, setAnchorEl] = useState(null);
     const {allProducts} = useSelector(state => state.catalogReducer);
     const [search, setSearch] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleMobileMenuClose = () => {
-      setMobileMoreAnchorEl(null);
-    };
     const hadleInputChange = e =>{
-      console.log(e.target.value)
       e.target.value && setSearch(e.target.value)
     }
     const handleChangeAutoComplete = e =>{
@@ -74,22 +47,15 @@ export const SearchBar = ()=> {
       
     }
     const handleClickButton = () =>{
-      console.log(search)
-      dispatch(generalSearch(search))
+      if(search.length > 3)dispatch(generalSearch(search))
+
     }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="relative" sx={{top:{xs:55, md:68}, height:75, alignItems:'center', justifyContent:'center' }}>
+      <AppBar position="relative" sx={{top:{xs:55, md:68}, height:75, alignItems:'center', justifyContent:'center', color:'secondary' }}>
         <Toolbar  >
           <Search >
-            {/* <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper> */}
-            {/* <StyledInputBase
-              placeholder="Buscar..."
-              inputProps={{ 'aria-label': 'search' }}
-            /> */}
              <Autocomplete
                 freeSolo
                 id="searchBar-ecomerce"
@@ -108,7 +74,7 @@ export const SearchBar = ()=> {
                       ...params.InputProps,
                       type: 'search',
                     }}
-                    onClick={e=>console.log(e)}
+                    
                   />
                 )}
               />

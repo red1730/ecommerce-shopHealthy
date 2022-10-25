@@ -1,5 +1,6 @@
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import NotFound from '../assets/notFount.jpg'
 
 import { Box, Button, Divider, Grid, Skeleton } from "@mui/material";
 import { RatingProduct } from "./RatingProduct";
@@ -43,46 +44,52 @@ export const ProductDetail_comp = () => {
   
 
   return (
-    <Grid container >
-      <Grid sx={{ margin: "150px auto", display: "flex" }}>
-        <CardMedia  component="img" sx={{height:"500px"}} image={`https://dkndrd.com/pf-healthyShop/${img}`} alt={nombre}/>
-        <Grid sx={{ margin: "150px auto", display: "column" }}>
-          <Typography sx={{fontSize:30}}
-            variant="body2"
-            color="text.primary"
-            textTransform="uppercase"            
-            fontWeight="bold"       
-          >
-            {nombre}
-            
-          </Typography>
-          <Divider/>
-          <Typography
-            variant="body1"
-            color="text.primary"
-            textAlign="center"
-            sx={{ fontWeight: 600, marginTop: 1, fontSize:25 }}
-          >
-            {precio + " $"}
-          </Typography>
-          <Divider/>
-          <RatingProduct sx={{alignItems: "center"}}/>
-          <Divider/>
-          <Typography>
-            <CreditCardIcon color="secondary" sx={{ fontSize: 24 }} /> Aceptamos
-            tarjetas todas las tarjetas.
-          </Typography>
-          <Typography>
-            <AddShoppingCartIcon color="secondary" sx={{ fontSize: 24 }} />
-            Aceptamos pagos en efectivo.
-          </Typography>
-          <Typography>
-            <DeliveryDiningIcon color="secondary" sx={{ fontSize: 24 }} /> Lo
-            llevamos a la puerta de tu casa.
-          </Typography>
-          <Contador  sx={{marginTop:4}}  />
-        </Grid>
+    <Box sx={{alignItems:'center', justifyContent:'center', display: 'flex', minWidth:'100vh'}}>
+    
+    <Grid container 
+          spacing={0} 
+          sx={{ alignItems:'center', justifyContent:'center', mt:15, width:'60%' }} >
+      <Grid item xs={6} sx={{margin:"0 auto"}} >
+        <CardMedia  component="img" sx={{width:'auto', maxHeight:"450px"}} src={`https://dkndrd.com/pf-healthyShop/${img}`?NotFound:true} alt={nombre}/>
       </Grid>
+      <Grid item xs={6} sx={{margin:"0 auto"}}>
+        <Typography sx={{fontSize:30}}
+          variant="body2"
+          color="text.primary"
+          textTransform="uppercase"            
+          fontWeight="bold"       
+        >
+          {nombre}
+          
+        </Typography>
+        <Divider/>
+        <Typography
+          variant="body1"
+          color="text.primary"
+          textAlign="center"
+          sx={{ fontWeight: 600, marginTop: 1, fontSize:25 }}
+        >
+          {precio + " $"}
+        </Typography>
+        <Divider/>
+        <RatingProduct sx={{alignItems: "center"}}/>
+        <Divider/>
+        <Typography>
+          <CreditCardIcon color="secondary" sx={{ fontSize: 24 }} /> Aceptamos
+          tarjetas todas las tarjetas.
+        </Typography>
+        <Typography>
+          <AddShoppingCartIcon color="secondary" sx={{ fontSize: 24 }} />
+          Aceptamos pagos en efectivo.
+        </Typography>
+        <Typography>
+          <DeliveryDiningIcon color="secondary" sx={{ fontSize: 24 }} /> Lo
+          llevamos a la puerta de tu casa.
+        </Typography>
+        <Contador  sx={{marginTop:4}}  />
+      </Grid>
+  
     </Grid>
+    </Box>
   );
 };

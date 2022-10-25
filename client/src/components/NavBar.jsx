@@ -70,7 +70,6 @@ export const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const location = useLocation();
-  console.log(location)
 
   const [logeado, setLogeado] = useState(false)
   const {user} = useContext(AuthContext)

@@ -9,7 +9,7 @@ import Checkbox from '@mui/material/Checkbox';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Stack } from "@mui/system";
 import Typography from '@mui/material/Typography';
-import { filterByCateg } from "../actions/filterProductByCateg";
+import { addNestedFilter, filterByCateg, removeNestedFilter } from "../actions/filterProductByCateg";
 import {capitalize} from '../helpers/capitalize'
 
 
@@ -30,8 +30,11 @@ export const Filters = ({categTitle, handleCloseNavMenu}) => {
     let nestedFilter = ['estilo de vida'];
 
     const [subCategoria, setSubCategoria] = useState([]); 
-    const [checked, setChecked] = useState({
-
+    const [isChecked, setIsChecked] = useState({
+      'sin tacc': false,
+      'sin azucar': false,
+      'vegano': false,
+      'organico/agroecologico': false
     });  
 
       const handleOpenUserMenu = (event) => {
@@ -63,16 +66,23 @@ export const Filters = ({categTitle, handleCloseNavMenu}) => {
         navigate(`/catalogo`);
       };
       const handleChangeMultiple = e => {
-        console.log(e.target.checked);
-        console.log(e.target.name);
 
+        if(e.target.checked) dispatch(addNestedFilter(e.target.name))
+        else if (!e.target.checked) dispatch(removeNestedFilter(e.target.name))
+
+        setIsChecked({
+          ...isChecked,
+          [e.target.name]: e.target.checked
+        });
+        
       }
 
+      
   return (
     <>
-            <MenuItem  onClick={handleOpenUserMenu} sx={{ fontSize:"0.873rem", color:'white',cursor:'pointer',display:'block' }}>
-            {categTitle}
-            </MenuItem>
+        <MenuItem  onClick={handleOpenUserMenu} sx={{ fontSize:"0.873rem", color:'white',cursor:'pointer',display:'block' }}>
+        {categTitle}
+        </MenuItem>
         <Menu
               sx={{ mt: '45px', }}
               id="menu-appbar"
@@ -114,7 +124,7 @@ export const Filters = ({categTitle, handleCloseNavMenu}) => {
                               label={capitalize(el.nombre)} 
                               control={ 
                                   <Checkbox 
-                                      checked={true} 
+                                      checked={isChecked[el.nombre]} 
                                       onChange={handleChangeMultiple} 
                                       sx={{fontSize:"0.2rem"}} 
                                       name={el.nombre}

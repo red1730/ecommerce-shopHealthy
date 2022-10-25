@@ -15,7 +15,7 @@ export const addNestedFilter = categName => (dispatch, getState) =>{
     
     let filtered = nestedFilter.concat( dataToFilter.filter( el => el.categoria.find( categ => categ.nombre.toLowerCase() === categName.toLowerCase())));
     
-    // dispatch( {type: 'ADD_NESTED_FILTER', payload: { data:filtered, cat: categName } });
+    dispatch( {type: 'ADD_NESTED_FILTER', payload: { data:filtered, cat: categName } });
 }
 export const removeNestedFilter = categName => (dispatch, getState) =>{
     // if(categName === null) return;
@@ -33,5 +33,5 @@ export const removeNestedFilter = categName => (dispatch, getState) =>{
     if ( filteredProducts.length < 1 ) dataToShow = allProducts;
 
 
-    // dispatch( {type: 'REMOVE_FILTER', payload: { data: dataToShow, newNested: newNestedFilter, cat: categName }});
+    dispatch( {type: 'REMOVE_FILTER', payload: { data: dataToShow, newNested: newNestedFilter, cat: categName }});
 }
