@@ -64,6 +64,12 @@ const admin =[
   },
 ]
 
+const hoverText = {
+  "&:hover": {
+    color:'#64B98B'
+  },
+};
+
 
 export const NavBar = () => {
   const { estadoGlobal, manejarUsuario } = useContext(AuthContext)
@@ -336,6 +342,7 @@ const handleCloseUserMenu = () => {
               {(!user.logged)
                   ? <Button 
                   component={RouterLink}
+                  sx={{textDecoration:'none', color: '#64B98B',"&:hover":{color:'#57AF57' } }}
                   to='login'
                  > Iniciar sesión
                   </Button>
@@ -344,7 +351,7 @@ const handleCloseUserMenu = () => {
                     {logged.map( (el, i) => (
                     <MenuItem key={i} onClick={handleCloseUserMenu}>
                         <Typography 
-                        textAlign="center"
+                        sx={{textDecoration:'none', color: '#64B98B',"&:hover":{color:'#64B98B' } }}
                         component={RouterLink}
                         to={el.link}
                         >
@@ -356,9 +363,6 @@ const handleCloseUserMenu = () => {
                         <HandleLogout />
                     </MenuItem>
                   </Box>
-                  
-
-                
               }
               </Menu>
           </Box> 
