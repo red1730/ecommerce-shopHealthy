@@ -26,23 +26,27 @@ const googleProvider = new GoogleAuthProvider();
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href={<Home/>}>
-      Henry Proyecto Grupal 
-      </Link>{' '}
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href={<Home />}>
+        Henry Proyecto Grupal
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
-
-export const Register_comp = () =>{
-  const {dispatch} = useContext(AuthContext); 
+export const Register_comp = () => {
+  const { dispatch } = useContext(AuthContext);
   let navigate = useNavigate();
 
-  const handleSubmit =  async  (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const correo= e.target.email.value
     const contraseña= e.target.password.value
@@ -221,4 +225,4 @@ export const Register_comp = () =>{
         <Copyright sx={{ mt: 5 }} />
       </Container>
   );
-}
+};

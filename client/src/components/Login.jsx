@@ -1,4 +1,4 @@
-import * as React from "react";
+// import { AuthContext } from "../auth/AuthContext";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -43,7 +43,7 @@ function Copyright(props) {
 }
 
 
-export const Login_comp =  (props) => {
+export const Login_comp =  () => {
   const {dispatch} = useContext(AuthContext); 
   // console.log(user)
   let navigate = useNavigate();
@@ -67,8 +67,8 @@ export const Login_comp =  (props) => {
     // let valor = true;
     // updateState(valor)
     // console.log(logeado, 'estado en el Login')
-    alert('EXITO, Inicio correcto')
-    navigate('/catalogo')
+    
+    navigate('/producto')
     
     // const data = new FormData(event.currentTarget);
     // console.log({
