@@ -74,7 +74,6 @@ const hoverText = {
 export const NavBar = () => {
   const { estadoGlobal, manejarUsuario } = useContext(AuthContext)
 
-  console.dir(estadoGlobal)
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const location = useLocation();
@@ -126,7 +125,7 @@ const handleCloseUserMenu = () => {
 
         <Toolbar >
           <IconButton component={RouterLink} to='/' >
-            <Avatar alt='logo' src={logo} sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            <Avatar alt='logo' src={logo} sx={{ display: { xs: 'none', md: 'flex' }, mr: 0,  }} />
 
           </IconButton>
           <Typography
@@ -220,11 +219,9 @@ const handleCloseUserMenu = () => {
               flexGrow: 1,
               fontFamily: "monospace",
               fontWeight: 700,
-
-              letterSpacing: '.1rem',
               color: 'white',
               textDecoration: 'none',
-
+              fontSize:"1.2rem"
             }}
           >
             HEALTHY FOOD
@@ -322,7 +319,7 @@ const handleCloseUserMenu = () => {
           <Box sx={{ flexGrow: 0, position:'relative' }}>
             <Tooltip title={(!user.logged)? 'Iniciar Sesión': 'Mi perfil'}>
 
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, mr:2}}>
                 <AccountCircleIcon />
               </IconButton>
             </Tooltip>

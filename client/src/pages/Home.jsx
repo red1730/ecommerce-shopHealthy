@@ -1,5 +1,5 @@
 import { ListImages } from '../components/ListImages'
-import { Box, CardMedia, Container, Grid } from '@mui/material';
+import { Box, CardMedia, Container, Divider, Grid } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import {usePagination} from "../hooks/usePagination";
 import Banner from '../assets/banner.png'
@@ -24,12 +24,12 @@ export const Home = () => {
 
 
   if(categ === 'All') dataToShow= allProducts;
-  else dataToShow = products
+  else dataToShow = products;
 
   const count = Math.ceil(dataToShow.length / PER_PAGE);
   const _DATA = usePagination(dataToShow, PER_PAGE);
 
-  const handleChange = (e, p) => {
+  const handleChangePage = (e, p) => {
     setPage(p);
     _DATA.jump(p);
   };
@@ -43,9 +43,14 @@ export const Home = () => {
             height='400'
           />
         </Box> : <ActionAlerts categoria={categ}/> }
-        <OrderSelect setPage={setPage}/>
-        <ListImages data={_DATA}/>
-        <Grid container sx={{width:'98%',justifyContent:'center', margin:'30px 0'}}>
+
+        <OrderSelect setPage={setPage} jump={_DATA.jump} />
+
+        <Box sx={{ flexGrow: 1, display: 'flex', alignItems:'center', justifyContent:'center' }}>
+          <ListImages data={_DATA}/>
+        </Box>
+
+        <Box  sx={{width:'98%',justifyContent:'center', alignItems:'center', display:'flex', my:4}}>
           <Pagination
           sx={{margin:'0 auto'}}
           count={count}
@@ -53,10 +58,10 @@ export const Home = () => {
           page={page}
           variant="outlined"
           shape="rounded"
-          onChange={handleChange}
+          onChange={handleChangePage}
         />
         {/* <ShoppingCartBadge position='fixed'/> */}
-        </Grid>
+        </Box>
     </Container>
   )
 }
