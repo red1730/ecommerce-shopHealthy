@@ -14,6 +14,9 @@ import { useState, useContext } from 'react';
 import logo from '../assets/logo.png';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import firebaseApp from '../credenciales';
+import PropTypes from 'prop-types';
+import Slide from '@mui/material/Slide';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
 const auth= getAuth(firebaseApp)
 console.dir(auth)
 
@@ -64,14 +67,32 @@ const admin =[
   },
 ]
 
-const hoverText = {
-  "&:hover": {
-    color:'#64B98B'
-  },
+const HideOnScroll = props => {
+  const { children, window } = props;
+  // Note that you normally won't need to set the window ref as useScrollTrigger
+  // will default to window.
+  // This is only being set here because the demo is in an iframe.
+  const trigger = useScrollTrigger({
+    target: window ? window() : undefined,
+  });
+
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
+  );
+}
+
+HideOnScroll.propTypes = {
+  children: PropTypes.element.isRequired,
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window: PropTypes.func,
 };
 
-
-export const NavBar = () => {
+export const NavBar = (props) => {
   const { estadoGlobal, manejarUsuario } = useContext(AuthContext)
 
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -118,11 +139,10 @@ const handleCloseUserMenu = () => {
 
 
   return (
-    <div >
-    {location.pathname =='/catalogo' && <SearchBar sx={{zIndex:0}} />}
-    <AppBar sx={{ position:'-webkit-sticky',top:0 }} >
+    <>
+    <HideOnScroll {...props} > 
+    <AppBar sx={{ position:'-webkit-sticky',top:0, height:'63px'}} >
       <Container maxWidth="xl">
-
         <Toolbar >
           <IconButton component={RouterLink} to='/' >
             <Avatar alt='logo' src={logo} sx={{ display: { xs: 'none', md: 'flex' }, mr: 0,  }} />
@@ -147,17 +167,20 @@ const handleCloseUserMenu = () => {
             HEALTHY FOOD
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
+          <Grid container sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
+            <Grid item xs={6}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+
+            </Grid>
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -201,31 +224,17 @@ const handleCloseUserMenu = () => {
               
 
             </Menu>
-          </Box>
-          <IconButton component={RouterLink} to="/">
-            <Avatar
-              alt="logo"
-              src={logo}
-              sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-            />
-          </IconButton>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              color: 'white',
-              textDecoration: 'none',
-              fontSize:"1.2rem"
-            }}
-          >
-            HEALTHY FOOD
-          </Typography>
+            <Grid item xs={5}>
+
+              <IconButton component={RouterLink} to="/" >
+                <Avatar
+                  alt="logo"
+                  src={logo}
+                  sx={{ display: { xs: "flex", md: "none", },}}
+                />
+              </IconButton>
+            </Grid>
+          </Grid>
 
           <Box 
             alignItems="center" 
@@ -368,7 +377,9 @@ const handleCloseUserMenu = () => {
           </Box> 
         </Toolbar>
       </Container>
+      {location.pathname =='/catalogo' && <SearchBar />}
     </AppBar>
-    </div>
+    </HideOnScroll>
+    </>
   );
 };
