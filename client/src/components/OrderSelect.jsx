@@ -11,9 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { orderAsc, orderDesc } from '../actions/order';
 
 
-export const OrderSelect = ({setPage})=> {
-
-const { onChangeFilterType, onChangeOrderKey,} = useOrder(setPage);
+export const OrderSelect = ({setPage, jump})=> {
+const { onChangeFilterType, onChangeOrderKey,} = useOrder(setPage, jump);
 const dispatch = useDispatch();
 const {order, orderKey} = useSelector(s => s.catalogReducer);
 
@@ -43,10 +42,14 @@ const keys = ['nombre', 'precio'];
             variant="contained"
             sx={{padding:0,height:35,mt:3, boxShadow:'none'}}
             >
-                <IconButton  sx={{ width:"20px", height:"10px", margin:0, color:order?'#64B98B':'black'}} onClick={ ()=> {dispatch({type:'SET_ORDER', payload:true}) ;dispatch(orderAsc(orderKey))}}>
+                <IconButton  
+                    sx={{ width:"20px", height:"10px", margin:0, color:order?'#64B98B':'black'}} 
+                    onClick={ ()=> dispatch(orderAsc(orderKey)) }>
                     <KeyboardArrowUpIcon />
                 </IconButton>
-                <IconButton  sx={{ width:"20px", height:"10px", margin:0,color:!order?'#64B98B':'black'}} onClick={ ()=> {dispatch({type:'SET_ORDER', payload:false}) ;dispatch(orderDesc(orderKey))}}>
+                <IconButton  
+                    sx={{ width:"20px", height:"10px", margin:0,color:!order?'#64B98B':'black'}} 
+                    onClick={ ()=> dispatch(orderDesc(orderKey)) }>
                     <KeyboardArrowDownIcon />
                 </IconButton>
             </ButtonGroup>

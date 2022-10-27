@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector, } from "react-redux";
 import { orderAsc, orderDesc } from "../actions/order";
 
-export const useOrder = (setCurrentPage, defaultKey)=>{
+export const useOrder = (setPage, jump)=>{
   
   const dispatch = useDispatch();
 
@@ -13,17 +13,18 @@ export const useOrder = (setCurrentPage, defaultKey)=>{
 
 
   const onChangeOrderKey = event => {
+    setPage(0+1);
+    jump(0+1);
+    dispatch({type: 'SET_ORDER_KEY', payload: event.target.value.toLowerCase()})
     if(order){
         dispatch(orderAsc(event.target.value))
     }else{
         dispatch(orderDesc(event.target.value))
     }
-    dispatch({type: 'SET_ORDER_KEY', payload: event.target.value})
-    setCurrentPage(1);
   }
   const onChangeFilterType = event =>{
     return true
-    setCurrentPage(1);
+    setPage(null,1);
   }
 
   return {

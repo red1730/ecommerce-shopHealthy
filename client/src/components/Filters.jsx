@@ -45,7 +45,6 @@ export const Filters = ({categTitle, handleCloseNavMenu}) => {
       const handleCloseUserMenu = () => {
         setAnchorElUser(null);
       };
-    const [anchorElNav, setAnchorElNav] = useState (null);
     const [anchorElUser, setAnchorElUser] = useState(null);
 
     useEffect(() => {

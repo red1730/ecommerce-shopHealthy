@@ -51,7 +51,13 @@ export const ProductDetail_comp = () => {
           spacing={2} 
           sx={{ alignItems:'center', justifyContent:'space-between', mt:15, width:'65%',  }} >
       <Grid item xs={12} md={7} sx={{alignItems:'center', justifyContent:'center',}} >
-        <CardMedia  component="img" sx={{width:'auto', maxHeight:{xs:"300px", md:'400px', xl:"450px", margin:'0 auto'}}} src={!`https://dkndrd.com/pf-healthyShop/${img}`?NotFound:`https://dkndrd.com/pf-healthyShop/${img}`} alt={nombre}/>
+        <Box sx={{display:'flex', alignItems:'center', justifyContent:'center'}} >
+          <CardMedia  
+          component="img" 
+          sx={{width:'auto', maxHeight:{xs:"300px", md:'400px', xl:"450px", margin:'0 auto'}}} 
+          src={!`https://dkndrd.com/pf-healthyShop/${img}`?NotFound:`https://dkndrd.com/pf-healthyShop/${img}`} 
+          alt={nombre}/>
+        </Box>
       </Grid>
       <Grid item xs={12} md={5} sx={{justifyContent:'center', alignItems:'center', }}>
         <Typography sx={{fontSize:30, textAlign:'center'}}
