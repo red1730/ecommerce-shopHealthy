@@ -8,3 +8,4 @@ export * from './Shopping';
 export * from './User';
 export * from './LandingPage';
 export * from './CrearProducto';
+export * from './Preferencias';

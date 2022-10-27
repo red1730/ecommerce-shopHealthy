@@ -12,6 +12,7 @@ import {
   Shopping,
   User,
   CrearProducto,
+  Preferencias,
 } from "../pages/index";
 
 export const RouterApp = () => {
@@ -29,6 +30,7 @@ export const RouterApp = () => {
         <Route path="/user" element={<User />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/producto" element={<CrearProducto />} />
+        <Route path="/preferencias" element={<Preferencias/>} />
       </Routes>
     </>
   );
