@@ -62,7 +62,6 @@ export const SearchBar = ()=> {
             onChange={handleChangeAutoComplete}
             renderInput={(params) => (
               <TextField
-                onSubmit={handleClickButton}
                 placeholder='Buscar'
                 sx={{ 
                   border: 'transparent', 

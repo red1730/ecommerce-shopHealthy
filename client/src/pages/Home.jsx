@@ -6,9 +6,9 @@ import Banner from '../assets/banner.png'
 import { useState, useEffect } from 'react';
 import {useDispatch, useSelector,} from 'react-redux'
 import { initProducts } from '../actions/getInitProducts';
-import { ShoppingCartBadge } from '../components/ShoppingCardBadge';
 import { ActionAlerts } from '../components/AlertCategoria';
 import { OrderSelect } from '../components/OrderSelect';
+import { CartFlotingButton } from '../components/CartFlotingButton';
 
 export const Home = () => {
 
@@ -60,7 +60,7 @@ export const Home = () => {
           shape="rounded"
           onChange={handleChangePage}
         />
-        {/* <ShoppingCartBadge position='fixed'/> */}
+        <CartFlotingButton />
         </Box>
     </Container>
   )
