@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -8,6 +9,7 @@ import TextField from "@mui/material/TextField";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import { Link } from "@mui/material";
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -20,15 +22,18 @@ import firebaseApp from "../credenciales";
 import { createProduct } from "../actions/createProduct"
 
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { getFirestore, doc, getDoc, setDoc} from "firebase/firestore"
+import { useRef } from "react";
 
+
+const firestore= getFirestore();
 const storage = getStorage(firebaseApp);
 
 export const Crear_comp = () => {
  
   const [arrayProductos, setArrayProductos] = useState(null);
-  
-  
-  
+  const dispatch = useDispatch();
+
   
   //Firebase
   async function buscarDocumentOrCrearDocumento(idDocumento) {
@@ -43,7 +48,7 @@ export const Crear_comp = () => {
       return infoDocu.productos;
     } else {
       // si no existe
-      await setDoc(docuRef, { productos: [...fakeData] });
+      await setDoc(docuRef, { productos: [..."no foto"] });
       const consulta = await getDoc(docuRef);
       const infoDocu = consulta.data();
       return infoDocu.productos;
@@ -67,15 +72,26 @@ export const Crear_comp = () => {
     }
     
     
+
+    const inputEl =  useRef(null)
+
+    const [input, setInput] = useState({
+      nombre: "",
+      marca: "",
+      categoria: "",
+      descripcion: "",
+      stock: "",
+      precio: "",
+    });
     const handleChange = (e) => {
         setInput({
           ...input,
           [e.target.name]: e.target.value, // cargamos los name="" de cada input
         });
       };
+
     const handleSubmit = (e) => {
       e.preventDefault();
-
     dispatch(createProduct(input));
     alert("Producto Agregado");
 
@@ -87,8 +103,7 @@ export const Crear_comp = () => {
       descripcion: "",
       stock: "",
       precio: "",
-    });
-    history.push("/catalogo"); 
+    })    
   };
 
   return (
@@ -115,7 +130,7 @@ export const Crear_comp = () => {
               <TextField
                 required
                 fullWidth
-                onChange={(e) => handleChange(e)}
+                ref={inputNombre}
                 id="nombre"
                 label="Nombre"
                 name="nombre"
@@ -198,6 +213,7 @@ export const Crear_comp = () => {
                 onChange={filehandler}
               />
             </Button>
+            
           </Box>
 
           <Button
