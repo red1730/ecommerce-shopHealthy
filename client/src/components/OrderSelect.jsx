@@ -3,7 +3,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { ButtonGroup, capitalize, IconButton } from '@mui/material';
-import { useOrder } from '../Hooks/useOrder';
+import { useOrder } from '../hooks/useOrder';
 import { Stack } from '@mui/system';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
