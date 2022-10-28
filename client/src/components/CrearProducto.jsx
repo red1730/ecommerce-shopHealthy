@@ -17,27 +17,20 @@ import InputAdornment from "@mui/material/InputAdornment";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import firebaseApp from "../credenciales";
 
+import { createProduct } from "../actions/createProduct"
+
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 const storage = getStorage(firebaseApp);
 
-
-
-
 export const Crear_comp = () => {
+ 
   const [arrayProductos, setArrayProductos] = useState(null);
-
-
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const nombre = e.target.nombre.value;
-    const marca = e.target.marca.value;
-    const categoria = e.target.categoria.value;
-    const descripcion = e.target.descripcion.value;
-    const stock = e.target.stock.value;
-  };
-
+  
+  
+  
+  
+  //Firebase
   async function buscarDocumentOrCrearDocumento(idDocumento) {
     //crear referencia al documento
     const docuRef = doc(firestore, `usuarios/${idDocumento}`);
@@ -56,33 +49,47 @@ export const Crear_comp = () => {
       return infoDocu.productos;
     }
   }
-
   useEffect(() => {
     async function fetchProductos() {
       const productosFetchadas = await buscarDocumentOrCrearDocumento(
-        correoUsuario
-      );
-      setArrayProductos(productosFetchadas);
+        // correoUsuario
+        );
+        setArrayProductos(productosFetchadas);
+      }
+      fetchProductos();
+    }, []);    
+    
+    async function filehandler(e) {
+      const archivoLocal = e.target.files[0];
+      const archivoRef = ref(storage, `documentos/${archivoLocal.nombre}`);
+      await uploadBytes(archivoRef, archivoLocal);
+      const urlDescarga = await getDownloadURL(archivoRef);
     }
+    
+    
+    const handleChange = (e) => {
+        setInput({
+          ...input,
+          [e.target.name]: e.target.value, // cargamos los name="" de cada input
+        });
+      };
+    const handleSubmit = (e) => {
+      e.preventDefault();
 
-    fetchProductos();
-  }, []);
+    dispatch(createProduct(input));
+    alert("Producto Agregado");
 
-
-
-
-
-
-
-  async function filehandler(e) {
-    const archivoLocal = e.target.files[0];    
-    const archivoRef = ref(storage, `documentos/${archivoLocal.nombre}`);
-    await uploadBytes(archivoRef, archivoLocal);
-    const urlDescarga = await getDownloadURL(archivoRef);
+    setInput({
+      // seteo a 0
+      nombre: "",
+      marca: "",
+      categoria: "",
+      descripcion: "",
+      stock: "",
+      precio: "",
+    });
+    history.push("/catalogo"); 
   };
-
-
-
 
   return (
     <Container component="main" maxWidth="xs" sx={{ marginTop: "100px" }}>
@@ -108,6 +115,7 @@ export const Crear_comp = () => {
               <TextField
                 required
                 fullWidth
+                onChange={(e) => handleChange(e)}
                 id="nombre"
                 label="Nombre"
                 name="nombre"
@@ -118,6 +126,7 @@ export const Crear_comp = () => {
               <TextField
                 required
                 fullWidth
+                onChange={(e) => handleChange(e)}
                 name="marca"
                 label="Marca"
                 type="marca"
@@ -129,6 +138,7 @@ export const Crear_comp = () => {
               <TextField
                 required
                 fullWidth
+                onChange={(e) => handleChange(e)}
                 name="categoria"
                 label="Categoria"
                 type="categoria"
@@ -140,6 +150,7 @@ export const Crear_comp = () => {
               <TextField
                 required
                 fullWidth
+                onChange={(e) => handleChange(e)}
                 name="descripcion"
                 label="Descripcion"
                 type="descripcion"
@@ -153,6 +164,7 @@ export const Crear_comp = () => {
               sx={{ m: 1 }}
               required
               fullWidth
+              onChange={(e) => handleChange(e)}
               name="stock"
               label="Stock"
               type="stock"
@@ -163,6 +175,7 @@ export const Crear_comp = () => {
               sx={{ m: 1 }}
               required
               fullWidth
+              onChange={(e) => handleChange(e)}
               name="Precio"
               label="precio"
               type="precio"
@@ -174,9 +187,16 @@ export const Crear_comp = () => {
                 ),
               }}
             />
-            <Button variant="contained" component="label" >
-              <AttachFileIcon/>
-              <input hidden accept="image/*" multiple type="file" onChange={filehandler}/>
+            <Button variant="contained" component="label">
+              <AttachFileIcon />
+              
+              <input
+                hidden
+                accept="image/*"
+                multiple
+                type="file"
+                onChange={filehandler}
+              />
             </Button>
           </Box>
 
