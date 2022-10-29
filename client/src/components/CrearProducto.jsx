@@ -131,6 +131,7 @@ export const Crear_comp = () => {
                 required
                 fullWidth
                 onChange={(e) => handleChange(e)}
+                name= "nombre"
                 id="nombre"
                 label="Nombre"
                 value={input.nombre}
@@ -142,6 +143,7 @@ export const Crear_comp = () => {
                 required
                 fullWidth
                 onChange={(e) => handleChange(e)}
+                name="marca"
                 value={input.marca}
                 label="Marca"
                 type="marca"
@@ -155,6 +157,7 @@ export const Crear_comp = () => {
                 fullWidth
                 onChange={(e) => handleChange(e)}
                 value={input.categoria}
+                name="categoria"
                 label="Categoria"
                 type="categoria"
                 id="categoria"
@@ -167,6 +170,7 @@ export const Crear_comp = () => {
                 fullWidth
                 onChange={(e) => handleChange(e)}
                 value={input.descripcion}
+                name="descripcion"
                 label="Descripcion"
                 type="descripcion"
                 id="descripcion"
@@ -181,6 +185,7 @@ export const Crear_comp = () => {
               fullWidth
               onChange={(e) => handleChange(e)}
               value={input.stock}
+              name="stock"
               label="Stock"
               type="stock"
               id="stock"
@@ -192,6 +197,7 @@ export const Crear_comp = () => {
               fullWidth
               onChange={(e) => handleChange(e)}
               value={input.precio}
+              name="precio"
               label="precio"
               type="precio"
               id="precio"
