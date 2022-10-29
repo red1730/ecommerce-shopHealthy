@@ -21,6 +21,8 @@ const path = require('path')
 const sequelize = new Sequelize('u381026178_eCommerceSalud', 'u381026178_admin', 'Qu&df=#;E2', {
   host: 'sql811.main-hosting.eu',
   dialect: 'mysql',
+  logging: false,
+  native: false,
 }) 
 
 
