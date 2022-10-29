@@ -22,9 +22,9 @@ router.post("/pago", async (req,res)=>{
         .create(preference)
         .then(function (response) {
        console.log(response.body)// En esta instancia deberás asignar el valor dentro de response.body.id por el ID de preferencia solicitado en el siguiente paso
-        //  res.redirect(response.body.init_point)
+       res.redirect(response.body.init_point)
         
-        res.send(response.body.init_point)
+        // res.send(response.body.init_point)
         })
         .catch(function (error) {
           console.log(error);
