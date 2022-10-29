@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import { Link } from "@mui/material";
+import Swal from 'sweetalert2'
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -19,22 +19,20 @@ import InputAdornment from "@mui/material/InputAdornment";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import firebaseApp from "../credenciales";
 
-import { createProduct } from "../actions/createProduct"
+import { createProduct } from "../actions/createProduct";
 
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { getFirestore, doc, getDoc, setDoc} from "firebase/firestore"
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { useRef } from "react";
+import { color, style } from "@mui/system";
 
-
-const firestore= getFirestore();
+const firestore = getFirestore();
 const storage = getStorage(firebaseApp);
 
 export const Crear_comp = () => {
- 
   const [arrayProductos, setArrayProductos] = useState(null);
   const dispatch = useDispatch();
 
-  
   //Firebase
   async function buscarDocumentOrCrearDocumento(idDocumento) {
     //crear referencia al documento
@@ -56,44 +54,46 @@ export const Crear_comp = () => {
   }
   useEffect(() => {
     async function fetchProductos() {
-      const productosFetchadas = await buscarDocumentOrCrearDocumento(
-        // correoUsuario
-        );
-        setArrayProductos(productosFetchadas);
-      }
-      fetchProductos();
-    }, []);    
-    
-    async function filehandler(e) {
-      const archivoLocal = e.target.files[0];
-      const archivoRef = ref(storage, `documentos/${archivoLocal.nombre}`);
-      await uploadBytes(archivoRef, archivoLocal);
-      const urlDescarga = await getDownloadURL(archivoRef);
+      const productosFetchadas = await buscarDocumentOrCrearDocumento();
+      // correoUsuario
+      setArrayProductos(productosFetchadas);
     }
-    
-    
+    fetchProductos();
+  }, []);
 
-    const inputEl =  useRef(null)
+  async function filehandler(e) {
+    const archivoLocal = e.target.files[0];
+    const archivoRef = ref(storage, `documentos/${archivoLocal.nombre}`);
+    await uploadBytes(archivoRef, archivoLocal);
+    const urlDescarga = await getDownloadURL(archivoRef);
+  }
 
-    const [input, setInput] = useState({
-      nombre: "",
-      marca: "",
-      categoria: "",
-      descripcion: "",
-      stock: "",
-      precio: "",
-    });
-    const handleChange = (e) => {
-        setInput({
-          ...input,
-          [e.target.name]: e.target.value, // cargamos los name="" de cada input
-        });
-      };
+  // const inputNombre = useRef(null);
+  // const inputMarca = useRef(null);
+  // const inputCategoria = useRef(null);
+  // const inputDescripcion = useRef(null);
+  // const inputStock = useRef(null);
+  // const inputPrecio = useRef(null);
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
+  const [input, setInput] = useState({
+    nombre: "",
+    marca: "",
+    categoria: "",
+    descripcion: "",
+    stock: "",
+    precio: "",
+  });
+  const handleChange = (e) => {
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value, // cargamos los name="" de cada input
+      });
+    };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     dispatch(createProduct(input));
-    alert("Producto Agregado");
+    Swal.fire("Producto Agregado");
 
     setInput({
       // seteo a 0
@@ -103,7 +103,7 @@ export const Crear_comp = () => {
       descripcion: "",
       stock: "",
       precio: "",
-    })    
+    });
   };
 
   return (
@@ -130,10 +130,10 @@ export const Crear_comp = () => {
               <TextField
                 required
                 fullWidth
-                ref={inputNombre}
+                onChange={(e) => handleChange(e)}
                 id="nombre"
                 label="Nombre"
-                name="nombre"
+                value={input.nombre}
                 autoComplete="Nombre"
               />
             </Grid>
@@ -142,7 +142,7 @@ export const Crear_comp = () => {
                 required
                 fullWidth
                 onChange={(e) => handleChange(e)}
-                name="marca"
+                value={input.marca}
                 label="Marca"
                 type="marca"
                 id="marca"
@@ -154,7 +154,7 @@ export const Crear_comp = () => {
                 required
                 fullWidth
                 onChange={(e) => handleChange(e)}
-                name="categoria"
+                value={input.categoria}
                 label="Categoria"
                 type="categoria"
                 id="categoria"
@@ -166,7 +166,7 @@ export const Crear_comp = () => {
                 required
                 fullWidth
                 onChange={(e) => handleChange(e)}
-                name="descripcion"
+                value={input.descripcion}
                 label="Descripcion"
                 type="descripcion"
                 id="descripcion"
@@ -180,7 +180,7 @@ export const Crear_comp = () => {
               required
               fullWidth
               onChange={(e) => handleChange(e)}
-              name="stock"
+              value={input.stock}
               label="Stock"
               type="stock"
               id="stock"
@@ -191,7 +191,7 @@ export const Crear_comp = () => {
               required
               fullWidth
               onChange={(e) => handleChange(e)}
-              name="Precio"
+              value={input.precio}
               label="precio"
               type="precio"
               id="precio"
@@ -204,7 +204,7 @@ export const Crear_comp = () => {
             />
             <Button variant="contained" component="label">
               <AttachFileIcon />
-              
+
               <input
                 hidden
                 accept="image/*"
@@ -213,7 +213,6 @@ export const Crear_comp = () => {
                 onChange={filehandler}
               />
             </Button>
-            
           </Box>
 
           <Button
