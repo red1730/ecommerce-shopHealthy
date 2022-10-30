@@ -112,6 +112,11 @@ export const catalogReducer = (state= initialState, action)=>{
                 ...state,   
                 orderKey: action.payload
             }
+
+        case 'CREATE_PRODUCT':
+            return{
+                ...state,
+            }
         
         default:
             return state;
