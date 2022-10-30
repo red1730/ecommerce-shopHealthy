@@ -63,7 +63,7 @@ export const Register_comp = () => {
     }
     dispatch(action)
     console.log(action)
-   
+
     Swal.fire({
       position: 'center',
       icon: 'success',
@@ -73,7 +73,7 @@ export const Register_comp = () => {
     })
 
       setTimeout(function(){
-        navigate('/catalogo') 
+        navigate('/catalogo') // debe Navegar a Ingresar datos faltantes del Usuario..
       }, 2000);
 
 
