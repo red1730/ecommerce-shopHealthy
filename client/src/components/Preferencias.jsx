@@ -1,4 +1,8 @@
 import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { modificarPerfil } from "../actions/perfil";
+
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -9,15 +13,45 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+
+
+
+
+
+
 export const Preferencias_comp = () => {
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      comment: data.get("comment"),
-    });
+  const dispatch = useDispatch();
+
+  const [input, setInput] = React.useState({
+    nombre:"",
+    apellido:"",
+    email:"",
+    neswsletter:false,
+    menus:false,
+  });
+
+  const handleChange = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(modificarPerfil(input));
+    Swal.fire("se modifico el perfil con Exito");
+
+    setInput({
+      // seteo a 0
+      nombre: "",
+      apellido: "",
+      email: "",
+         });
   };
 
     return (
@@ -48,6 +82,8 @@ export const Preferencias_comp = () => {
                   label="Nombre"
                   name="nombre"
                   autoComplete="Nombre"
+                  value={input.nombre}
+                  onChange={(e) => handleChange(e)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -59,6 +95,8 @@ export const Preferencias_comp = () => {
                   type="apellido"
                   id="apellido"
                   autoComplete="apellido"
+                  value={input.apellido}
+                  onChange={(e) => handleChange(e)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -70,19 +108,14 @@ export const Preferencias_comp = () => {
                   type="email"
                   id="email"
                   autoComplete="email"
+                  value={input.email}
+                  onChange={(e) => handleChange(e)}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  
-                  fullWidth
-                  name=""
-                  label=""
-                  type=""
-                  id=""
-                  autoComplete=""
-                />
-              </Grid>
+              <FormGroup>
+      <FormControlLabel disabled control={<Switch  />} label="Recibir Newsletter" />
+      <FormControlLabel disabled control={<Switch />} label="Sugerencias de Menus" />
+    </FormGroup>
             </Grid>
            <Button
            type="submit"
