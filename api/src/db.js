@@ -47,7 +47,7 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Categoria, Marca, Producto, Usuario,Review,Detalleventa } = sequelize.models;
+const { Categoria, Marca, Producto, Usuario,Review,Detalleventa,Venta } = sequelize.models;
 Producto.belongsToMany(Categoria, {through: 'productosPorCategoria', timestamps: false})
 Categoria.belongsToMany(Producto, {through: 'productosPorCategoria', timestamps: false})
 Producto.belongsTo(Marca)
@@ -62,6 +62,8 @@ Usuario.hasMany(Review)
 
 Detalleventa.belongsTo(Usuario);
 Usuario.hasMany(Detalleventa);
+Producto.belongsToMany(Detalleventa, {through:Venta})
+Detalleventa.belongsToMany(Producto, {through:Venta})
 
 // Usuario.belongsToMany(Producto,{through:"Producto_Usuario"});
 // Producto.belongsToMany(Usuario,{through:"Producto_Usuario"})
