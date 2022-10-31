@@ -7,7 +7,7 @@ const path = require('path')
 // const {
 //   DB_USER, DB_PASSWORD, DB_HOST
 // } = process.env;
-// const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/PGripal`, {
+// const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/pf-demo`, {
 //         logging: false,
 //         native: false,
 //       });
@@ -24,20 +24,6 @@ const sequelize = new Sequelize('u381026178_eCommerceSalud', 'u381026178_admin',
   logging: false,
   native: false,
 }) 
-
-
-
-
-// const sequelize = new Sequelize('u381026178_eCommerceSalud', 'u381026178_admin', 'Qu&df=#;E2', {
-//   host: 'sql811.main-hosting.eu',
-//   dialect: 'mysql',
-//   logging: false, 
-//   native: false,
-
-// }) 
-
- 
-
 
 
 sequelize.authenticate().then(() => {
@@ -61,15 +47,20 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Categoria, Marca, Producto, Usuario } = sequelize.models;
+const { Categoria, Marca, Producto, Usuario,Review } = sequelize.models;
 Producto.belongsToMany(Categoria, {through: 'productosPorCategoria', timestamps: false})
 Categoria.belongsToMany(Producto, {through: 'productosPorCategoria', timestamps: false})
 Producto.belongsTo(Marca)
+
 Marca.hasMany(Producto, {
   foreignKey: 'marcaId'
 });
-Usuario.belongsToMany(Producto,{through:"Producto_Usuario"});
-Producto.belongsToMany(Usuario,{through:"Producto_Usuario"})
+Review.belongsTo(Producto)
+Producto.hasMany(Review)
+Review.belongsTo(Usuario)
+Usuario.hasMany(Review)
+// Usuario.belongsToMany(Producto,{through:"Producto_Usuario"});
+// Producto.belongsToMany(Usuario,{through:"Producto_Usuario"})
 
 
 module.exports = {
