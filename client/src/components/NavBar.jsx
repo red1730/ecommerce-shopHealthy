@@ -1,4 +1,4 @@
-import {AppBar, Toolbar, Container,} from '@mui/material';
+import {AppBar, Toolbar, Container, Divider,} from '@mui/material';
 import {Slide, useScrollTrigger} from '@mui/material';
 import { useContext } from 'react';
 import { Link as RouterLink, useLocation, useNavigate, useParams} from 'react-router-dom';
@@ -51,7 +51,7 @@ export const NavBar = (props) => {
   return (
     <>
     <HideOnScroll {...props} > 
-    <AppBar sx={{ position:'-webkit-sticky',top:0, height:'63px'}} >
+    <AppBar sx={{ position:'-webkit-sticky',top:0, }} >
       <Container maxWidth="xl"  >
         <Toolbar >
           <NavMobile />
