@@ -20,5 +20,9 @@ module.exports=(sequelize)=>{
             type: DataTypes.TEXT,
             allowNull: false,
           },
+          activo: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+          },
     })
 }
