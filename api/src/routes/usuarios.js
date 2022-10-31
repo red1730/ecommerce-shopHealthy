@@ -56,7 +56,7 @@ router.post("/crear", async (req, res) => {
         apellido,
         dni,
         direccion,
-        contraseña,
+        codPostal,        
         telefono,
         mail,
         isAdmin,
@@ -68,10 +68,11 @@ router.post("/crear", async (req, res) => {
         apellido: apellido,
         dni: dni,
         direccion: direccion,
-        contraseña: contraseña,
+        codPostal: codPostal,
         telefono: telefono,
         mail: mail,
         isAdmin: isAdmin,
+        activo:true
       });
       
       const transport = nodemailer.createTransport({
@@ -120,7 +121,7 @@ router.put("/modificar/:id", async (req, res) => {
         apellido,
         dni,
         direccion,
-        contraseña,
+        codPostal,
         telefono,
         mail,
         isAdmin,
@@ -152,10 +153,10 @@ router.put("/modificar/:id", async (req, res) => {
         usuario.save();
         cambios.push("dirección")
       }
-      if (contraseña) {
-        usuario.contraseña = contraseña;
+      if (codPostal) {
+        usuario.codPostal = codPostal;
         usuario.save();
-        cambios.push("contraseña")
+        cambios.push("codPostal")
       }
       if (telefono) {
         usuario.telefono = telefono;

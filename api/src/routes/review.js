@@ -5,26 +5,27 @@ const router = Router();
 router.get("/", async (req, res) => {
 
     const {comentario} = req.query
-    let todosLosComentarios = await Review.findAll()
+    let todosLosComentarios = await Review.findAll({where: {activo: true}})  
     if (comentario) {
       let comentarioFiltrados = todosLosComentarios.filter( prod => prod.comentario.toLowerCase().includes(comentario.toLowerCase()))
       comentarioFiltrados.length ? 
       res.status(200).send(comentarioFiltrados) : res.status(404).send('Not found or does not exist 😥')
     }else{
-     res.status(201).send(todosLosComentarios)
-    //  Review.findAll().then(rvw => res.json(rvw))
+     res.status(201).send(todosLosComentarios)    
     }
   
   })
 
-
 router.post("/crear", async(req,res)=>{
     try {
-        const { puntaje, titulo, comentario } = req.body;
+        const { puntaje, titulo, comentario, productoId, usuarioId } = req.body;
     const review = await Review.create({
          puntaje,
          titulo,
-         comentario
+         comentario,
+         activo: true,
+         productoId,
+         usuarioId
     });
     res.status(200).send(review);
     } catch (error) {

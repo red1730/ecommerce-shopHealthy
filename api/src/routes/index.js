@@ -4,6 +4,7 @@ const productosRuta= require('./producto')
 const marcasRuta= require('./marca')
 const usuarioruta = require('./usuarios')
 const compraRuta = require('./rutapago')
+const reviewRuta = require('./review')
 const path = require('path');
 const { conn } = require('../db');
 const cargadores = require('../controlers/cargadores');
@@ -43,4 +44,5 @@ router.use('/tresmiluno/producto', productosRuta)
 router.use('/tresmiluno/categoria', categoriasRuta)
 router.use('/tresmiluno/marca',marcasRuta)
 router.use('/tresmiluno/compra',compraRuta)
+router.use('/tresmiluno/review',reviewRuta)
 module.exports = router;
