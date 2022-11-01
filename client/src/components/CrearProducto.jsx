@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -17,22 +17,25 @@ import Container from "@mui/material/Container";
 import AddIcon from "@mui/icons-material/Add";
 import InputAdornment from "@mui/material/InputAdornment";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 import firebaseApp from "../credenciales";
+=======
+
+>>>>>>> cc8df37cdfa24fc7e0882d32153ad2935db50a57
 
 import { createProduct } from "../actions/createProduct";
 
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
-import { useRef } from "react";
-import { color, style } from "@mui/system";
 
+<<<<<<< HEAD
 const firestore = getFirestore();
 const storage = getStorage(firebaseApp);
 =======
 
 import { createProduct } from "../actions/createProduct";
 
+=======
+>>>>>>> cc8df37cdfa24fc7e0882d32153ad2935db50a57
 import Uploady from "@rpldy/uploady";
 import UploadButton from "@rpldy/upload-button";
 
@@ -40,12 +43,20 @@ import "./style.css";
 
 const CLOUD_NAME = "dt9tiuufp",
   UPLOAD_PRESET = "HealtyFood_image";
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+
+
+
+>>>>>>> cc8df37cdfa24fc7e0882d32153ad2935db50a57
 
 export const Crear_comp = () => {
+
   const [arrayProductos, setArrayProductos] = useState(null);
   const dispatch = useDispatch();
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   //Firebase
   async function buscarDocumentOrCrearDocumento(idDocumento) {
@@ -107,6 +118,20 @@ export const Crear_comp = () => {
 
 >>>>>>> Stashed changes
   const [input, setInput] = useState({
+=======
+ const subirimagen = <Uploady
+ destination={{
+   url: `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`,
+   params: {
+     upload_preset: UPLOAD_PRESET
+   }
+ }}
+ >
+ <UploadButton><AttachFileIcon/></UploadButton>
+</Uploady>
+
+    const [input, setInput] = useState({
+>>>>>>> cc8df37cdfa24fc7e0882d32153ad2935db50a57
     nombre: "",
     marca: "",
     categoria: "",
@@ -115,11 +140,11 @@ export const Crear_comp = () => {
     precio: "",
   });
   const handleChange = (e) => {
-      setInput({
-        ...input,
-        [e.target.name]: e.target.value, // cargamos los name="" de cada input
-      });
-    };
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value, // cargamos los name="" de cada input
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -162,7 +187,7 @@ export const Crear_comp = () => {
                 required
                 fullWidth
                 onChange={(e) => handleChange(e)}
-                name= "nombre"
+                name="nombre"
                 id="nombre"
                 label="Nombre"
                 value={input.nombre}
@@ -239,6 +264,7 @@ export const Crear_comp = () => {
                 ),
               }}
             />
+<<<<<<< HEAD
 <<<<<<< Updated upstream
             <Button variant="contained" component="label">
               <AttachFileIcon />
@@ -265,6 +291,19 @@ export const Crear_comp = () => {
               </UploadButton>
             </Uploady>
 >>>>>>> Stashed changes
+=======
+                        <Uploady
+        destination={{
+          url: `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`,
+          params: {
+            upload_preset: UPLOAD_PRESET
+          }
+        }}
+        >
+        <UploadButton className="buttonupload"><AttachFileIcon/></UploadButton>
+      </Uploady>
+        
+>>>>>>> cc8df37cdfa24fc7e0882d32153ad2935db50a57
           </Box>
 
           <Button

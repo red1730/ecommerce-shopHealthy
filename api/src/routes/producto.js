@@ -240,6 +240,21 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.post("/baja/:id", async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const productoBaja = await Producto.findByPk(id);
+    if (productoBaja) {
+      productoBaja.activo=false
+      productoBaja.save();
+      
+    }
+  }
+  catch(error){
+    console.log(error)
+  }
+})
+
 module.exports = router
 
 

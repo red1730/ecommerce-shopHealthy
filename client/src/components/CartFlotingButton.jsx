@@ -46,7 +46,7 @@ export const CartFlotingButton = ()=> {
 
   const productList = (anchor) => (
     <Box
-      sx={{ width: 400 }}
+      sx={{ width: 400, bgcolor: "whitesmoke" , height:"100%",}}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
@@ -93,6 +93,7 @@ export const CartFlotingButton = ()=> {
             open={state.right}
             onClose={toggleDrawer('right', false)}
             onOpen={toggleDrawer('right', true)}
+            sx={{opacity:"90%",}}
           >
             {productList('right')}
           </SwipeableDrawer>

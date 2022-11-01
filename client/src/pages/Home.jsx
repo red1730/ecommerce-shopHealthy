@@ -35,7 +35,7 @@ export const Home = () => {
   };
   return (
     <Container sx={{marginTop:'1px'}} >
-        { setBanner? <Box sx={{margin:'90px 0 25px'}}>
+        { setBanner? <Box sx={{display:'flex', justifyContent:'center', alignItems:'center',mt:14}}>
           <CardMedia
             component="img"
             image={Banner}

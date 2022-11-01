@@ -49,7 +49,7 @@ export const SearchBar = ()=> {
     }
 
   return (
-    <Toolbar sx={{display:'flex', justifyContent:'end', alingItems:'center', bgcolor:'transparent', my:{xs:0, sm:0,  md:-1.7,} }} >
+    <Toolbar sx={{display:'flex', justifyContent:'center', alingItems:'center', mb:{xs:0, md:-0.9}, mt:{xs:0,md:-3}, p:0, } } >
       <Search >
           <Autocomplete
             freeSolo
@@ -78,7 +78,7 @@ export const SearchBar = ()=> {
                 InputProps={{
                   ...params.InputProps,
                   type: 'search',
-                  boxshadow:'0px 2px 4px -1px rgb(0 0 0 / 20%)',
+                  boxshadow:'10px 20px 4px -1px rgb(0 0 0 / 20%)',
 
                 }}
                 
@@ -86,7 +86,7 @@ export const SearchBar = ()=> {
             )}
           />
       </Search>
-      <IconButton onClick={handleClickButton} sx={{top:"3px"}} >
+      <IconButton onClick={handleClickButton}  >
         <SearchIcon  />
       </IconButton>
     </Toolbar>
