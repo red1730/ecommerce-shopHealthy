@@ -1,32 +1,11 @@
 const { Router } = require("express");
-//Instalo e importo axios//
-const axios = require("axios");
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
-const { Categoria, Producto, Marca } = require("../db");
-// const {API_KEY} = process.env;
+const { Categoria, Producto } = require("../db");
+
 
 const router = Router();
 
-router.get("/:categoria", async (req, res) => {
-  const { categoria } = req.params
-  console.log(categoria)
-  const InstanciaCategoria = await Categoria.findOne({
-    where: {
-      nombre: categoria
-    }
-  })  
-  console.log(JSON.stringify(InstanciaCategoria))
 
-  Categoria.findAll({
-    include: { 
-      model: Producto,
-      attributes: ['nombre']
-    }
-  }).then((prods) => {res.json(prods)})
-  
-})
-
+//TRAE TODAS LAS CATEGORIAS
 router.get("/", async (req, res) => {
   try {
     const categorias = await Categoria.findAll({
@@ -42,4 +21,56 @@ router.get("/", async (req, res) => {
     res.status(404).json(" Error 404,No se pueden mostrar las categorias");
   }
 });
+
+//TRAE LA CATEGORIA DE ACUERDO AL NOMBRE INGRESADO
+router.get("/:categoria", async (req, res) => {
+  const { categoria } = req.params
+  console.log(categoria)
+  const instanciaCategoria = await Categoria.findOne({
+    where: {
+      nombre: categoria
+    }
+  })  
+  
+  if(instanciaCategoria){
+    res.send(instanciaCategoria)
+  }
+  const categ = await Categoria.findAll()
+  res.send(categ)
+
+})  
+
+//CREAR CATEGORIA
+router.post("/crear", async (req, res) => {
+  try {
+    const { nombre } = req.body;
+    const categoria = await Categoria.create({
+      nombre: nombre,
+    });
+    res.status(200).send(categoria);
+  } catch (error) {
+    res.status(404).send(error);
+  }
+});
+
+// PUT - MODIFICAR CATEGORIA
+router.put("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const producto = await Categoria.findByPk(id);
+    const { nombre } = req.body;
+    if (nombre) {
+      producto.nombre = nombre;
+      producto.save();
+    }
+    res.status(200).send({ msg: "cambios guardados!" });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+
+
+
+
 module.exports = router
