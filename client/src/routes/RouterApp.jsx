@@ -1,6 +1,7 @@
 import Search from "@mui/icons-material/Search";
 import { Route, Routes } from "react-router-dom";
 import { NavBar } from "../components/NavBar";
+import  {DashBoardApp}  from '../dashboard/DashBoardApp';
 import {
   Admin,
   Contact,
@@ -28,7 +29,7 @@ export const RouterApp = () => {
         <Route path="/comprar" element={<Shopping />} />
         <Route path="/contacto" element={<Contact />} />
         <Route path="/user" element={<User />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/*" element={<DashBoardApp />} />
         <Route path="/producto" element={<CrearProducto />} />
         <Route path="/preferencias" element={<Preferencias/>} />
       </Routes>
