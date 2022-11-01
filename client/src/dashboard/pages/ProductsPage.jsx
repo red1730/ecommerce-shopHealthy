@@ -4,13 +4,16 @@ import { useState } from 'react';
 import { Container, Stack, Typography } from '@mui/material';
 // components
 import { ProductSort, ProductList, ProductCartWidget, ProductFilterSidebar } from '../sections/@dashboard/products';
+import { useSelector } from 'react-redux';
 // mock
-import PRODUCTS from '../_mock/products';
+// import PRODUCTS from '../_mock/products';
 
 // ----------------------------------------------------------------------
 
 export default function ProductsPage() {
   const [openFilter, setOpenFilter] = useState(false);
+
+  const {alllProducts} = useSelector(s => s.catalogReducer)
 
   const handleOpenFilter = () => {
     setOpenFilter(true);
@@ -23,7 +26,7 @@ export default function ProductsPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard: Productoss </title>
+        <title> Dashboard: Productos </title>
       </Helmet>
 
       <Container>
@@ -42,7 +45,7 @@ export default function ProductsPage() {
           </Stack>
         </Stack>
 
-        <ProductList products={PRODUCTS} />
+        <ProductList products={alllProducts} />
         <ProductCartWidget />
       </Container>
     </>

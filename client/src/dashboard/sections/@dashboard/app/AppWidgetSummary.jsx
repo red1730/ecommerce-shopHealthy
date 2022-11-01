@@ -59,8 +59,8 @@ export default function AppWidgetSummary({ title, total, icon, color = 'primary'
         <Iconify icon={icon} width={24} height={24} />
       </StyledIcon> */}
       <MiniProductCard product={ {id: 2,
-        cover: `/assets/images/products/product_${2}.jpg`,
-        name: 'Nike Air Force 1 07 LX',
+        cover: `https://dkndrd.com/pf-healthyShop/DEMETER-EL-PAMPA-ORGANICO-NUECES-PECAN-ORGANICAS-500G.jpg`,
+        name: 'NUECES ORGÁNICAS 500GR',
         price: '',
         priceSale: '',
         colors:[],
