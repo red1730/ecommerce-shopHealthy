@@ -1,5 +1,17 @@
 const { Router } = require("express");
 const { Producto, Marca, Categoria } = require("../db");
+// const {API_KEY} = process.env;
+const {check, validationResult}= require('express-validator');
+
+const validateResult =(req,res,next)=>{
+  try {
+    validationResult(req).throw()
+    return next()
+  } catch (error) {
+    res.status(403)
+    res.send({errors:error.array()})
+  }
+}
 
 
 const router = Router();
@@ -95,6 +107,21 @@ router.get("/:id", async (req, res) => {
     res.status(404).json("No existe el producto seleccionado");
   }
 });
+
+//? POST crear PRODUCTO
+router.post("/admin/crear",
+                  check('nombre').exists().not().isEmpty(),
+                  check('descripcion').exists().not().isEmpty().isLength({min:20, max:200}),
+                  check('precio').exists().isNumeric(),
+                  check('stock').exists().isNumeric().not().isEmpty(),
+                  check('img').exists(),
+                  check('categorias').exists().not().isEmpty(),
+                  check('marcaId').exists().not().isEmpty(),
+
+                  (req,res,next)=>{
+                    validateResult(req,res,next)
+                  },
+
 
 
 //POST CREAR PRODUCTO
