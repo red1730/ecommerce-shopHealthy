@@ -21,9 +21,14 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 
 import { createProduct } from "../actions/createProduct";
 
-import { useRef } from "react";
-import { color, style } from "@mui/system";
 
+import Uploady from "@rpldy/uploady";
+import UploadButton from "@rpldy/upload-button";
+
+import "./style.css";
+
+const CLOUD_NAME = "dt9tiuufp",
+  UPLOAD_PRESET = "HealtyFood_image";
 
 
 
@@ -33,26 +38,16 @@ export const Crear_comp = () => {
   const [arrayProductos, setArrayProductos] = useState(null);
   const dispatch = useDispatch();
 
-  const [image, setImage] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const uploadImage = async (e)=> {
-    const files = e.target.files;
-    const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "HealtyFood_image");
-    setLoading(true);
-    const res = await fetch("https://api.cloudinary.com/v1_1/dt9tiuufp/HealtyFood_image/upload",
-    {
-      method: "POST",
-      body: data,
-      mode: 'no-cors'
-    })
-    console.log(res)
-    const file = await res.json();
-    setImage(file.secure_url)
-    setLoading(false)
-  }
+ const subirimagen = <Uploady
+ destination={{
+   url: `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`,
+   params: {
+     upload_preset: UPLOAD_PRESET
+   }
+ }}
+ >
+ <UploadButton><AttachFileIcon/></UploadButton>
+</Uploady>
 
     const [input, setInput] = useState({
     nombre: "",
@@ -187,18 +182,17 @@ export const Crear_comp = () => {
                 ),
               }}
             />
-            <Button variant="contained" component="label">
-              <AttachFileIcon />
-            
-              
-            <input
-                hidden
-                accept="image/*"
-                multiple
-                type="file"
-                onChange={uploadImage}
-              />
-            </Button>
+                        <Uploady
+        destination={{
+          url: `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`,
+          params: {
+            upload_preset: UPLOAD_PRESET
+          }
+        }}
+        >
+        <UploadButton className="buttonupload"><AttachFileIcon/></UploadButton>
+      </Uploady>
+        
           </Box>
 
           <Button

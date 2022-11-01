@@ -1,3 +1,12 @@
 .logos{
     width: 40px;
 }
+.buttonupload{
+    color: #64B98B;
+    border-radius: 5px;
+    border: 1px;
+    margin-top: 2px;
+}
+.buttonupload:hover{
+    color:#4B9B6F ;
+}
