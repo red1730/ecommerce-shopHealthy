@@ -6,6 +6,18 @@ const axios = require("axios");
 // Ejemplo: const authRouter = require('./auth.js');
 const { Producto, Marca, Categoria } = require("../db");
 // const {API_KEY} = process.env;
+const {check, validationResult}= require('express-validator');
+
+const validateResult =(req,res,next)=>{
+  try {
+    validationResult(req).throw()
+    return next()
+  } catch (error) {
+    res.status(403)
+    res.send({errors:error.array()})
+  }
+}
+
 
 const router = Router();
 
@@ -143,23 +155,37 @@ router.put("/categoria/:id", async (req, res) => {
     res.status(400).send(error);
   }
 });
+
 //? POST crear PRODUCTO
+router.post("/admin/crear",
+                  check('nombre').exists().not().isEmpty(),
+                  check('descripcion').exists().not().isEmpty().isLength({min:20, max:200}),
+                  check('precio').exists().isNumeric(),
+                  check('stock').exists().isNumeric().not().isEmpty(),
+                  check('img').exists(),
+                  check('categorias').exists().not().isEmpty(),
+                  check('marcaId').exists().not().isEmpty(),
+
+                  (req,res,next)=>{
+                    validateResult(req,res,next)
+                  },
 
 
-
-router.post("/admin/crear", async (req, res) => {
+  async (req, res) => {
   const categoriasAux = await Categoria.findAll({
     include: [{ model: Producto }],
   });
 
   try {
-    const { nombre, descripcion, precio, stock, imagen, categorias } = req.body;
+    const { nombre, descripcion, precio, stock, img, categorias,marcaId } = req.body;
     const producto = await Producto.create({
       nombre: nombre,
       descripcion: descripcion,
       precio: precio,
       stock: stock,
-      imagen: imagen,
+      img: img,
+      categorias:categorias,
+      marcaId: marcaId
     });
 
     let auxiliar = [];
@@ -240,6 +266,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// BORRAR PRODUCTO....
 router.post("/baja/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
