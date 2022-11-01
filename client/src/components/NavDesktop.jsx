@@ -46,7 +46,7 @@ export const NavDesktop = () => {
         onClick={()=> {dispatch({type:'RESET_CATALOG'})}}
         sx={{  color: 'white', '&:hover':{color:'#485446'}  }}
         component={RouterLink}
-        to='catalogo'
+        to='/catalogo'
       >
         Catálogo
       </Button>
@@ -61,7 +61,7 @@ export const NavDesktop = () => {
         onClick={handleCloseNavMenu}
         sx={{  my:2, color: 'white', '&:hover':{color:'#485446'}  }}
         component={RouterLink}
-        to='contacto'
+        to='/contacto'
       >
         Contacto
       </Button>

@@ -60,7 +60,7 @@ export const NavMobile = () => {
                     textAlign="center"
                     component={RouterLink}
                     sx={{textDecoration:'none', color:'inherit'}}
-                    to='catalogo'
+                    to='/catalogo'
                     onClick={()=> { dispatch({type:'RESET_CATALOG'})}}
                     replace={true}
                     >Catálogo</Typography>
@@ -73,7 +73,7 @@ export const NavMobile = () => {
                     textAlign="center"
                     component={RouterLink}
                     sx={{textDecoration:'none', color:'inherit'}}
-                    to='contacto'
+                    to='/contacto'
                     >Contacto</Typography>
                 </MenuItem>      
               
