@@ -7,9 +7,9 @@ const path = require('path')
  const {
    DB_USER, DB_PASSWORD, DB_HOST
  } = process.env;
- const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/pGrupal`, {
-         logging: false,
-         native: false,
+ const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/PGrupal`, {
+  logging: false,
+  native: false,
        });
 
 
@@ -18,12 +18,12 @@ const path = require('path')
 //     dialect: 'mysql',
 //   }) 
 
-/* const sequelize = new Sequelize('u381026178_eCommerceSalud', 'u381026178_admin', 'Qu&df=#;E2', {
-  host: 'sql811.main-hosting.eu',
-  dialect: 'mysql',
-  logging: false,
-  native: false,
-})  */
+//  const sequelize = new Sequelize('u381026178_eCommerceSalud', 'u381026178_admin', 'Qu&df=#;E2', {
+//   host: 'sql811.main-hosting.eu',
+//   dialect: 'mysql',
+//   logging: false,
+//   native: false,
+// })  
 
 
 sequelize.authenticate().then(() => {
