@@ -3,6 +3,8 @@ const categoriasRuta= require('./categoria')
 const productosRuta= require('./producto')
 const marcasRuta= require('./marca')
 const usuarioruta = require('./usuarios')
+const compraRuta = require('./rutapago')
+const reviewRuta = require('./review')
 const path = require('path');
 const { conn } = require('../db');
 const cargadores = require('../controlers/cargadores');
@@ -20,10 +22,10 @@ router.get("/tresmiluno/", async (req, res) => {
 })
 
 router.get("/tresmiluno/droptodo", async (req, res) => {
-    await conn.query('SET FOREIGN_KEY_CHECKS = 0')
+    // await conn.query('SET FOREIGN_KEY_CHECKS = 0')
     await conn.drop()
     await conn.sync({force: false})
-    await conn.query('SET FOREIGN_KEY_CHECKS = 1')
+    // await conn.query('SET FOREIGN_KEY_CHECKS = 1')
     res.status(418).json({mensaje: 'Volaste todo a la miercoles!'})
     categoriaCarga()
     marcasCarga()
@@ -41,5 +43,6 @@ router.use('/tresmiluno/usuario',usuarioruta)
 router.use('/tresmiluno/producto', productosRuta)
 router.use('/tresmiluno/categoria', categoriasRuta)
 router.use('/tresmiluno/marca',marcasRuta)
-
+router.use('/tresmiluno/compra',compraRuta)
+router.use('/tresmiluno/review',reviewRuta)
 module.exports = router;

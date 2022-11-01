@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -8,6 +9,7 @@ import TextField from "@mui/material/TextField";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import Swal from "sweetalert2";
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -15,74 +17,68 @@ import Container from "@mui/material/Container";
 import AddIcon from "@mui/icons-material/Add";
 import InputAdornment from "@mui/material/InputAdornment";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
-import firebaseApp from "../credenciales";
 
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
-const storage = getStorage(firebaseApp);
+import { createProduct } from "../actions/createProduct";
+
+
+import Uploady from "@rpldy/uploady";
+import UploadButton from "@rpldy/upload-button";
+
+import "./style.css";
+
+const CLOUD_NAME = "dt9tiuufp",
+  UPLOAD_PRESET = "HealtyFood_image";
 
 
 
 
 export const Crear_comp = () => {
+
   const [arrayProductos, setArrayProductos] = useState(null);
+  const dispatch = useDispatch();
 
+ const subirimagen = <Uploady
+ destination={{
+   url: `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`,
+   params: {
+     upload_preset: UPLOAD_PRESET
+   }
+ }}
+ >
+ <UploadButton><AttachFileIcon/></UploadButton>
+</Uploady>
 
+    const [input, setInput] = useState({
+    nombre: "",
+    marca: "",
+    categoria: "",
+    descripcion: "",
+    stock: "",
+    precio: "",
+  });
+  const handleChange = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value, // cargamos los name="" de cada input
+    });
+  };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const nombre = e.target.nombre.value;
-    const marca = e.target.marca.value;
-    const categoria = e.target.categoria.value;
-    const descripcion = e.target.descripcion.value;
-    const stock = e.target.stock.value;
+    dispatch(createProduct(input));
+    Swal.fire("Producto Agregado");
+
+    setInput({
+      // seteo a 0
+      nombre: "",
+      marca: "",
+      categoria: "",
+      descripcion: "",
+      stock: "",
+      precio: "",
+    });
   };
-
-  async function buscarDocumentOrCrearDocumento(idDocumento) {
-    //crear referencia al documento
-    const docuRef = doc(firestore, `usuarios/${idDocumento}`);
-    // buscar documento
-    const consulta = await getDoc(docuRef);
-    // revisar si existe
-    if (consulta.exists()) {
-      // si sí existe
-      const infoDocu = consulta.data();
-      return infoDocu.productos;
-    } else {
-      // si no existe
-      await setDoc(docuRef, { productos: [...fakeData] });
-      const consulta = await getDoc(docuRef);
-      const infoDocu = consulta.data();
-      return infoDocu.productos;
-    }
-  }
-
-  useEffect(() => {
-    async function fetchProductos() {
-      const productosFetchadas = await buscarDocumentOrCrearDocumento(
-        correoUsuario
-      );
-      setArrayProductos(productosFetchadas);
-    }
-
-    fetchProductos();
-  }, []);
-
-
-
-
-
-
-
-  async function filehandler(e) {
-    const archivoLocal = e.target.files[0];    
-    const archivoRef = ref(storage, `documentos/${archivoLocal.nombre}`);
-    await uploadBytes(archivoRef, archivoLocal);
-    const urlDescarga = await getDownloadURL(archivoRef);
-  };
-
-
-
 
   return (
     <Container component="main" maxWidth="xs" sx={{ marginTop: "100px" }}>
@@ -108,9 +104,11 @@ export const Crear_comp = () => {
               <TextField
                 required
                 fullWidth
+                onChange={(e) => handleChange(e)}
+                name="nombre"
                 id="nombre"
                 label="Nombre"
-                name="nombre"
+                value={input.nombre}
                 autoComplete="Nombre"
               />
             </Grid>
@@ -118,7 +116,9 @@ export const Crear_comp = () => {
               <TextField
                 required
                 fullWidth
+                onChange={(e) => handleChange(e)}
                 name="marca"
+                value={input.marca}
                 label="Marca"
                 type="marca"
                 id="marca"
@@ -129,6 +129,8 @@ export const Crear_comp = () => {
               <TextField
                 required
                 fullWidth
+                onChange={(e) => handleChange(e)}
+                value={input.categoria}
                 name="categoria"
                 label="Categoria"
                 type="categoria"
@@ -140,6 +142,8 @@ export const Crear_comp = () => {
               <TextField
                 required
                 fullWidth
+                onChange={(e) => handleChange(e)}
+                value={input.descripcion}
                 name="descripcion"
                 label="Descripcion"
                 type="descripcion"
@@ -153,6 +157,8 @@ export const Crear_comp = () => {
               sx={{ m: 1 }}
               required
               fullWidth
+              onChange={(e) => handleChange(e)}
+              value={input.stock}
               name="stock"
               label="Stock"
               type="stock"
@@ -163,7 +169,9 @@ export const Crear_comp = () => {
               sx={{ m: 1 }}
               required
               fullWidth
-              name="Precio"
+              onChange={(e) => handleChange(e)}
+              value={input.precio}
+              name="precio"
               label="precio"
               type="precio"
               id="precio"
@@ -174,10 +182,17 @@ export const Crear_comp = () => {
                 ),
               }}
             />
-            <Button variant="contained" component="label" >
-              <AttachFileIcon/>
-              <input hidden accept="image/*" multiple type="file" onChange={filehandler}/>
-            </Button>
+                        <Uploady
+        destination={{
+          url: `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`,
+          params: {
+            upload_preset: UPLOAD_PRESET
+          }
+        }}
+        >
+        <UploadButton className="buttonupload"><AttachFileIcon/></UploadButton>
+      </Uploady>
+        
           </Box>
 
           <Button

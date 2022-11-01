@@ -31,7 +31,7 @@ export const RouterApp = () => {
         <Route path="/user" element={<User />} />
         <Route path="/admin/*" element={<DashBoardApp />} />
         <Route path="/producto" element={<CrearProducto />} />
-        <Route path="/preferencias" element={<Preferencias/>} />
+        <Route path="/usuario/:nombre" element={<Preferencias/>} />
       </Routes>
     </>
   );

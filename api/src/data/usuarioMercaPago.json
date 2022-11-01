@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1227569427,
+    "nickname": "TETE7559172",
+    "password": "VBeLbbpGzL",
+    "site_status": "active",
+    "site_id": "MLA",
+    "description": "a description",
+    "date_created": "2022-10-29T00:03:12-04:00",
+    "date_last_updated": "2022-10-29T00:03:12-04:00",
+    "credential":{
+      "test":{
+        "access_token":"APP_USR-5158522346025867-102900-89c445a71a382a2c711e2c60691415a9-1227569427",
+        "publi_key":"APP_USR-cd42f506-59dc-44c5-8848-e7f4dbd467cc"
+      }
+    }
+  },
+  {
+    "id": 1227571812,
+    "nickname": "TEST9OTUI1JM",
+    "password": "ojkAlcbNjL",
+    "site_status": "active",
+    "site_id": "MLA",
+    "description": "a description",
+    "date_created": "2022-10-29T00:06:21-04:00",
+    "date_last_updated": "2022-10-29T00:06:21-04:00",
+    "credential":{
+      "test":{
+        "access_token":"TEST-1163891699055312-102900-b6011380440c5b998a4457210f7d03c6-1227571812",
+        "publi_key":"TEST-1fa6fefc-53f5-45d4-acac-e7a88b523607"
+      }
+    }
+  }
+]
