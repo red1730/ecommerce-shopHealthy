@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -17,65 +17,44 @@ import Container from "@mui/material/Container";
 import AddIcon from "@mui/icons-material/Add";
 import InputAdornment from "@mui/material/InputAdornment";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
-import firebaseApp from "../credenciales";
+
 
 import { createProduct } from "../actions/createProduct";
 
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { useRef } from "react";
 import { color, style } from "@mui/system";
 
-const firestore = getFirestore();
-const storage = getStorage(firebaseApp);
+
+
+
 
 export const Crear_comp = () => {
+
   const [arrayProductos, setArrayProductos] = useState(null);
   const dispatch = useDispatch();
 
-  //Firebase
-  async function buscarDocumentOrCrearDocumento(idDocumento) {
-    //crear referencia al documento
-    const docuRef = doc(firestore, `usuarios/${idDocumento}`);
-    // buscar documento
-    const consulta = await getDoc(docuRef);
-    // revisar si existe
-    if (consulta.exists()) {
-      // si sí existe
-      const infoDocu = consulta.data();
-      return infoDocu.productos;
-    } else {
-      // si no existe
-      await setDoc(docuRef, { productos: [..."no foto"] });
-      const consulta = await getDoc(docuRef);
-      const infoDocu = consulta.data();
-      return infoDocu.productos;
-    }
-  }
-  useEffect(() => {
-    async function fetchProductos() {
-      const productosFetchadas = await buscarDocumentOrCrearDocumento();
-      // correoUsuario
-      setArrayProductos(productosFetchadas);
-    }
-    fetchProductos();
-  }, []);
+  const [image, setImage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  async function filehandler(e) {
-    const archivoLocal = e.target.files[0];
-    const archivoRef = ref(storage, `documentos/${archivoLocal.nombre}`);
-    await uploadBytes(archivoRef, archivoLocal);
-    const urlDescarga = await getDownloadURL(archivoRef);
+  const uploadImage = async (e)=> {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "HealtyFood_image");
+    setLoading(true);
+    const res = await fetch("https://api.cloudinary.com/v1_1/dt9tiuufp/HealtyFood_image/upload",
+    {
+      method: "POST",
+      body: data,
+      mode: 'no-cors'
+    })
+    console.log(res)
+    const file = await res.json();
+    setImage(file.secure_url)
+    setLoading(false)
   }
 
-  // const inputNombre = useRef(null);
-  // const inputMarca = useRef(null);
-  // const inputCategoria = useRef(null);
-  // const inputDescripcion = useRef(null);
-  // const inputStock = useRef(null);
-  // const inputPrecio = useRef(null);
-
-  const [input, setInput] = useState({
+    const [input, setInput] = useState({
     nombre: "",
     marca: "",
     categoria: "",
@@ -84,11 +63,11 @@ export const Crear_comp = () => {
     precio: "",
   });
   const handleChange = (e) => {
-      setInput({
-        ...input,
-        [e.target.name]: e.target.value, // cargamos los name="" de cada input
-      });
-    };
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value, // cargamos los name="" de cada input
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -131,7 +110,7 @@ export const Crear_comp = () => {
                 required
                 fullWidth
                 onChange={(e) => handleChange(e)}
-                name= "nombre"
+                name="nombre"
                 id="nombre"
                 label="Nombre"
                 value={input.nombre}
@@ -210,13 +189,14 @@ export const Crear_comp = () => {
             />
             <Button variant="contained" component="label">
               <AttachFileIcon />
-
-              <input
+            
+              
+            <input
                 hidden
                 accept="image/*"
                 multiple
                 type="file"
-                onChange={filehandler}
+                onChange={uploadImage}
               />
             </Button>
           </Box>
