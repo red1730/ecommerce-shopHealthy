@@ -46,6 +46,12 @@ function Copyright(props) {
 
 
 export const Login_comp =  () => {
+  const[titulo, setTitulo]=React.useState('')
+  const[leyenda, setLeyenda]=React.useState('')
+  const[errorTitulo, setErrorTitulo]=React.useState(false)
+  var strongRegex = new RegExp("^(?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[!@#$%^&*])(?=.{8,})")
+  var emailRegex = new RegExp("^([A-Za-z]|[0-9])+$")
+
   const {dispatch} = useContext(AuthContext); 
   // console.log(user)
   let navigate = useNavigate();
@@ -149,6 +155,7 @@ export const Login_comp =  () => {
 
 
 
+
   return (
       <Container component="main" maxWidth="xs" sx={{marginTop:"100px"}}>
         <CssBaseline />
@@ -173,6 +180,16 @@ export const Login_comp =  () => {
             sx={{ mt: 1 }}
           >
             <TextField
+              onChange={(e)=>{setTitulo(e.target.value);
+                if(emailRegex.test(titulo)){
+                setErrorTitulo(true)
+                setLeyenda('Email no valido')
+              }else{
+                setErrorTitulo(false)
+                setLeyenda('')
+              }}}
+              error={errorTitulo}
+              helperText={leyenda}
               margin="normal"
               required
               fullWidth
@@ -183,6 +200,19 @@ export const Login_comp =  () => {
               autoFocus
             />
             <TextField
+              
+              onChange={(e)=>{setTitulo(e.target.value);
+                    if(strongRegex.test(titulo)){
+                    setErrorTitulo(true)
+                    setLeyenda('Contraseña insegura, ingrese otra mas fuerte')
+                  }else{
+                    setErrorTitulo(false)
+                    setLeyenda('')
+                  }
+                }
+              }
+                  error={errorTitulo}
+                  helperText={leyenda}
               margin="normal"
               required
               fullWidth

@@ -15,42 +15,53 @@ import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
 
 export const Contact_comp = () => {
+  const[titulo, setTitulo]=React.useState('')
+  const[leyenda, setLeyenda]=React.useState('')
+  const[errorTitulo, setErrorTitulo]=React.useState(false)
+  var emailRegex = new RegExp("^([A-Za-z]|[0-9])+$")
   let navigate = useNavigate();
   const dispatch = useDispatch()
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      comment: data.get("comment"),
-    });
-
-    const info = {
-      nombre: data.get("firstname"),
-      email: data.get("email"),
-      mensaje: data.get("comment"),
-    }
-
-    dispatch(postContactoMensaje(info))
-    
+    if(!errorTitulo){
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      console.log({
+        email: data.get("email"),
+        comment: data.get("comment"),
+      });
+  
+      const info = {
+        nombre: data.get("firstname"),
+        email: data.get("email"),
+        mensaje: data.get("comment"),
+      }
+  
+      dispatch(postContactoMensaje(info))
+      
+        Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Tu mensaje ha sido enviado con Exito!',
+        showConfirmButton: false,
+        timer: 2500
+      })
+  
+        setTimeout(function(){
+          navigate('/catalogo') 
+        }, 3000);
+  
+    }else{
       Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Tu mensaje ha sido enviado con Exito!',
-      showConfirmButton: false,
-      timer: 2500
-    })
+        position: 'center',
+        icon: 'error',
+        title: 'Oopssss....!',
+        text:'Por favor complete el formulario.'
+      });
+    }
+    
 
-      setTimeout(function(){
-        navigate('/catalogo') 
-      }, 3000);
-
-  };
-
-  const[titulo, setTitulo]=React.useState('')
-  const[leyenda, setLeyenda]=React.useState('')
-  const[errorTitulo, setErrorTitulo]=React.useState(false)
+ 
 
   return (
     // <ThemeProvider theme={theme}>
@@ -105,9 +116,9 @@ export const Contact_comp = () => {
                   required
                   fullWidth
                   onChange={(e)=>{setTitulo(e.target.value);
-                    if(titulo.length >25){
+                    if(emailRegex.test(titulo)){
                     setErrorTitulo(true)
-                    setLeyenda('Nombre no puede contener mas de 25 caracteres.')
+                    setLeyenda('Email no valido')
                   }else{
                     setErrorTitulo(false)
                     setLeyenda('')
@@ -119,19 +130,19 @@ export const Contact_comp = () => {
                   name="email"
                   autoComplete="email"
                 />
- {/* <TextField
-          error
-          id="outlined-error-helper-text"
-          label="Error"
-          defaultValue="Hello World"
-          helperText="Incorrect entry."
-        /> */}
-
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  onChange={(e)=>{setTitulo(e.target.value)}}
+                  onChange={(e)=>{setTitulo(e.target.value);
+                     if(titulo.length < 10 && titulo.length > 500){
+                    setErrorTitulo(true)
+                    setLeyenda('Escribe al menos 5 palabras')
+                  }else{
+                    setErrorTitulo(false)
+                    setLeyenda('')
+                  }
+                }}
                   error={errorTitulo}
                   helperText={leyenda}
                   name="comment"
@@ -157,4 +168,5 @@ export const Contact_comp = () => {
         </Box>
       </Container>
   );
-};
+}
+}
