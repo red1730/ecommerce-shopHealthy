@@ -27,6 +27,7 @@ export const Contact_comp = () => {
     });
 
     const info = {
+      nombre: data.get("firstname"),
       email: data.get("email"),
       mensaje: data.get("comment"),
     }
@@ -46,6 +47,10 @@ export const Contact_comp = () => {
       }, 3000);
 
   };
+
+  const[titulo, setTitulo]=React.useState('')
+  const[leyenda, setLeyenda]=React.useState('')
+  const[errorTitulo, setErrorTitulo]=React.useState(false)
 
   return (
     // <ThemeProvider theme={theme}>
@@ -78,6 +83,17 @@ export const Contact_comp = () => {
                   name="firstName"
                   required
                   fullWidth
+                  onChange={(e)=>{setTitulo(e.target.value);
+                  if(titulo.length >25){
+                    setErrorTitulo(true)
+                    setLeyenda('Nombre no puede contener mas de 25 caracteres.')
+                  }else{
+                    setErrorTitulo(false)
+                    setLeyenda('')
+                  }
+                  }}
+                  error={errorTitulo}
+                  helperText={leyenda}
                   id="firstName"
                   label="Nombre"
                   autoFocus
@@ -88,15 +104,36 @@ export const Contact_comp = () => {
                 <TextField
                   required
                   fullWidth
+                  onChange={(e)=>{setTitulo(e.target.value);
+                    if(titulo.length >25){
+                    setErrorTitulo(true)
+                    setLeyenda('Nombre no puede contener mas de 25 caracteres.')
+                  }else{
+                    setErrorTitulo(false)
+                    setLeyenda('')
+                  }}}
+                  error={errorTitulo}
+                  helperText={leyenda}
                   id="email"
                   label="Email"
                   name="email"
                   autoComplete="email"
                 />
+ {/* <TextField
+          error
+          id="outlined-error-helper-text"
+          label="Error"
+          defaultValue="Hello World"
+          helperText="Incorrect entry."
+        /> */}
+
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
+                  onChange={(e)=>{setTitulo(e.target.value)}}
+                  error={errorTitulo}
+                  helperText={leyenda}
                   name="comment"
                   label="Mensaje..."
                   type="comment"

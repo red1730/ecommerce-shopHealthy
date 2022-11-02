@@ -31,7 +31,7 @@ const firestore = getFirestore();
 const storage = getStorage(firebaseApp);
 
 
-import { createProduct } from "../actions/createProduct";
+
 
 
 import Uploady from "@rpldy/uploady";
@@ -121,7 +121,7 @@ export const Crear_comp = () => {
     categoria: "",
     descripcion: "",
     stock: "",
-    precio: "",
+    precio: ""
   });
   const handleChange = (e) => {
     setInput({
