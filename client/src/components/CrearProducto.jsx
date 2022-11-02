@@ -20,13 +20,6 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 
 import firebaseApp from "../credenciales";
 
-
-
-
-import { createProduct } from "../actions/createProduct";
-
-
-
 const firestore = getFirestore();
 const storage = getStorage(firebaseApp);
 
