@@ -9,6 +9,8 @@ import MarkunreadMailboxIcon from "@mui/icons-material/MarkunreadMailbox";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
+import {Footer_comp} from "./Footer";
+
 import { postContactoMensaje } from '../actions/contactoMail'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
@@ -75,7 +77,7 @@ export const Contact_comp = () => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
             <MarkunreadMailboxIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -166,6 +168,7 @@ export const Contact_comp = () => {
             </Grid>
           </Box>
         </Box>
+        <Footer_comp/>
       </Container>
   );
 }

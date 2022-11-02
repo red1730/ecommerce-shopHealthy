@@ -18,6 +18,7 @@
 // import InputAdornment from "@mui/material/InputAdornment";
 // import AttachFileIcon from "@mui/icons-material/AttachFile";
 
+<<<<<<< HEAD
 // import firebaseApp from "../credenciales";
 
 
@@ -30,6 +31,8 @@
 // const firestore = getFirestore();
 // const storage = getStorage(firebaseApp);
 
+=======
+>>>>>>> main
 
 
 
@@ -43,11 +46,18 @@
 //   UPLOAD_PRESET = "HealtyFood_image";
 
 
+<<<<<<< HEAD
 // export const Crear_comp = () => {
+=======
+
+
+export const Crear_comp = () => {
+>>>>>>> main
 
 //   const [arrayProductos, setArrayProductos] = useState(null);
 //   const dispatch = useDispatch();
 
+<<<<<<< HEAD
 
 //   //Firebase
 //   async function buscarDocumentOrCrearDocumento(idDocumento) {
@@ -129,6 +139,33 @@
 //       [e.target.name]: e.target.value, // cargamos los name="" de cada input
 //     });
 //   };
+=======
+ const subirimagen = <Uploady
+ destination={{
+   url: `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`,
+   params: {
+     upload_preset: UPLOAD_PRESET
+   }
+ }}
+ >
+ <UploadButton><AttachFileIcon/></UploadButton>
+</Uploady>
+
+    const [input, setInput] = useState({
+    nombre: "",
+    marca: "",
+    categoria: "",
+    descripcion: "",
+    stock: "",
+    precio: "",
+  });
+  const handleChange = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value, // cargamos los name="" de cada input
+    });
+  };
+>>>>>>> main
 
 //   const handleSubmit = (e) => {
 //     e.preventDefault();
@@ -146,6 +183,7 @@
 //     });
 //   };
 
+<<<<<<< HEAD
 //   return (
 //     <Container component="main" maxWidth="xs" sx={{ marginTop: "100px" }}>
 //       <CssBaseline />
@@ -287,6 +325,122 @@
         
 
 //           </Box>
+=======
+  return (
+    <Container component="main" maxWidth="xs" sx={{ marginTop: "100px" }}>
+      <CssBaseline />
+      <Box
+        onSubmit={handleSubmit}
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <AddIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Agregar Producto
+        </Typography>
+        <Box component="form" sx={{ mt: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                onChange={(e) => handleChange(e)}
+                name="nombre"
+                id="nombre"
+                label="Nombre"
+                value={input.nombre}
+                autoComplete="Nombre"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                onChange={(e) => handleChange(e)}
+                name="marca"
+                value={input.marca}
+                label="Marca"
+                type="marca"
+                id="marca"
+                autoComplete="marca"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                onChange={(e) => handleChange(e)}
+                value={input.categoria}
+                name="categoria"
+                label="Categoria"
+                type="categoria"
+                id="categoria"
+                autoComplete="categoria"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                onChange={(e) => handleChange(e)}
+                value={input.descripcion}
+                name="descripcion"
+                label="Descripcion"
+                type="descripcion"
+                id="descripcion"
+                autoComplete="descripcion"
+              />
+            </Grid>
+          </Grid>
+          <Box sx={{ display: "flex", flexGrow: "grow" }}>
+            <TextField
+              sx={{ m: 1 }}
+              required
+              fullWidth
+              onChange={(e) => handleChange(e)}
+              value={input.stock}
+              name="stock"
+              label="Stock"
+              type="stock"
+              id="stock"
+              autoComplete="stock"
+            />
+            <TextField
+              sx={{ m: 1 }}
+              required
+              fullWidth
+              onChange={(e) => handleChange(e)}
+              value={input.precio}
+              name="precio"
+              label="precio"
+              type="precio"
+              id="precio"
+              autoComplete="precio"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">$</InputAdornment>
+                ),
+              }}
+            />
+                        <Uploady
+        destination={{
+          url: `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`,
+          params: {
+            upload_preset: UPLOAD_PRESET
+          }
+        }}
+        >
+        <UploadButton className="buttonupload"><AttachFileIcon/></UploadButton>
+      </Uploady>
+        
+          </Box>
+>>>>>>> main
 
 //           <Button
 //             type="submit"
