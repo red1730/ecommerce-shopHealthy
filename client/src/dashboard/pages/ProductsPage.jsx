@@ -1,19 +1,27 @@
 import { Helmet } from 'react-helmet-async';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // @mui
 import { Container, Stack, Typography } from '@mui/material';
 // components
 import { ProductSort, ProductList, ProductCartWidget, ProductFilterSidebar } from '../sections/@dashboard/products';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { initProducts } from '../../actions/getInitProducts';
 // mock
 // import PRODUCTS from '../_mock/products';
 
 // ----------------------------------------------------------------------
 
 export default function ProductsPage() {
+
+  const dispatch = useDispatch()
+
   const [openFilter, setOpenFilter] = useState(false);
 
-  const {alllProducts} = useSelector(s => s.catalogReducer)
+  const {allProducts} = useSelector(s => s.catalogReducer)
+
+  useEffect(() => {
+    dispatch(initProducts())
+  }, [dispatch]);
 
   const handleOpenFilter = () => {
     setOpenFilter(true);
@@ -45,8 +53,8 @@ export default function ProductsPage() {
           </Stack>
         </Stack>
 
-        <ProductList products={alllProducts} />
-        <ProductCartWidget />
+        <ProductList products={allProducts} />
+        {/* <ProductCartWidget /> */}
       </Container>
     </>
   );

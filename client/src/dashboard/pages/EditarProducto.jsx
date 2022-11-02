@@ -1,12 +1,13 @@
-import PropTypes from 'prop-types';
-// @mui
 import { Box, Card, Link, Typography, Stack, capitalize, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 // utils
-import { fCurrency } from '../../../utils/formatNumber';
+import { fCurrency } from '../utils/formatNumber';
 // components
-import Label from '../../../components/label';
-import { ColorPreview } from '../../../components/color-utils';
+import Label from '../components/label';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProductById } from '../../helpers/getProductById';
 
 // ----------------------------------------------------------------------
 
@@ -24,11 +25,37 @@ const StyledProductImg = styled('img')({
 //   product: PropTypes.object,
 // };
 
-export default function ShopProductCard({ product }) {
-  const { img, nombre, precio,id, activo} = product;
+export default function EditarProducto() {
+
+  const { id } = useParams();
+  const [product, setProduct] = useState ({});
+
+  const dispatch = useDispatch ();
+  const { isLoading } = useSelector ((state) => state.catalogReducer);
+
+  const navigate = useNavigate ();
+
+  useEffect(() => {
+    const getProduct = async () => {
+      dispatch({ type: "SET_ISLOADING_TRUE" });
+      try {
+        const productAux = await getProductById(id);
+        setProduct(productAux);
+      } catch (error) {
+        console.log("cayo el bendito back otra vez!");
+      }
+      return dispatch({ type: "SET_ISLOADING_FALSE" });
+    };
+    getProduct();
+  }, [id, dispatch, navigate]);
+    
+  const { nombre, precio, img, stock, activo } = product;
+
+
+  if(isLoading) return <Typography variant='h3' m='0 auto' >Cargando...</Typography>
 
   return (
-    <Card sx={{boxShadow:15}} >
+    <Card sx={{boxShadow:15, width:'40%',m:'0 auto'}} >
       <Box sx={{ pt: '100%', position: 'relative' }}>
         
           {!activo && <Label
@@ -50,7 +77,7 @@ export default function ShopProductCard({ product }) {
       <Stack spacing={2} sx={{ p: 3 }}>
         {/* <Link color="inherit" underline="hover"> */}
           <Typography variant="subtitle2" noWrap>
-            {capitalize(nombre)}
+            {nombre.toUpperCase()}
           </Typography>
         {/* </Link> */}
 
