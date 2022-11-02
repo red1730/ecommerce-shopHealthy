@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography, Stack } from '@mui/material';
-// import {StarIcon} from '@mui/icons-material';
+import StarIcon from '@mui/icons-material/Star';
 // components
 import Iconify from '../components/iconify';
 // sections
@@ -29,21 +29,17 @@ export default function DashboardAppPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard | Minimal UI </title>
+        <title> Healthy Shop | dashboard </title>
       </Helmet>
 
       <Container maxWidth="xl">
-        <Typography variant="h4" sx={{ mb: 5 }}>
-          Hola, bienvenido al HelthyShop Dashboard
+        <Typography  variant="h4" sx={{ mb: 5 }}>
+          Hola, bienvenido al Dashboard de Healthy Shop 👋
         </Typography>
 
         <Grid container spacing={3}>
-          <Grid item xs={12} sx={{display:'flex', justifyContent:'center'}} >
-            <Stack>
-              {/* <StarIcon/> */}
-              <Typography sta variant='h5' sx={{fontWeight:700,}} >TOP 3 PRODUCTOS MAS VENDIDOS</Typography>
-
-            </Stack>
+          <Grid item xs={12} sx={{display:'flex', justifyContent:'center', alignItems:'center', textAlign:'center', mt:0 }} >
+              <Typography variant='h5' sx={{fontWeight:700, }} > <StarIcon sx={{ color:t=>t.palette.primary.main, mt:-0.5 }} /> TOP 3 PRODUCTOS MAS VENDIDOS</Typography>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <AppWidgetSummary title="Ventas Concretadas" top={1} total={120} icon={'ant-design:android-filled'} />

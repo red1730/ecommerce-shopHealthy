@@ -2,6 +2,7 @@ import Search from "@mui/icons-material/Search";
 import { Route, Routes } from "react-router-dom";
 import { NavBar } from "../components/NavBar";
 import  {DashBoardApp}  from '../dashboard/DashBoardApp';
+import RouterDashBoard from "../dashboard/routes";
 import {
   Admin,
   Contact,
@@ -15,21 +16,20 @@ import {
   CrearProducto,
   Preferencias,
 } from "../pages/index";
+import { CatalogoRouter } from "./CatalogoRouter";
 
 export const RouterApp = () => {
   return (
     <>
-      <NavBar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/catalogo" element={<Home />} />
-        <Route path="/catalogo/:id" element={<ProductDetail />} />
+        <Route path="/catalogo/*" element={<CatalogoRouter />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Register />} />
         <Route path="/comprar" element={<Shopping />} />
         <Route path="/contacto" element={<Contact />} />
         <Route path="/user" element={<User />} />
-        <Route path="/admin/*" element={<DashBoardApp />} />
+        <Route path="/admin/*" element={<RouterDashBoard />} />
         <Route path="/producto" element={<CrearProducto />} />
         <Route path="/usuario/:nombre" element={<Preferencias/>} />
       </Routes>
