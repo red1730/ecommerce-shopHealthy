@@ -18,6 +18,14 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    edad:{
+      type:DataTypes.INTEGER,
+      allowNull:false,
+    },
+    genero:{
+      type:DataTypes.STRING,
+      allowNull:false,
+    },
     telefono: {
       type: DataTypes.BIGINT,
       allowNull: true,
@@ -29,6 +37,10 @@ module.exports = (sequelize) => {
     },
     direccion: {
       type: DataTypes.STRING,
+      allowNull: false,
+    },
+    num_dir: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     dni: {
