@@ -108,7 +108,8 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-//? POST crear PRODUCTO
+
+//POST CREAR PRODUCTO
 router.post("/admin/crear",
                   check('nombre').exists().not().isEmpty(),
                   check('descripcion').exists().not().isEmpty().isLength({min:20, max:200}),
@@ -120,12 +121,8 @@ router.post("/admin/crear",
 
                   (req,res,next)=>{
                     validateResult(req,res,next)
-                  },
+                  }), async (req,res)=>{
 
-
-
-//POST CREAR PRODUCTO
-router.post("/admin/crear", async (req,res)=>{
   try{
     const { nombre, precio, img, stock, descripcion, marcaId, categorias } = req.body;
     const nuevoProducto = await Producto.create({
@@ -148,7 +145,7 @@ router.post("/admin/crear", async (req,res)=>{
   }catch(error){
     res.status(400).send(error)
   }
-})
+}
 
 
 //PUT MODIFICAR PRODUCTO
