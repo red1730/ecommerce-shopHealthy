@@ -66,11 +66,11 @@ export const Preferencias_comp = () => {
         <Typography component="h1" variant="h5">
           Perfil
         </Typography>
-        <Box component="form" sx={{ mt: 3 }}>
+        <Box component="form" sx={{ mt: 2 }}>
           <Grid container spacing={2}>
             <Box sx={{ display: "flex", flexGrow: "grow" }}>
               <TextField
-                sx={{ m: 2 }}
+                sx={{ m: 1 }}
                 id="nombre"
                 label="Nombre"
                 name="nombre"
@@ -79,7 +79,7 @@ export const Preferencias_comp = () => {
                 onChange={(e) => handleChange(e)}
               />
               <TextField
-                sx={{ m: 2, wigth:200 }}
+                sx={{ m: 1, wigth:200 }}
                 name="apellido"
                 label="Apellido"
                 type="apellido"
