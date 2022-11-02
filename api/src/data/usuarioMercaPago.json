@@ -30,5 +30,32 @@
         "publi_key":"TEST-1fa6fefc-53f5-45d4-acac-e7a88b523607"
       }
     }
+  },
+
+  {
+    "items": [
+      {
+        "id": "1234",
+        "title": "Lightweight Paper Table",
+        "description": "Inspired by the classic foldable art of origami",
+        "category_id": "1",
+        "quantity": 3,
+        "currency_id": "ARS",
+        "unit_price": 55.41
+      }
+    ],
+    "payer": {
+      "name": "Chirango",
+      "surname": "El chambo",
+      "email": "elchapo@gmail.com",
+      "identification": {
+        "type": "DNI",
+        "number": "12345678"
+      }
+    }
   }
+  
 ]
+
+
+
