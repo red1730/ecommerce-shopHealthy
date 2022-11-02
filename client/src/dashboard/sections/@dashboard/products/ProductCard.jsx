@@ -7,6 +7,7 @@ import { fCurrency } from '../../../utils/formatNumber';
 // components
 import Label from '../../../components/label';
 import { ColorPreview } from '../../../components/color-utils';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
@@ -26,6 +27,7 @@ const StyledProductImg = styled('img')({
 
 export default function ShopProductCard({ product }) {
   const { img, nombre, precio,id, activo} = product;
+  const navigate = useNavigate()
 
   return (
     <Card sx={{boxShadow:15}} >
@@ -56,7 +58,7 @@ export default function ShopProductCard({ product }) {
 
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           {/* <ColorPreview colors={colors} /> */}
-          <Button variant='contained' >Editar</Button>
+          <Button variant='contained' onClick={()=>navigate(`/admin/dashboard/products/${id}`) } >Editar</Button>
           <Typography variant="subtitle1">
             <Typography
               component="span"

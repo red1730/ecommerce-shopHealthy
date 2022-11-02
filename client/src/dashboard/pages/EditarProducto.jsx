@@ -1,7 +1,11 @@
 import React from 'react';
-import { Box, Card, Link, Typography, Stack, capitalize, Button, TextField, Alert, InputLabel, FormControl } from '@mui/material';
+import { Box, Card, Link, Typography, Stack, capitalize, Button, TextField, Alert, InputLabel, FormControl, Select, MenuItem, Skeleton, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import { styled,alpha } from '@mui/material/styles';
+import Switch from '@mui/material/Switch';
 import InputBase from '@mui/material/InputBase';
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+
 // utils
 import { fCurrency } from '../utils/formatNumber';
 // components
@@ -12,13 +16,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProductById } from '../../helpers/getProductById';
 import { useForm, Controller } from "react-hook-form";
 import { LoadingButton } from '@mui/lab';
+import {CategoriaMultiple} from '../components/CategoriaMultiple';
 
 // ----------------------------------------------------------------------
+import { categorias } from '../../helpers/categoriasPrueba';
+import UploadButton from '../components/UploadButton';
+const ITEM_HEIGHT = 60;
+const ITEM_PADDING_TOP = 0;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 const StyledProductImg = styled('img')({
-  top: 0,
-  width: '100%',
-  height: '100%',
+  top: 20,
+  width: '60%',
   objectFit: 'cover',
   position: 'absolute',
 });
@@ -56,6 +72,10 @@ export default function EditarProducto() {
 
   const { id } = useParams();
   const [product, setProduct] = useState ({});
+  const [image, setImage] = useState('');
+  const [load, setLoad] = useState(null);
+  const [fileSrc, setFileScr] = useState(null)
+  const [dataPost, setDataPost] = useState({})
 
   const dispatch = useDispatch ();
   const { isLoading } = useSelector ((state) => state.catalogReducer);
@@ -76,29 +96,43 @@ export default function EditarProducto() {
     getProduct();
   }, [id, dispatch, navigate]);
     
-  const { nombre, precio, img, stock, activo, descripcion } = product;
-  console.log(nombre)
+  const { nombre, precio, img, stock, activo, descripcion, marca, categoria } = product;
+  const { handleSubmit, formState:{errors}, control, } = useForm();
 
-  const { handleSubmit, formState:{errors}, control } = useForm({
-    defaultValues:{
-        nombre:nombre,
-        precio,
-        stock,
-        activo,
-        descripcion
-    }
-  });
-  const onSubmit = e=>{
-    e.preventDefault();
-    console.log(e)
+
+  const onSubmit = (data)=>{
+
+    console.log(data);
+    setDataPost(data)
   }
+  const uploadImage = async(e) =>{
+    const files = e.target.files;
+    setFileScr(e.target.files[0])
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "ykaylnwx");
+    setLoad(true);
+    console.log(data)
+    console.log(files)
+    const res = await fetch(
+        'https://api.cloudinary.com/v1_1/dw8jw0zhx/image/upload',
+        {
+            method:"POST",
+            body:data
+        }
+    )
+    const file = await res.json();
+    setImage(file.secure_url);
+    setLoad(false);
+}
 
-  if(isLoading) return <Typography variant='h3' m='0 auto' >Cargando...</Typography>
+
+  if(!nombre) return <Typography variant='h3' m='0 auto' >Cargando...</Typography>
 
   return (
     <>
-    <Card sx={{boxShadow:15, width:{xs:'100%',md:'40%'}, m:'0 auto'}} >
-      <Box sx={{ pt: '100%', position: 'relative', }}>
+      <Card sx={{boxShadow:15, width:{xs:'100%',md:'60%'}, m:'0 auto'}} >
+      <Box sx={{ pt: '70%', position: 'relative', display:'flex', justifyContent:'center', alignItems:'center'}}>
         
           {!activo && <Label
             variant="filled"
@@ -113,32 +147,30 @@ export default function EditarProducto() {
           >
             {'inactivo'}
           </Label>}
-        
-        <StyledProductImg alt={nombre} src={`https://dkndrd.com/pf-healthyShop/${img}`} />
+
+            
+          <IconButton color="primary" aria-label="upload picture" component="label" sx={{
+              zIndex: 90,
+              top: 16,
+              left: 16,
+              position: 'absolute',
+              textTransform: 'uppercase',
+            }}>
+            <input hidden accept="image/*" type="file" name='file' onChange={uploadImage} />
+            <PhotoCamera fontSize='large'/>
+          </IconButton>
+                
+        {!load? <StyledProductImg alt={nombre} src={image || `https://dkndrd.com/pf-healthyShop/${img}`} />: <Typography sx={{zIndex:100, m:"0 auto"}}>Loading..</Typography>}
       </Box>
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <Stack spacing={1}>
+        <form onSubmit={handleSubmit(d=>onSubmit(d))}>
+        <Stack spacing={1} sx={{m:2}} >
                 <Controller 
                     name="nombre"
+                    defaultValue={nombre}
                     control={control}
-                    rules={{ required: true }}
+                    rules={{ required: true, maxLength:100 }}
                     render={({ field }) => <RedditTextField
-                                            label="Nombre"
-                                            id="nombre"
-                                            variant="filled"
-                                            style={{ marginTop: 11 }}
-                                            {...field}
-                                        />}
-                
-                />
-                {errors.nombre?.type === 'required' &&  <Alert sx={{height:'25px', p:0, m:0}} severity="error">El nombre es requerido</Alert>}
-                <Controller 
-                    name="marca"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => <RedditTextField
-                                            label="Precio"
-                                            defaultValue={precio}
+                                            label="Nombre*"
                                             id="precio"
                                             variant="filled"
                                             style={{ marginTop: 11 }}
@@ -146,14 +178,68 @@ export default function EditarProducto() {
                                         />}
                 
                 />
-                {errors.nombre?.type === 'required' &&  <Alert sx={{height:'25px', p:0, m:0}} severity="error">El nombre es requerido</Alert>}
+                {errors?.nombre?.type === 'required' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">El nombre es requerido</Alert>}
+                {errors?.nombre?.type === 'maxLength' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">Maximo 100 caracteres </Alert>}
                 <Controller 
-                    name="categoria"
+                    name="precio"
                     control={control}
-                    rules={{ required: true }}
+                    rules={{ required: true, min:1, max:10000, pattern:/^([0-9])*$/ }}
+                    defaultValue={precio}
                     render={({ field }) => <RedditTextField
-                                            label="Stock"
-                                            defaultValue={stock}
+                                            label="Precio (arg)*"
+                                            id="precio"
+                                            variant="filled"
+                                            style={{ marginTop: 11 }}
+                                            {...field}
+                                        />}
+                
+                />
+                {errors?.precio?.type === 'required' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">El precio es requerido</Alert>}
+                {errors?.precio?.type === 'min' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">El precio mínimo es 1 </Alert>}
+                {errors?.precio?.type === 'max' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">El precio máximo es 10000 </Alert>}
+                {errors?.precio?.type === 'pattern' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">Solo números son validos </Alert>}
+                <Controller 
+                    name="marca"
+                    control={control}
+                    rules={{ required: true, maxLength:20 }}
+                    defaultValue={marca?.nombre||''}
+                    render={({ field }) => <RedditTextField
+                                            label="Marca*"
+                                            id="marca"
+                                            variant="filled"
+                                            style={{ marginTop: 11 }}
+                                            {...field}
+                                        />}
+                
+                />
+                {errors.marca?.type === 'required' &&  <Alert sx={{height:'25px', p:0, m:0}} severity="error">El nombre de la marca es requerido</Alert>}
+                {errors.marca?.type === 'maxLength' &&  <Alert sx={{height:'25px', p:0, m:0}} severity="error">Maximo 20 caracteres </Alert>}
+                
+                {errors.marca?.type === 'required' &&  <Alert sx={{height:'25px', p:0, m:0}} severity="error">El nombre de la marca es requerido</Alert>}
+                {errors.marca?.type === 'maxLength' &&  <Alert sx={{height:'25px', p:0, m:0}} severity="error">Maximo 20 caracteres </Alert>}
+                <Controller 
+                    name="descripcion"
+                    control={control}
+                    rules={{maxLength:300 }}
+                    defaultValue={descripcion}
+                    render={({ field }) => <RedditTextField
+                                            label="Descripcion*"
+                                            multiline
+                                            id="descripcion"
+                                            variant="filled"
+                                            style={{ marginTop: 11 }}
+                                            {...field}
+                                        />}
+                
+                />
+                {errors?.nombre?.type === 'maxLength' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">Maximo 300 caracteres </Alert>}
+                <Controller 
+                    name="stock"
+                    control={control}
+                    rules={{ required: true, min:1, max:500, pattern:/^([0-9])*$/ }}
+                    defaultValue={stock}
+                    render={({ field }) => <RedditTextField
+                                            label="Stock*"
                                             id="stock"
                                             variant="filled"
                                             style={{ marginTop: 11 }}
@@ -161,27 +247,81 @@ export default function EditarProducto() {
                                         />}
                 
                 />
-                {errors.nombre?.type === 'required' &&  <Alert sx={{height:'25px', p:0, m:0}} severity="error">El nombre es requerido</Alert>}
+                {errors?.stock?.type === 'required' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">El stock es requerido</Alert>}
+                {errors?.stock?.type === 'min' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">El stock mínimo es 1 </Alert>}
+                {errors?.stock?.type === 'max' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">El stock máximo es 500 </Alert>}
+                {errors?.stock?.type === 'pattern' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">Solo números son validos </Alert>}
                 <Controller 
-                    name="descripcion"
+                    name="categoria"
                     control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => <RedditTextField
-                                            label='Activo:'
-                                            defaultValue={activo}
-                                            id="activo"
-                                            variant="filled"
-                                            style={{ marginTop: 11 }}
-                                            {...field}
-                                        />}
-                
+                    defaultValue={categoria[0].nombre}
+                    rules={{maxLength:20}}
+                    render={({ field }) => (
+                        <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Categoria*</InputLabel>
+                        <Select
+                        {...field}
+                        MenuProps={MenuProps}
+                        label="Categoria"
+                        
+                      >
+                        {categorias.map(el=>(
+                            <MenuItem key={el.id} value={el.nombre}>
+                            {el.nombre}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                    </FormControl>
+                      
+                      
+                      )}
                 />
-                {errors.nombre?.type === 'required' &&  <Alert sx={{height:'25px', p:0, m:0}} severity="error">El nombre es requerido</Alert>}
-                {/* <LoadingButton fullWidth size="large" type="submit" variant="contained">
-                    Login
-                </LoadingButton> */}
+                {errors?.stock?.type === 'required' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">El stock es requerido</Alert>}
+
+                <Controller 
+                    name="categoriaDos"
+                    control={control}
+                    defaultValue={categoria[1]?.nombre || ''}
+                    render={({ field }) => (
+                        <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Categoria 2</InputLabel>
+                        <Select
+                        {...field}
+                        MenuProps={MenuProps}
+                        label="Categoria"
+                        
+                      >
+                        <MenuItem value="">
+                            <em>Ninguno</em>
+                        </MenuItem>
+                        {categorias.map(el=>(
+                            <MenuItem key={el.id} value={el.nombre}>
+                            {el.nombre}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                    </FormControl>
+                      
+                      )}
+                />
+                    <Controller
+                        name="activo"
+                        control={control}
+                        defaultValue={true}
+                        render={({ field }) =><Switch {...field} />}
+                        
+                    />
 
             </Stack>
+                <Stack direction='row' spacing={1} >
+                    {/* <Button type="submit" variant='contained' sx={{width:'50%'}} >
+                        Modificar
+                    </Button> */}
+                    <input type="submit" />
+                    <Button variant='contained' sx={{width:'50%'}} onClick={()=> navigate(-1)}  >
+                        Cancelar
+                    </Button>
+                </Stack>
         </form>
     </Card>
     </>
