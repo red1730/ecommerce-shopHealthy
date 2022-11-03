@@ -18,12 +18,12 @@ const path = require('path')
 //     dialect: 'mysql',
 //   }) 
 
-/* const sequelize = new Sequelize('u381026178_eCommerceSalud', 'u381026178_admin', 'Qu&df=#;E2', {
+ const sequelize = new Sequelize('u381026178_eCommerceSalud', 'u381026178_admin', 'Qu&df=#;E2', {
   host: 'sql811.main-hosting.eu',
   dialect: 'mysql',
   logging: false,
   native: false,
-})  */
+})  
 
 
 sequelize.authenticate().then(() => {

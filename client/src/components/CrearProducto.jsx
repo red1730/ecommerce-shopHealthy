@@ -1,42 +1,42 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import * as React from "react";
+// import { useState, useEffect } from "react";
+// import { useDispatch, useSelector } from "react-redux";
 
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
+// import Avatar from "@mui/material/Avatar";
+// import Button from "@mui/material/Button";
+// import CssBaseline from "@mui/material/CssBaseline";
+// import TextField from "@mui/material/TextField";
 
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Swal from "sweetalert2";
+// import Grid from "@mui/material/Grid";
+// import Box from "@mui/material/Box";
+// import Swal from "sweetalert2";
 
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+// import Typography from "@mui/material/Typography";
+// import Container from "@mui/material/Container";
 
-import AddIcon from "@mui/icons-material/Add";
-import InputAdornment from "@mui/material/InputAdornment";
-import AttachFileIcon from "@mui/icons-material/AttachFile";
-
-
-import { createProduct } from "../actions/createProduct";
+// import AddIcon from "@mui/icons-material/Add";
+// import InputAdornment from "@mui/material/InputAdornment";
+// import AttachFileIcon from "@mui/icons-material/AttachFile";
 
 
-import Uploady from "@rpldy/uploady";
-import UploadButton from "@rpldy/upload-button";
 
-import "./style.css";
 
-const CLOUD_NAME = "dt9tiuufp",
-  UPLOAD_PRESET = "HealtyFood_image";
+
+// import Uploady from "@rpldy/uploady";
+// import UploadButton from "@rpldy/upload-button";
+
+// import "./style.css";
+
+// const CLOUD_NAME = "dt9tiuufp",
+//   UPLOAD_PRESET = "HealtyFood_image";
 
 
 
 
 export const Crear_comp = () => {
 
-  const [arrayProductos, setArrayProductos] = useState(null);
-  const dispatch = useDispatch();
+//   const [arrayProductos, setArrayProductos] = useState(null);
+//   const dispatch = useDispatch();
 
  const subirimagen = <Uploady
  destination={{
@@ -64,21 +64,21 @@ export const Crear_comp = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(createProduct(input));
-    Swal.fire("Producto Agregado");
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     dispatch(createProduct(input));
+//     Swal.fire("Producto Agregado");
 
-    setInput({
-      // seteo a 0
-      nombre: "",
-      marca: "",
-      categoria: "",
-      descripcion: "",
-      stock: "",
-      precio: "",
-    });
-  };
+//     setInput({
+//       // seteo a 0
+//       nombre: "",
+//       marca: "",
+//       categoria: "",
+//       descripcion: "",
+//       stock: "",
+//       precio: "",
+//     });
+//   };
 
   return (
     <Container component="main" maxWidth="xs" sx={{ marginTop: "100px" }}>

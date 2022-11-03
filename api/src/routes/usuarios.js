@@ -96,6 +96,8 @@ router.post("/crear",check('nombre').exists().not().isEmpty(),
       const {
         id,nombre,apellido,dni,direccion,num_dir,codPostal,telefono,mail,isAdmin,edad,genero} = req.body;
       
+
+      
       const usuario = await Usuario.create({
         id: id,
         nombre: nombre,
@@ -124,9 +126,7 @@ router.post("/crear",check('nombre').exists().not().isEmpty(),
             rejectUnauthorized: false   //permite mandar mails desde otro lado q no sea el localhost
         }
     })
-     
-
-      const info = await transport.sendMail({
+        const info = await transport.sendMail({
         from: '"Healthy Shop 🥗🍚" <healthyshophenry@outlook.com>', 
         to: `${mail}`, 
         subject: "Confirmación de registro.", 
@@ -134,11 +134,7 @@ router.post("/crear",check('nombre').exists().not().isEmpty(),
         html: `<b><h1>Bienvenido ${nombre} y gracias por ser parte de una vida más saludable</h1>
       </b>`, 
       })
-      
       console.log("Message sent: %s", info.messageId)
-
-   
-
       res.status(200).send(usuario);
     } catch (error) {
       console.log(error);
