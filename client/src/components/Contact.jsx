@@ -71,6 +71,7 @@ export const Contact_comp = () => {
 
   return (
     // <ThemeProvider theme={theme}>
+    <>
       <Container component="main" maxWidth="md" sx={{marginTop:"100px"}}>
         <CssBaseline />
         <Box
@@ -162,7 +163,7 @@ export const Contact_comp = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 0 }}
             >
               Enviar
             </Button>
@@ -172,8 +173,9 @@ export const Contact_comp = () => {
             </Grid>
           </Box>
         </Box>
-        <Footer_comp/>
       </Container>
+      <Footer_comp/>
+      </>
   );
 }
 
