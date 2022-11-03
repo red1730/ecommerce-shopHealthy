@@ -15,6 +15,7 @@ import NavSection from '../../../components/nav-section';
 //
 import navConfig from './config';
 import LogoPNG from '../../../assets/logo.png'
+import adminLogo from '../../../assets/adminLogo.png'
 
 // ----------------------------------------------------------------------
 
@@ -63,7 +64,7 @@ export default function Nav({ openNav, onCloseNav }) {
       <Box sx={{ mb: 5, mx: 2.5,}}>
         <Link underline="none">
           <StyledAccount>
-            <Avatar src={account.photoURL} alt="photoURL" />
+            <Avatar src={adminLogo} alt="photoURL" />
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
