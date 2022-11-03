@@ -91,7 +91,7 @@ router.post('/notificacion', async (req,res)=>{
   }
 })
 
-// RUTA PARA PROBAR REGISTRO DE VENTA/DETALLEVENTA Y ACTUALIZ STOCK   /tresmiluno/compra/carga
+// RUTA SOLAMENTE PARA PROBAR REGISTRO DE VENTA/DETALLEVENTA Y ACTUALIZ STOCK   /tresmiluno/compra/carga
 router.post('/carga', async (req,res)=>{
   var merchantOrder = {
     id: 6349337013,
@@ -130,23 +130,23 @@ router.post('/carga', async (req,res)=>{
     payer: { id: 1227571812, email: '' },
     items: [
       {
-        id: '1',
+        id: '3',
         category_id: '20565251',
         currency_id: 'ARS',
         description: 'Inspired by the classic foldable art of origami',
         picture_url: null,
         title: 'Lightweight Paper Table',
-        quantity: 3,
+        quantity: 1,
         unit_price: 55.40999984741211
       },
       {
-        id: '2',
+        id: '4',
         category_id: '20565251',
         currency_id: 'ARS',
         description: 'ZERO',
         picture_url: null,
         title: 'COCACOLA',
-        quantity: 2,
+        quantity: 1,
         unit_price: 90.41000366210938
       }
     ],
