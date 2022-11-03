@@ -48,7 +48,6 @@ function Copyright(props) {
   );
 }
 
-
 export const Login_comp =  () => {
   const[email, setEmail]=React.useState('')
   const[password, setPassword]=React.useState('')
@@ -102,11 +101,7 @@ if(errorEmail || errorPassword){
     }
   }
   dispatch(action)
-  console.log(action)
-  // console.log(usuario)
-  // let valor = true;
-  // updateState(valor)
-  // console.log(logeado, 'estado en el Login')
+  // console.log(action)
   Swal.fire({
     position: 'center',
     icon: 'success',
@@ -118,23 +113,18 @@ if(errorEmail || errorPassword){
     setTimeout(function(){
       navigate('/catalogo') 
     }, 2000);
-      // const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
  }
 };
 
   const handleSubmitGoogle =  async  (e) => {
     signInWithPopup(auth, googleProvider)
     .then((result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
+     
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       console.log(token, 'token....')
       console.log(result , 'resultado...de google.')
-      // The signed-in user info.
+      
       const user = result.user;
       const action = {
         type: type.login,
@@ -147,28 +137,14 @@ if(errorEmail || errorPassword){
       console.log(user, 'Usuario.')
     })
     .catch((error) => {
-      // Handle Errors here.
+      
       const errorCode = error.code;
       const errorMessage = error.message;
-      // The email of the user's account used.
       const email = error.customData.email;
-      // The AuthCredential type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
+      
     });
 
-    // const result = await getRedirectResult(auth);
-    // console.log(result)
-    // if (result) {
-    //   // This is the signed-in user
-    //   const user = result.user;
-    //   // This gives you a Facebook Access Token.
-    //   const credential = provider.credentialFromResult(auth, result);
-    //   const token = credential.accessToken;
-    // }
-
-  
-    // console.log(action)
     setTimeout(function(){
       Swal.fire({
         position: 'center',

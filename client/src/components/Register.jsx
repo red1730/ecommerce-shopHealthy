@@ -24,6 +24,9 @@ import {getAuth, createUserWithEmailAndPassword, signInWithRedirect,GoogleAuthPr
 const auth= getAuth(firebaseApp)
 const googleProvider = new GoogleAuthProvider();
 import Swal from 'sweetalert2'
+import validator from 'validator'
+var emailRegex = new RegExp("^([A-Za-z]|[0-9])+$")
+
 
 function Copyright(props) {
   return (
@@ -43,11 +46,72 @@ function Copyright(props) {
   );
 }
 
+
 export const Register_comp = () => {
+  const[email, setEmail]=React.useState('')
+  const[password, setPassword]=React.useState('')
+  const[leyendaEmail, setLeyendaEmail]=React.useState('')
+  const[leyendaPassword, setLeyendaPassword]=React.useState('')
+  const[errorEmail, setErrorEmail]=React.useState(false)
+  const[errorPassword, setErrorPassword]=React.useState(false)
+  const validate = (value) => {
+  
+    if (validator.isStrongPassword(value, {
+      minLength: 8, minLowercase: 1,
+      minUppercase: 1, minNumbers: 1, minSymbols: 1
+    })) {
+      setErrorPassword(false)
+      setLeyendaPassword('Excelente 😉')
+    } else {
+      setErrorPassword(true)
+      setLeyendaPassword(
+      'Escribe una clave bien fuerte 💪😉, mas de  8 caracteres, 1 minuscula, 1 mayuscula, 1 número, 1 simbolo')      
+    }
+  }
+ 
+ 
+
   const { dispatch } = useContext(AuthContext);
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    if(errorEmail || errorPassword || email===''||password===''){
+      e.preventDefault();
+      Swal.fire({
+         position: 'center',
+         icon: 'error',
+         title: 'Oopssss....!',
+         text:'Por favor complete el formulario.'  
+       })
+    }else{
+      e.preventDefault();
+      const correo= e.target.email.value
+      const contraseña= e.target.password.value
+      console.log(correo,contraseña)
+      
+      const usuario = await createUserWithEmailAndPassword(auth,correo,contraseña)
+  
+      const action = {
+        type: type.login,
+        payload: {
+          name: usuario.user.email
+        }
+      }
+      dispatch(action)
+      console.log(action)
+  
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Registrado con Exito! ya falta menos 😋!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+  
+        setTimeout(function(){
+          navigate('/catalogo') // debe Navegar a Ingresar datos faltantes del Usuario..
+        }, 2000);
+    }
     e.preventDefault();
     const correo= e.target.email.value
     const contraseña= e.target.password.value
@@ -110,17 +174,6 @@ export const Register_comp = () => {
       // ...
     });
 
-    // const result = await getRedirectResult(auth);
-    // console.log(result)
-    // if (result) {
-    //   // This is the signed-in user
-    //   const user = result.user;
-    //   // This gives you a Facebook Access Token.
-    //   const credential = provider.credentialFromResult(auth, result);
-    //   const token = credential.accessToken;
-    // }
-
-  
     // console.log(action)
     setTimeout(function(){
       Swal.fire({
@@ -137,15 +190,6 @@ export const Register_comp = () => {
       }, 4500);
 
   };
-
-
-
-
-
-
-
-
-
 
   return (
       <Container component="main" maxWidth="xs" sx={{marginTop:"100px"}}>
@@ -166,31 +210,22 @@ export const Register_comp = () => {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              {/* <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="Nombre"
-                  autoFocus
-                />
-              </Grid> */}
-              {/* <Grid item xs={12} sm={6}>
+
+
+            <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
-                  label="Apellido"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid> */}
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
+                  onChange={(e)=>{setEmail(e.target.value);
+                    if(emailRegex.test(email)){
+                    setErrorEmail(true)
+                    setLeyendaEmail('Email no valido')
+                  }else{
+                    setErrorEmail(false)
+                    setLeyendaEmail('')
+                  }}}
+                  error={errorEmail}
+                  helperText={leyendaEmail}
                   id="email"
                   label="Email"
                   name="email"
@@ -201,6 +236,9 @@ export const Register_comp = () => {
                 <TextField
                   required
                   fullWidth
+                  onChange={(e) => validate(e.target.value)}
+                  error={errorPassword}
+                  helperText={leyendaPassword}
                   name="password"
                   label="Password"
                   type="password"
