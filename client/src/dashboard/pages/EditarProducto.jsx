@@ -125,7 +125,7 @@ export default function EditarProducto() {
     setImage(file.secure_url);
     setLoad(false);
 }
-
+console.log(image)
 
   if(!nombre) return <Typography variant='h3' m='0 auto' >Cargando...</Typography>
 
