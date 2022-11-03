@@ -9,30 +9,39 @@ import MarkunreadMailboxIcon from "@mui/icons-material/MarkunreadMailbox";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
+import {Footer_comp} from "./Footer";
+
 import { postContactoMensaje } from '../actions/contactoMail'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
 
 export const Contact_comp = () => {
+  const[nombre, setNombre]=React.useState('')
+  const[email, setEmail]=React.useState('')
+  const[mensaje, setMensaje]=React.useState('')
+  const[leyendaNombre, setLeyendaNombre]=React.useState('')
+  const[leyendaEmail, setLeyendaEmail]=React.useState('')
+  const[leyendaMensaje, setLeyendaMensaje]=React.useState('')
+  const[errorNombre, setErrorNombre]=React.useState(false)
+  const[errorEmail, setErrorEmail]=React.useState(false)
+  const[errorMensaje, setErrorMensaje]=React.useState(false)
+  var emailRegex = new RegExp("^([A-Za-z]|[0-9])+$")
   let navigate = useNavigate();
   const dispatch = useDispatch()
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    if(nombre !==''&& email !==''&& mensaje!=='' && !errorNombre&&!errorEmail && !errorMensaje){
+      event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      comment: data.get("comment"),
-    });
-
+  
     const info = {
+      nombre: data.get("firstName"),
       email: data.get("email"),
       mensaje: data.get("comment"),
     }
 
     dispatch(postContactoMensaje(info))
-    
       Swal.fire({
       position: 'center',
       icon: 'success',
@@ -43,9 +52,22 @@ export const Contact_comp = () => {
 
       setTimeout(function(){
         navigate('/catalogo') 
-      }, 3000);
+      }, 3000)
 
-  };
+    }else{
+      event.preventDefault();
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Oopssss....!',
+        text:'Por favor complete el formulario.'
+      
+      })
+     
+    }
+   
+    }
+ 
 
   return (
     // <ThemeProvider theme={theme}>
@@ -59,7 +81,7 @@ export const Contact_comp = () => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
             <MarkunreadMailboxIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -78,6 +100,17 @@ export const Contact_comp = () => {
                   name="firstName"
                   required
                   fullWidth
+                  onChange={(e)=>{setNombre(e.target.value);
+                  if(nombre.length >25){
+                    setErrorNombre(true)
+                    setLeyendaNombre('Nombre no puede contener mas de 25 caracteres.')
+                  }else{
+                    setErrorNombre(false)
+                    setLeyendaNombre('')
+                  }
+                  }}
+                  error={errorNombre}
+                  helperText={leyendaNombre}
                   id="firstName"
                   label="Nombre"
                   autoFocus
@@ -88,6 +121,16 @@ export const Contact_comp = () => {
                 <TextField
                   required
                   fullWidth
+                  onChange={(e)=>{setEmail(e.target.value);
+                    if(emailRegex.test(email)){
+                    setErrorEmail(true)
+                    setLeyendaEmail('Email no valido')
+                  }else{
+                    setErrorEmail(false)
+                    setLeyendaEmail('')
+                  }}}
+                  error={errorEmail}
+                  helperText={leyendaEmail}
                   id="email"
                   label="Email"
                   name="email"
@@ -97,6 +140,17 @@ export const Contact_comp = () => {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
+                  onChange={(e)=>{setMensaje(e.target.value);
+                     if(mensaje.length < 10 || mensaje.length > 500){
+                    setErrorMensaje(true)
+                    setLeyendaMensaje('Escribe al menos 5 palabras')
+                  }else{
+                    setErrorMensaje(false)
+                    setLeyendaMensaje('')
+                  }
+                }}
+                  error={errorMensaje}
+                  helperText={leyendaMensaje}
                   name="comment"
                   label="Mensaje..."
                   type="comment"
@@ -118,6 +172,8 @@ export const Contact_comp = () => {
             </Grid>
           </Box>
         </Box>
+        <Footer_comp/>
       </Container>
   );
-};
+}
+
