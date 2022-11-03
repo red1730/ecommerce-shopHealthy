@@ -4,7 +4,7 @@ module.exports = (sequelize) => {
     
     sequelize.define("venta", {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         allowNull: false,
         primaryKey: true,
       },
