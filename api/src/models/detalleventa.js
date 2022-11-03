@@ -8,30 +8,13 @@ module.exports = (sequelize) => {
       allowNull: false,
       primaryKey: true,
     },
-    fecha: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    pago_total: {
+    cantidad: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    Tipo_de_pago: {
-      type: DataTypes.STRING,
+    precioUnitario:{
+      type: DataTypes.DECIMAL,
       allowNull: false,
-    },
-    Tipo_de_envio: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    Direccion_de_envio: {
-      type: DataTypes.JSON,
-      allowNull: false,
-    },
-    Estado: {
-      type: DataTypes.STRING,
-      defaultValue: "En preparación",
-      allowNull: true,
     },
   });
 };
