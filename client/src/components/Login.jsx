@@ -46,6 +46,7 @@ function Copyright(props) {
 
 
 export const Login_comp =  () => {
+
   const {dispatch} = useContext(AuthContext); 
   // console.log(user)
   let navigate = useNavigate();
@@ -146,6 +147,7 @@ export const Login_comp =  () => {
       }, 4500);
 
   };
+
 
 
 
