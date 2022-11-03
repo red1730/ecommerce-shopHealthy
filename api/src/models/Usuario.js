@@ -5,10 +5,9 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define("usuario", {
     id: {
-      type: DataTypes.UUID,
-      defaultValue: Sequelize.UUIDV4,
-      allowNull: false,
-      primaryKey: true,
+      type: DataTypes.BIGINT,
+        allowNull: false,
+        primaryKey: true,
     },
     nombre: {
       type: DataTypes.STRING,
@@ -41,10 +40,6 @@ module.exports = (sequelize) => {
     },
     num_dir: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    dni: {
-      type: DataTypes.BIGINT,
       allowNull: false,
     },
     codPostal: {
