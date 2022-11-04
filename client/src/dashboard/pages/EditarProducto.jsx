@@ -185,10 +185,10 @@ console.log(image)
                                         />}
                 
                 />
-                {errors?.precio?.type === 'required' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">El precio es requerido</Alert>}
-                {errors?.precio?.type === 'min' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">El precio mínimo es 1 </Alert>}
-                {errors?.precio?.type === 'max' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">El precio máximo es 10000 </Alert>}
-                {errors?.precio?.type === 'pattern' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">Solo números son validos </Alert>}
+                {errors?.precio?.type === 'required' &&  <Alert sx={{height:'40px', p:0, mb:2}} severity="error">El precio es requerido</Alert>}
+                {errors?.precio?.type === 'min' &&  <Alert sx={{height:'40px', p:0, mb:2}} severity="error">El precio mínimo es 1 </Alert>}
+                {errors?.precio?.type === 'max' &&  <Alert sx={{height:'40px', p:0, mb:2}} severity="error">El precio máximo es 10000 </Alert>}
+                {errors?.precio?.type === 'pattern' &&  <Alert sx={{height:'40px', p:0, mb:2}} severity="error">Solo números son validos </Alert>}
                 <Controller 
                     name="marca"
                     control={control}
@@ -203,11 +203,8 @@ console.log(image)
                                         />}
                 
                 />
-                {errors.marca?.type === 'required' &&  <Alert sx={{height:'25px', p:0, m:0}} severity="error">El nombre de la marca es requerido</Alert>}
-                {errors.marca?.type === 'maxLength' &&  <Alert sx={{height:'25px', p:0, m:0}} severity="error">Maximo 20 caracteres </Alert>}
-                
-                {errors.marca?.type === 'required' &&  <Alert sx={{height:'25px', p:0, m:0}} severity="error">El nombre de la marca es requerido</Alert>}
-                {errors.marca?.type === 'maxLength' &&  <Alert sx={{height:'25px', p:0, m:0}} severity="error">Maximo 20 caracteres </Alert>}
+                {errors.marca?.type === 'required' &&  <Alert sx={{height:'40px', p:0, m:0}} severity="error">El nombre de la marca es requerido</Alert>}
+                {errors.marca?.type === 'maxLength' &&  <Alert sx={{height:'40px', p:0, m:0}} severity="error">Maximo 20 caracteres </Alert>}
                 <Controller 
                     name="descripcion"
                     control={control}
@@ -246,7 +243,7 @@ console.log(image)
                     name="categoria"
                     control={control}
                     defaultValue={categoria[0]?.nombre||''}
-                    rules={{maxLength:20}}
+                    rules={{maxLength:30, required:true}}
                     render={({ field }) => (
                         <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">Categoria*</InputLabel>
@@ -267,8 +264,9 @@ console.log(image)
                       
                       )}
                 />
-                {errors?.stock?.type === 'required' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">El stock es requerido</Alert>}
-
+                {errors?.stock?.type === 'required' &&  <Alert sx={{height:'40px', p:0, mb:2}} severity="error">La categoria 1 es requerida</Alert>}
+                {errors?.stock?.type === 'length' &&  <Alert sx={{height:'40px', p:0, mb:2}} severity="error">Maximo 30 caracteres </Alert>}
+                
                 <Controller 
                     name="categoriaDos"
                     control={control}

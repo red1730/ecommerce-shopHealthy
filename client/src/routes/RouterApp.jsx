@@ -16,6 +16,7 @@ import {
   CrearProducto,
   Preferencias,
 } from "../pages/index";
+import NotFound404 from "../pages/NotFound404";
 import { CatalogoRouter } from "./CatalogoRouter";
 
 export const RouterApp = () => {
@@ -24,7 +25,7 @@ export const RouterApp = () => {
       <Routes>
         <Route path="/" element={<CatalogoRouter />} />
         <Route path="/catalogo/*" element={<CatalogoRouter />} />
-        <Route path="/logeo" element={<Login />} />
+        <Route path="/acceso" element={<Login />} />
         <Route path="/registro" element={<Register />} />
         <Route path="/comprar" element={<Shopping />} />
         <Route path="/contacto" element={<Contact />} />
@@ -32,6 +33,7 @@ export const RouterApp = () => {
         <Route path="/admin/*" element={<RouterDashBoard />} />
         <Route path="/producto" element={<CrearProducto />} />
         <Route path="/usuario/:nombre" element={<Preferencias/>} />
+        <Route path="/*" element={<NotFound404 />} />
       </Routes>
     </>
   );
