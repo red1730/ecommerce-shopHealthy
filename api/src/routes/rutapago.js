@@ -13,7 +13,7 @@ const {items, payer} = req.body
         payer:{
           name: payer.name,
           surname: payer.surname,
-          email: payer.email,
+          email: payer.email, 
 
         identification:{
             "type": "DNI",
