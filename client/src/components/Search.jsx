@@ -57,7 +57,7 @@ export const SearchBar = ()=> {
             id="searchBar-ecomerce"
             disableClearable
             value={search}
-            options={allProducts.map( el => `${el.nombre} de -> ${el.marcaId.nombre} #${el.id}`.toLocaleUpperCase())}
+            options={allProducts.map( el => `${el.nombre} de -> ${el.marca? el.marca.nombre : 'Marca no definida'} #${el.id}`.toLocaleUpperCase())}
             onInputChange={hadleInputChange}
             onChange={handleChangeAutoComplete}
             renderInput={(params) => (
