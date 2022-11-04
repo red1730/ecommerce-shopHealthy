@@ -275,8 +275,8 @@ export const Register_comp = () => {
 
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link component={RouterLink} to = '/login' variant="body2">
-                  Ya tenes una cuenta? Login
+                <Link component={RouterLink} to = '/acceso' variant="body2">
+                  Ya tenes una cuenta? Has click aquí
                 </Link>
               </Grid>
             </Grid>

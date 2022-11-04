@@ -2,8 +2,9 @@ import { Helmet } from 'react-helmet-async';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Button, Typography, Container, Box } from '@mui/material';
+import { Button, Typography, Container, Box, Avatar } from '@mui/material';
 import { Stack } from '@mui/system';
+import Logo from '../assets/logo.png'
 
 // ----------------------------------------------------------------------
 
@@ -19,14 +20,18 @@ const StyledContent = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Page404() {
+export default function NotFound404() {
   return (
     <>
       <Helmet>
         <title> 404 | No existe la página </title>
       </Helmet>
 
-      <Container sx={{mt:"40px"}}>
+      <Box sx={{display: 'flex',bgcolor:'#637381', height:'90px', textAlign:'center', alignItems:'center' }}>
+        <Avatar src={Logo} alt='logo' sx={{mr:3}} />
+        <Typography  sx={{fontWeight:600, color:'white'}} >HEALTHY SHOP</Typography>
+      </Box>
+      <Container >
         <StyledContent sx={{ textAlign: 'center', alignItems: 'center' }}>
           <Typography variant="h3" paragraph>
             ¡Página no encontrada!
@@ -44,9 +49,6 @@ export default function Page404() {
         <Stack direction='row' spacing={3}>
           <Button to="/catalogo" size="large" variant="contained" component={RouterLink} sx={{bgcolor:'#637381', '&:hover':{bgcolor:'#637381', color:'black' }}} >
             Regresar 👉 Catálogo
-          </Button>
-          <Button to="/admin/dashboard/app" size="large" variant="contained" component={RouterLink} sx={{bgcolor:'#637381', '&:hover':{bgcolor:'#637381', color:'black' }}}  >
-            Regresar 👉 Dashboard
           </Button>
         </Stack>
         </StyledContent>

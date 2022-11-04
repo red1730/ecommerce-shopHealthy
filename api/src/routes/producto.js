@@ -116,7 +116,10 @@ router.post("/admin/crear",
                   check('descripcion').exists().not().isEmpty().isLength({min:20, max:200}),
                   check('precio').exists().isNumeric(),
                   check('stock').exists().isNumeric().not().isEmpty(),
+                  // check('img').exists(),
                   check('categorias').exists().not().isEmpty(),
+                  // check('marcaId').exists().not().isEmpty(),
+
                   (req,res,next)=>{
                      validateResult(req,res,next)
                   }, async (req, res) => {

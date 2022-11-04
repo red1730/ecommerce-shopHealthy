@@ -41,7 +41,7 @@ export const NavUserMenu = ({user}) => {
             ? <Button 
             component={RouterLink}
             sx={{textDecoration:'none', color: '#64B98B',"&:hover":{color:'#57AF57' } }}
-            to='/login'
+            to='/acceso'
             > Iniciar sesión
             </Button>
             :

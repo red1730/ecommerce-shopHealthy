@@ -1,13 +1,10 @@
 import React from 'react';
-import { Box, Card, Link, Typography, Stack, capitalize, Button, TextField, Alert, InputLabel, FormControl, Select, MenuItem, Skeleton, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
+import { Box, Card, Typography, Stack, Button, TextField, Alert, InputLabel, FormControl, Select, MenuItem, Skeleton, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import { styled,alpha } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
-import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-
 // utils
-import { fCurrency } from '../utils/formatNumber';
 // components
 import Label from '../components/label';
 import { useEffect, useState } from 'react';
@@ -15,12 +12,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductById } from '../../helpers/getProductById';
 import { useForm, Controller } from "react-hook-form";
-import { LoadingButton } from '@mui/lab';
-import {CategoriaMultiple} from '../components/CategoriaMultiple';
 
 // ----------------------------------------------------------------------
 import { categorias } from '../../helpers/categoriasPrueba';
-import UploadButton from '../components/UploadButton';
+
 const ITEM_HEIGHT = 60;
 const ITEM_PADDING_TOP = 0;
 const MenuProps = {
@@ -74,11 +69,8 @@ export default function EditarProducto() {
   const [product, setProduct] = useState ({});
   const [image, setImage] = useState('');
   const [load, setLoad] = useState(null);
-  const [fileSrc, setFileScr] = useState(null)
-  const [dataPost, setDataPost] = useState({})
 
   const dispatch = useDispatch ();
-  const { isLoading } = useSelector ((state) => state.catalogReducer);
 
   const navigate = useNavigate ();
 
@@ -98,16 +90,15 @@ export default function EditarProducto() {
     
   const { nombre, precio, img, stock, activo, descripcion, marca, categoria } = product;
   const { handleSubmit, formState:{errors}, control, } = useForm();
+  const [check, setCheck] = useState(activo)
 
 
   const onSubmit = (data)=>{
 
     console.log(data);
-    setDataPost(data)
   }
   const uploadImage = async(e) =>{
     const files = e.target.files;
-    setFileScr(e.target.files[0])
     const data = new FormData();
     data.append("file", files[0]);
     data.append("upload_preset", "ykaylnwx");
@@ -160,7 +151,7 @@ console.log(image)
             <PhotoCamera fontSize='large'/>
           </IconButton>
                 
-        {!load? <StyledProductImg alt={nombre} src={image || `https://dkndrd.com/pf-healthyShop/${img}`} />: <Typography sx={{zIndex:100, m:"0 auto"}}>Loading..</Typography>}
+        {!load? <StyledProductImg alt={nombre} src={image || `https://dkndrd.com/pf-healthyShop/${img}`} />: <Skeleton sx={{zIndex:100, height:"140%", width:"80%", top:-60, position: 'absolute',}} />}
       </Box>
         <form onSubmit={handleSubmit(d=>onSubmit(d))}>
         <Stack spacing={1} sx={{m:2}} >
@@ -194,10 +185,10 @@ console.log(image)
                                         />}
                 
                 />
-                {errors?.precio?.type === 'required' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">El precio es requerido</Alert>}
-                {errors?.precio?.type === 'min' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">El precio mínimo es 1 </Alert>}
-                {errors?.precio?.type === 'max' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">El precio máximo es 10000 </Alert>}
-                {errors?.precio?.type === 'pattern' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">Solo números son validos </Alert>}
+                {errors?.precio?.type === 'required' &&  <Alert sx={{height:'40px', p:0, mb:2}} severity="error">El precio es requerido</Alert>}
+                {errors?.precio?.type === 'min' &&  <Alert sx={{height:'40px', p:0, mb:2}} severity="error">El precio mínimo es 1 </Alert>}
+                {errors?.precio?.type === 'max' &&  <Alert sx={{height:'40px', p:0, mb:2}} severity="error">El precio máximo es 10000 </Alert>}
+                {errors?.precio?.type === 'pattern' &&  <Alert sx={{height:'40px', p:0, mb:2}} severity="error">Solo números son validos </Alert>}
                 <Controller 
                     name="marca"
                     control={control}
@@ -212,11 +203,8 @@ console.log(image)
                                         />}
                 
                 />
-                {errors.marca?.type === 'required' &&  <Alert sx={{height:'25px', p:0, m:0}} severity="error">El nombre de la marca es requerido</Alert>}
-                {errors.marca?.type === 'maxLength' &&  <Alert sx={{height:'25px', p:0, m:0}} severity="error">Maximo 20 caracteres </Alert>}
-                
-                {errors.marca?.type === 'required' &&  <Alert sx={{height:'25px', p:0, m:0}} severity="error">El nombre de la marca es requerido</Alert>}
-                {errors.marca?.type === 'maxLength' &&  <Alert sx={{height:'25px', p:0, m:0}} severity="error">Maximo 20 caracteres </Alert>}
+                {errors.marca?.type === 'required' &&  <Alert sx={{height:'40px', p:0, m:0}} severity="error">El nombre de la marca es requerido</Alert>}
+                {errors.marca?.type === 'maxLength' &&  <Alert sx={{height:'40px', p:0, m:0}} severity="error">Maximo 20 caracteres </Alert>}
                 <Controller 
                     name="descripcion"
                     control={control}
@@ -254,8 +242,8 @@ console.log(image)
                 <Controller 
                     name="categoria"
                     control={control}
-                    defaultValue={categoria[0].nombre}
-                    rules={{maxLength:20}}
+                    defaultValue={categoria[0]?.nombre||''}
+                    rules={{maxLength:30, required:true}}
                     render={({ field }) => (
                         <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">Categoria*</InputLabel>
@@ -276,8 +264,9 @@ console.log(image)
                       
                       )}
                 />
-                {errors?.stock?.type === 'required' &&  <Alert sx={{height:'25px', p:0, mb:2}} severity="error">El stock es requerido</Alert>}
-
+                {errors?.stock?.type === 'required' &&  <Alert sx={{height:'40px', p:0, mb:2}} severity="error">La categoria 1 es requerida</Alert>}
+                {errors?.stock?.type === 'length' &&  <Alert sx={{height:'40px', p:0, mb:2}} severity="error">Maximo 30 caracteres </Alert>}
+                
                 <Controller 
                     name="categoriaDos"
                     control={control}
@@ -308,16 +297,16 @@ console.log(image)
                         name="activo"
                         control={control}
                         defaultValue={true}
-                        render={({ field }) =><Switch {...field} />}
+                        render={({ field }) =><Switch {...field} value={activo} />}
                         
                     />
 
             </Stack>
                 <Stack direction='row' spacing={1} >
-                    {/* <Button type="submit" variant='contained' sx={{width:'50%'}} >
+                    <Button type="submit" variant='contained' sx={{width:'50%'}} >
                         Modificar
-                    </Button> */}
-                    <input type="submit" />
+                    </Button>
+                    {/* <input type="submit" /> */}
                     <Button variant='contained' sx={{width:'50%'}} onClick={()=> navigate(-1)}  >
                         Cancelar
                     </Button>
