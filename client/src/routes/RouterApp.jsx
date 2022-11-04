@@ -22,13 +22,13 @@ export const RouterApp = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<CatalogoRouter />} />
         <Route path="/catalogo/*" element={<CatalogoRouter />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/logeo" element={<Login />} />
         <Route path="/registro" element={<Register />} />
         <Route path="/comprar" element={<Shopping />} />
         <Route path="/contacto" element={<Contact />} />
-        <Route path="/user" element={<User />} />
+        <Route path="/usuario" element={<User />} />
         <Route path="/admin/*" element={<RouterDashBoard />} />
         <Route path="/producto" element={<CrearProducto />} />
         <Route path="/usuario/:nombre" element={<Preferencias/>} />
