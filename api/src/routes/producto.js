@@ -109,43 +109,78 @@ router.get("/:id", async (req, res) => {
 });
 
 
-//POST CREAR PRODUCTO
+
 router.post("/admin/crear",
                   check('nombre').exists().not().isEmpty(),
+                  check('marca').exists().not().isEmpty(),
                   check('descripcion').exists().not().isEmpty().isLength({min:20, max:200}),
                   check('precio').exists().isNumeric(),
                   check('stock').exists().isNumeric().not().isEmpty(),
-                  check('img').exists(),
                   check('categorias').exists().not().isEmpty(),
-                  check('marcaId').exists().not().isEmpty(),
-
                   (req,res,next)=>{
-                    validateResult(req,res,next)
-                  }), async (req,res)=>{
+                     validateResult(req,res,next)
+                  }, async (req, res) => {
 
-  try{
-    const { nombre, precio, img, stock, descripcion, marcaId, categorias } = req.body;
-    const nuevoProducto = await Producto.create({
-      nombre: nombre,
-      precio: precio,
-      img: img,
-      stock: stock,
-      descripcion: descripcion,
-      activo: true,  
-      marcaId: marcaId      
-    });
+ try {
 
-    let categ = await Categoria.findAll({
-      where: { nombre: categorias}
+
+  const { nombre, descripcion, precio, stock, categorias, activo, marca, img} = req.body;
+  let markaId
+  let markaCreada
+  let marcaId
+  
+  let marka = await Marca.findOne({
+    where: { nombre: marca}
+  })
+  
+  if(!marka){
+    markaCreada = await Marca.create({
+      nombre:marca
     })
-
-    nuevoProducto.addCategoria(categ)   
-    res.status(200).send(nuevoProducto)
-
-  }catch(error){
-    res.status(400).send(error)
+    marcaId = markaCreada.id
+  }else{
+    marcaId = marka.id
   }
-}
+
+  
+
+categorias.forEach(async Kate => {
+  await Categoria.findOrCreate({
+    where:{nombre:Kate}
+  })
+
+});
+
+let category = await Categoria.findAll({
+  where: { nombre: categorias}
+})
+
+console.log(category)
+
+ 
+  const producto = await Producto.create({
+    nombre: nombre,
+    descripcion: descripcion,
+    precio: precio,
+    stock: stock,
+    activo:activo,
+    marcaId:marcaId,
+    img: img
+  });
+// console.log(producto)
+
+    producto.addCategoria(category) 
+
+
+
+  res.status(200).send( producto);
+ 
+ } catch (error) {
+   res.status(401).send(error)
+ }
+
+ 
+});
 
 
 //PUT MODIFICAR PRODUCTO
