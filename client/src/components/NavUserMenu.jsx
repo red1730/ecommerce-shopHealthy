@@ -3,7 +3,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import HandleLogout from '../helpers/HandleLogOut';
 import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { logged, admin } from "../helpers/userMenuLinks";
+import { usuarioLogged, } from "../helpers/userMenuLinks";
 
 export const NavUserMenu = ({user}) => {
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -46,7 +46,7 @@ export const NavUserMenu = ({user}) => {
             </Button>
             :
             <Box>
-            {logged.map( (el, i) => (
+            {usuarioLogged(user.nombre).map( (el, i) => (
             <MenuItem key={i} onClick={handleCloseUserMenu}>
                 <Typography 
                 sx={{textDecoration:'none', color: '#64B98B',"&:hover":{color:'#64B98B' } }}

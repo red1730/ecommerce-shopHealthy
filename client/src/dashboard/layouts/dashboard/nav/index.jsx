@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom'
 // @mui
 import { styled, alpha } from '@mui/material/styles';
 import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
@@ -83,7 +84,7 @@ export default function Nav({ openNav, onCloseNav }) {
 
       <Box sx={{ flexGrow: 1 }} />
 
-      <Button sx={{bottom:1}} >
+      <Button sx={{bottom:1}} component={RouterLink} to='/catalogo' >
         Ir a catalogo
       </Button>
 
