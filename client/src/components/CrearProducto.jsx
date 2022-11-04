@@ -38,16 +38,6 @@ export const Crear_comp = () => {
     const [arrayProductos, setArrayProductos] = useState(null);
     const dispatch = useDispatch();
   
-   const subirimagen = <Uploady
-   destination={{
-     url: `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`,
-     params: {
-       upload_preset: UPLOAD_PRESET
-     }
-   }}
-   >
-   <UploadButton><AttachFileIcon/></UploadButton>
-  </Uploady>
   
       const [input, setInput] = useState({
       nombre: "",
@@ -64,21 +54,21 @@ export const Crear_comp = () => {
       });
     };
   
-  //   const handleSubmit = (e) => {
-  //     e.preventDefault();
-  //     dispatch(createProduct(input));
-  //     Swal.fire("Producto Agregado");
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      dispatch(createProduct(input));
+      Swal.fire("Producto Agregado");
   
-  //     setInput({
-  //       // seteo a 0
-  //       nombre: "",
-  //       marca: "",
-  //       categoria: "",
-  //       descripcion: "",
-  //       stock: "",
-  //       precio: "",
-  //     });
-  //   };
+      setInput({
+        // seteo a 0
+        nombre: "",
+        marca: "",
+        categoria: "",
+        descripcion: "",
+        stock: "",
+        precio: "",
+      });
+    };
   
     return (
       <Container component="main" maxWidth="xs" sx={{ marginTop: "100px" }}>
