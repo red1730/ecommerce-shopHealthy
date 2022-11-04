@@ -17,11 +17,11 @@ const validateResult =(req,res,next)=>{
 const router = Router();
 
 
-  //TRAE TODOS LOS PRODUCTOS CON SU MARCA Y SU CATEGORIA
+  //TRAE TODOS LOS PRODUCTOS ACTIVOS CON SU MARCA Y SU CATEGORIA
   router.get("/", async (req, res) => {
 
     const {nombre} = req.query
-    let todosLosProductos = await Producto.findAll()
+    let todosLosProductos = await Producto.findAll({where: {activo: true}})
     if (nombre) {
       let productoFiltrado = todosLosProductos.filter( prod => prod.nombre.toLowerCase().includes(nombre.toLowerCase()))
       productoFiltrado.length ? 
@@ -29,6 +29,9 @@ const router = Router();
     }else{
       
       Producto.findAll({
+        where: {
+          activo: true
+        },
         include: [{ 
           model: Categoria,
           attributes: ['nombre']
@@ -41,13 +44,35 @@ const router = Router();
   
   })
 
+   //TRAE TODOS LOS PRODUCTOS DADOS DE BAJA (ACTIVO=FALSE) CON SU MARCA Y SU CATEGORIA
+   router.get("/borrados", async (req, res) => {
 
-  //TRAE LOS PRODUCTOS POR MARCA 
+      Producto.findAll({
+        where: {
+          activo: false
+        },
+        include: [{ 
+          model: Categoria,
+          attributes: ['nombre']
+        },{
+          model: Marca,
+          attributes: ['nombre']
+        }], 
+      }).then(prods => res.json(prods))
+    
+  
+  })
+
+
+  //TRAE LOS PRODUCTOS ACTIVOS POR MARCA 
 router.get("/marca", async (req, res) => {
   try {
     const { nombre } = req.query;
     const productos = await Producto.findAll({
       attributes: ["id", "nombre", "precio", "img", "stock", "descripcion"],
+      where: {
+        activo: true
+      },
       include: [
         {
           model: Categoria,        
@@ -67,11 +92,14 @@ router.get("/marca", async (req, res) => {
   });
 
 
-// TRAER LOS PRODUCTOS POR CATEGORIA
+// TRAER LOS PRODUCTOS ACTIVOS POR CATEGORIA
 router.get("/categoria", async (req, res) => {
   try {
     const { nombre } = req.query;
     const productos = await Producto.findAll({attributes: ["id", "nombre", "precio", "img", "stock", "descripcion"],
+    where: {
+      activo: true
+    },
     include: [
       {
         model: Marca,        
@@ -91,17 +119,22 @@ router.get("/categoria", async (req, res) => {
   }
 });
 
-//TRAE EL DETALLE DE UN PRODUCTO
+//TRAE EL DETALLE DE UN PRODUCTO ACTIVO
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    let productodetalle = await Producto.findByPk(id.toUpperCase(), {
+    let productodetalle = await Producto.findOne({
+      where:{ id: id,
+              activo: true},
       include: [Categoria,Marca],
-    });
+  });
+
     if (productodetalle) {
       productodetalle.img = "dkndrd.com/pf-healthyShop/".concat(productodetalle.img) 
       res.send(productodetalle) 
+    }else{
+      res.send("El producto no se encuentra activo")
     }
   } catch (error) {
     res.status(404).json("No existe el producto seleccionado");
@@ -109,9 +142,10 @@ router.get("/:id", async (req, res) => {
 });
 
 
-//POST CREAR PRODUCTO
+//CREA UN PRODUCTO
 router.post("/admin/crear",
                   check('nombre').exists().not().isEmpty(),
+                  check('marca').exists().not().isEmpty(),
                   check('descripcion').exists().not().isEmpty().isLength({min:20, max:200}),
                   check('precio').exists().isNumeric(),
                   check('stock').exists().isNumeric().not().isEmpty(),
@@ -120,32 +154,66 @@ router.post("/admin/crear",
                   // check('marcaId').exists().not().isEmpty(),
 
                   (req,res,next)=>{
-                    validateResult(req,res,next)
-                  }), async (req,res)=>{
+                     validateResult(req,res,next)
+                  }, async (req, res) => {
 
-  try{
-    const { nombre, precio, img, stock, descripcion, marcaId, categorias } = req.body;
-    const nuevoProducto = await Producto.create({
-      nombre: nombre,
-      precio: precio,
-      img: img,
-      stock: stock,
-      descripcion: descripcion,
-      activo: true,  
-      marcaId: marcaId      
-    });
+ try {
 
-    let categ = await Categoria.findAll({
-      where: { nombre: categorias}
+
+  const { nombre, descripcion, precio, stock, categorias, activo, marca, img} = req.body;
+  
+  let markaCreada
+  let marcaId
+  
+  let marka = await Marca.findOne({
+    where: { nombre: marca}
+  })
+  
+  if(!marka){
+    markaCreada = await Marca.create({
+      nombre:marca
     })
-
-    nuevoProducto.addCategoria(categ)   
-    res.status(200).send(nuevoProducto)
-
-  }catch(error){
-    res.status(400).send(error)
+    marcaId = markaCreada.id
+  }else{
+    marcaId = marka.id
   }
-}
+
+  
+
+categorias.forEach(async Kate => {
+  await Categoria.findOrCreate({
+    where:{nombre:Kate}
+  })
+
+});
+
+let category = await Categoria.findAll({
+  where: { nombre: categorias}
+})
+
+console.log(category)
+
+ 
+  const producto = await Producto.create({
+    nombre: nombre,
+    descripcion: descripcion,
+    precio: precio,
+    stock: stock,
+    activo:activo,
+    marcaId:marcaId,
+    img: img
+  });
+
+  producto.addCategoria(category) 
+
+  res.status(200).send( producto);
+ 
+ } catch (error) {
+   res.status(401).send(error)
+ }
+
+ 
+});
 
 
 //PUT MODIFICAR PRODUCTO
@@ -154,7 +222,7 @@ router.put("/admin/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const producto = await Producto.findByPk(id);
-    const { nombre, precio, descripcion, imagen, stock, marcaId } = req.body;
+    const { nombre, precio, descripcion, imagen, stock, marcaId, activo } = req.body;
 
     if (nombre) {
       producto.nombre = nombre;
@@ -178,6 +246,10 @@ router.put("/admin/:id", async (req, res) => {
     }
     if (marcaId) {
       producto.marcaId = marcaId;
+      producto.save();
+    }
+    if (activo) {
+      producto.activo = activo;
       producto.save();
     }
 

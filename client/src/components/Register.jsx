@@ -60,6 +60,7 @@ export const Register_comp = () => {
       minLength: 8, minLowercase: 1,
       minUppercase: 1, minNumbers: 1, minSymbols: 1
     })) {
+      setPassword(`${value}`)
       setErrorPassword(false)
       setLeyendaPassword('Excelente 😉')
     } else {
@@ -68,29 +69,22 @@ export const Register_comp = () => {
       'Escribe una clave bien fuerte 💪😉, mas de  8 caracteres, 1 minuscula, 1 mayuscula, 1 número, 1 simbolo')      
     }
   }
- 
- 
 
   const { dispatch } = useContext(AuthContext);
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    if(errorEmail || errorPassword || email===''||password===''){
-      e.preventDefault();
-      Swal.fire({
-         position: 'center',
-         icon: 'error',
-         title: 'Oopssss....!',
-         text:'Por favor complete el formulario.'  
-       })
-    }else{
-      e.preventDefault();
+    // console.log(email,password,'esto viene de los estados...')
+
+      if(!errorPassword && !errorEmail && email !== '' && password !== '' ){
+        e.preventDefault();
       const correo= e.target.email.value
       const contraseña= e.target.password.value
       console.log(correo,contraseña)
       
       const usuario = await createUserWithEmailAndPassword(auth,correo,contraseña)
-  
+      console.log('DATOS USUARIO FIREBASE...')
+      console.log(usuario)
       const action = {
         type: type.login,
         payload: {
@@ -105,42 +99,25 @@ export const Register_comp = () => {
         icon: 'success',
         title: 'Registrado con Exito! ya falta menos 😋!',
         showConfirmButton: false,
-        timer: 1500
+        timer: 1000
       })
-  
         setTimeout(function(){
-          navigate('/catalogo') // debe Navegar a Ingresar datos faltantes del Usuario..
+          navigate('/usuario/nombre') // debe Navegar a Ingresar datos faltantes del Usuario..
         }, 2000);
-    }
-    e.preventDefault();
-    const correo= e.target.email.value
-    const contraseña= e.target.password.value
-    console.log(correo,contraseña)
-    
-    const usuario = await createUserWithEmailAndPassword(auth,correo,contraseña)
-
-    const action = {
-      type: type.login,
-      payload: {
-        name: usuario.user.email
       }
-    }
-    dispatch(action)
-    console.log(action)
+      else {
 
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Registrado con Exito! ya falta menos 😋!',
-      showConfirmButton: false,
-      timer: 1500
-    })
-
-      setTimeout(function(){
-        navigate('/catalogo') // debe Navegar a Ingresar datos faltantes del Usuario..
-      }, 2000);
-
-
+        e.preventDefault();
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Oopssss....!',
+          text:'Por favor complete el formulario.'  
+        })
+      }
+   
+      
+    
   };
 
   const handleSubmitGoogle =  async  (e) => {
@@ -186,7 +163,7 @@ export const Register_comp = () => {
     }, 3000);
 
       setTimeout(function(){
-        navigate('/catalogo') 
+        navigate('/usuario/nombre') 
       }, 4500);
 
   };
