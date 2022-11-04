@@ -1,4 +1,6 @@
 import { ListImages } from '../components/ListImages'
+import { Helmet } from 'react-helmet-async';
+
 import { Box, CardMedia, Container, Divider, Grid } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import {usePagination} from "../hooks/usePagination";
@@ -34,6 +36,10 @@ export const Home = () => {
     _DATA.jump(p);
   };
   return (
+    <>
+    <Helmet>
+      <title> Healthy Shop | Catalogo </title>
+    </Helmet>
     <Container sx={{marginTop:'1px'}} >
         { setBanner? <Box sx={{display:'flex', justifyContent:'center', alignItems:'center',mt:14}}>
           <CardMedia
@@ -63,5 +69,6 @@ export const Home = () => {
         <CartFlotingButton />
         </Box>
     </Container>
+    </>
   )
 }

@@ -29,14 +29,14 @@ export default function RouterDashBoard() {
     //   path: 'login',
     //   element: <LoginPage />,
     // },
-    // {
-    //   element: <SimpleLayout />,
-    //   children: [
-    //     { element: <Navigate to="/admin/dashboard/app" />, index: true },
-    //     // { path: '404', element: <Page404 /> },
-    //     // { path: '*', element: <Navigate to="/admin/404" /> },
-    //   ],
-    // },
+    {
+      element: <SimpleLayout />,
+      children: [
+        { element: <Navigate to="/admin/dashboard/app" />, index: true },
+        { path: '404', element: <Page404 /> },
+        { path: '*', element: <Navigate to="/admin/404" /> },
+      ],
+    },
     // {
     //   path: '*',
     //   element: <Navigate to="/404" replace />,
