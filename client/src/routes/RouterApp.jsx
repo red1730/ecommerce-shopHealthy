@@ -1,5 +1,6 @@
 import Search from "@mui/icons-material/Search";
 import { Route, Routes } from "react-router-dom";
+import { ProtectedRoute } from "../auth/ProtectRoutes";
 import { NavBar } from "../components/NavBar";
 import  {DashBoardApp}  from '../dashboard/DashBoardApp';
 import RouterDashBoard from "../dashboard/routes";
@@ -18,21 +19,25 @@ import {
 } from "../pages/index";
 import NotFound404 from "../pages/NotFound404";
 import { CatalogoRouter } from "./CatalogoRouter";
+import { UserRoutes } from "./UserRoutes";
+import { useContext } from 'react';
+import { AuthContext } from "../auth/AuthContext";
 
 export const RouterApp = () => {
+  const {user} = useContext(AuthContext)
   return (
     <>
       <Routes>
-        <Route path="/" element={<CatalogoRouter />} />
+        <Route element={<ProtectedRoute isAllowed={user.logged} />} >
+          <Route path="/usuario/*" element={<UserRoutes />} />
+        </Route>
+        <Route element={<ProtectedRoute isAllowed={user.logged && user.isAdmin} />} >
+          <Route path="/admin/*" element={<RouterDashBoard />} />
+        </Route>
         <Route path="/catalogo/*" element={<CatalogoRouter />} />
         <Route path="/acceso" element={<Login />} />
         <Route path="/registro" element={<Register />} />
-        <Route path="/comprar" element={<Shopping />} />
-        <Route path="/contacto" element={<Contact />} />
-        <Route path="/usuario" element={<User />} />
-        <Route path="/admin/*" element={<RouterDashBoard />} />
         <Route path="/producto" element={<CrearProducto />} />
-        <Route path="/usuario/:nombre" element={<Preferencias/>} />
         <Route path="/*" element={<NotFound404 />} />
       </Routes>
     </>

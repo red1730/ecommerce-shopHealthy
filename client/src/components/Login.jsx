@@ -93,11 +93,13 @@ if(errorEmail || errorPassword){
   const contraseña= e.target.password.value
   // console.log(correo,contraseña)
   const usuario = await signInWithEmailAndPassword(auth,correo,contraseña)
-
+  console.log(usuario)
   const action = {
     type: type.login,
     payload: {
-      name: usuario.user.email
+      nombre: usuario.user.displayName? usuario.user.displayName.toLocaleLowerCase() : '',
+      uid: usuario.user.uid, 
+      email: usuario.user.email
     }
   }
   dispatch(action)
@@ -122,19 +124,21 @@ if(errorEmail || errorPassword){
      
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
-      console.log(token, 'token....')
-      console.log(result , 'resultado...de google.')
+      // console.log(token, 'token....')
+      // console.log(result , 'resultado...de google.')
       
       const user = result.user;
+      console.log(user.displayName)
       const action = {
         type: type.login,
         payload: {
-          name: user.email
+          nombre: user.displayName.toLocaleLowerCase(),
+          uid: user.uid,
+          email: user.email
         }
       }
       dispatch(action)
       // ...
-      console.log(user, 'Usuario.')
     })
     .catch((error) => {
       
