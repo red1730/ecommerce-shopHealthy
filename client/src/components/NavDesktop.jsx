@@ -44,11 +44,13 @@ export const NavDesktop = () => {
     sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent:'space-around', p:0, }}>
       <Button
         onClick={()=> {dispatch({type:'RESET_CATALOG'})}}
-        sx={{  color: 'white', '&:hover':{color:'#485446'}  }}
+        sx={{  color: 'white', '&:hover':{color:'#485446'},  }}
         component={RouterLink}
         to='/catalogo'
       >
-        Catálogo
+        <Typography sx={{fontSize:'0.875rem'}} >
+        CATÁLOGO
+        </Typography>
       </Button>
     
           {categName.map((el, i)=> (
@@ -63,7 +65,9 @@ export const NavDesktop = () => {
         component={RouterLink}
         to='/contacto'
       >
-        Contacto
+        <Typography sx={{fontSize:'0.875rem'}} >
+          CONTACTO
+        </Typography>
       </Button>
   </Box>
   </>

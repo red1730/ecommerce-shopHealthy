@@ -68,7 +68,6 @@ const {nombre, apellido, email, telefono, mensaje}=req.body;
 
 router.post("/crear",check('nombre').exists().not().isEmpty(),
                       check('apellido').exists().not().isEmpty(),
-                      check('dni').exists().isNumeric().isLength({min:7,max:8}),
                       check('direccion').exists().not().isEmpty(),
                       check('num_dir').exists().isNumeric(),
                       check('codPostal').exists().isNumeric().custom((value,{req})=>{
@@ -94,7 +93,9 @@ router.post("/crear",check('nombre').exists().not().isEmpty(),
 , async (req, res) => {
     try {
       const {
-        id,nombre,apellido,dni,direccion,num_dir,codPostal,telefono,mail,isAdmin,edad,genero} = req.body;
+        id,nombre,apellido,direccion,num_dir,codPostal,telefono,mail,isAdmin,edad,genero} = req.body;
+      
+
       
       const usuario = await Usuario.create({
         id: id,
@@ -102,7 +103,6 @@ router.post("/crear",check('nombre').exists().not().isEmpty(),
         apellido: apellido,
         edad:edad,
         genero:genero,
-        dni: dni, 
         direccion: direccion,
         num_dir: num_dir,
         codPostal: codPostal,
@@ -124,9 +124,7 @@ router.post("/crear",check('nombre').exists().not().isEmpty(),
             rejectUnauthorized: false   //permite mandar mails desde otro lado q no sea el localhost
         }
     })
-     
-
-      const info = await transport.sendMail({
+        const info = await transport.sendMail({
         from: '"Healthy Shop 🥗🍚" <healthyshophenry@outlook.com>', 
         to: `${mail}`, 
         subject: "Confirmación de registro.", 
@@ -134,11 +132,7 @@ router.post("/crear",check('nombre').exists().not().isEmpty(),
         html: `<b><h1>Bienvenido ${nombre} y gracias por ser parte de una vida más saludable</h1>
       </b>`, 
       })
-      
       console.log("Message sent: %s", info.messageId)
-
-   
-
       res.status(200).send(usuario);
     } catch (error) {
       console.log(error);
@@ -156,7 +150,6 @@ router.put("/modificar/:id", async (req, res) => {
         uid,
         nombre,
         apellido,
-        dni,
         direccion,
         codPostal,
         telefono,
@@ -179,11 +172,6 @@ router.put("/modificar/:id", async (req, res) => {
         usuario.apellido = apellido;
         usuario.save();
         cambios.push("apellido")
-      }
-      if (dni) {
-        usuario.dni = dni;
-        usuario.save();
-        cambios.push("dni")
       }
       if (direccion) {
         usuario.direccion = direccion;

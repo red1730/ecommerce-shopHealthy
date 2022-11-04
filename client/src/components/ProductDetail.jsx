@@ -30,37 +30,35 @@ export const ProductDetail_comp = () => {
       dispatch({ type: "SET_ISLOADING_TRUE" });
       try {
         const productAux = await getProductById(id);
-        dispatch({ type: "SET_ISLOADING_FALSE" });
         setProduct(productAux);
       } catch (error) {
         console.log("cayo el bendito back otra vez!");
       }
+      return dispatch({ type: "SET_ISLOADING_FALSE" });
     };
     getProduct();
   }, [id, dispatch, navigate]);
-  
-  // if(!isLoading) return <Skeleton/>
-  
+    
   const { nombre, precio, img, stock } = product;
   
 
   return (
-    <Box sx={{alignItems:'center', justifyContent:'center', display: 'flex', }}>
+  <Box sx={{alignItems:'center', justifyContent:'center', display: 'flex', }}>
     
     <Grid container 
           spacing={2} 
-          sx={{ alignItems:'center', justifyContent:'space-between', mt:15, width:'65%',  }} >
+          sx={{ alignItems:'center', justifyContent:'space-between', mt:'70px', width:'65%',  }} >
       <Grid item xs={12} md={7} sx={{alignItems:'center', justifyContent:'center',}} >
         <Box sx={{display:'flex', alignItems:'center', justifyContent:'center'}} >
-          <CardMedia  
+          {!isLoading? <CardMedia  
           component="img" 
           sx={{width:'auto', maxHeight:{xs:"300px", md:'400px', xl:"450px", margin:'0 auto'}}} 
           src={!`https://dkndrd.com/pf-healthyShop/${img}`?NotFound:`https://dkndrd.com/pf-healthyShop/${img}`} 
-          alt={nombre}/>
+          alt={nombre}/> : <Skeleton variant="rectangular" width={'350px'} height={'350px'} /> }
         </Box>
       </Grid>
-      <Grid item xs={12} md={5} sx={{justifyContent:'center', alignItems:'center', }}>
-        <Typography sx={{fontSize:30, textAlign:'center'}}
+      <Grid item xs={12} md={5} sx={{justifyContent:'center', alignItems:'center', mt:{xs:1, md:10} }}>
+        {!isLoading?<Typography sx={{fontSize:{xs:15,md:25}, textAlign:'center'}}
           variant="body2"
           color="text.primary"
           textTransform="uppercase"            
@@ -68,16 +66,16 @@ export const ProductDetail_comp = () => {
         >
           {nombre}
           
-        </Typography>
+        </Typography>: <Skeleton height={'150px'} /> }
         <Divider sx={{border:'1px solid black', my:2}} />
-        <Typography
+        {!isLoading?<Typography
           variant="body1"
           color="text.primary"
           textAlign="center"
           sx={{ fontWeight: 600, marginTop: 1, fontSize:25 }}
         >
           {precio + " $"}
-        </Typography>
+        </Typography>: <Skeleton height={'65px'}/> }
         <Divider/>
         <RatingProduct sx={{alignItems: "center"}}/>
         <Divider/>

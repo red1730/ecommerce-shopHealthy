@@ -1,4 +1,5 @@
 // import { AuthContext } from "../auth/AuthContext";
+import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -21,9 +22,12 @@ import { AuthContext } from "../auth/AuthContext";
 import {getAuth, createUserWithEmailAndPassword, signInWithRedirect,GoogleAuthProvider,signInWithPopup,signInWithEmailAndPassword } from 'firebase/auth'
 import { type } from "../../types";
 import Swal from 'sweetalert2'
-
+import validator from 'validator'
 const auth= getAuth(firebaseApp)
 const googleProvider = new GoogleAuthProvider();
+
+//var passwordRegex = new RegExp('^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$', 'g')  
+  var emailRegex = new RegExp("^([A-Za-z]|[0-9])+$")
 
 
 function Copyright(props) {
@@ -44,59 +48,83 @@ function Copyright(props) {
   );
 }
 
-
 export const Login_comp =  () => {
+  const[email, setEmail]=React.useState('')
+  const[password, setPassword]=React.useState('')
+  const[leyendaEmail, setLeyendaEmail]=React.useState('')
+  const[leyendaPassword, setLeyendaPassword]=React.useState('')
+  const[errorEmail, setErrorEmail]=React.useState(false)
+  const[errorPassword, setErrorPassword]=React.useState(false)
+  
+
   const {dispatch} = useContext(AuthContext); 
   // console.log(user)
   let navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();    
-    const correo= e.target.email.value
-    const contraseña= e.target.password.value
-    // console.log(correo,contraseña)
-    const usuario = await signInWithEmailAndPassword(auth,correo,contraseña)
-
-    const action = {
-      type: type.login,
-      payload: {
-        name: usuario.user.email
-      }
+  const validate = (value) => {
+  
+    if (validator.isStrongPassword(value, {
+      minLength: 8, minLowercase: 1,
+      minUppercase: 1, minNumbers: 1, minSymbols: 1
+    })) {
+      setErrorPassword(false)
+      setLeyendaPassword('Excelente 😉')
+    } else {
+      setErrorPassword(true)
+      setLeyendaPassword(
+      'Escribe una clave bien fuerte 💪😉, mas de  8 caracteres, 1 minuscula, 1 mayuscula, 1 número, 1 simbolo')      
     }
-    dispatch(action)
-    console.log(action)
-    // console.log(usuario)
-    // let valor = true;
-    // updateState(valor)
-    // console.log(logeado, 'estado en el Login')
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Bienvenido 🥰!',
-      showConfirmButton: false,
-      timer: 1500
-    })
+  }
+ 
 
-      setTimeout(function(){
-        navigate('/catalogo') 
-      }, 2000);
-    
-    // const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
-  };
+const handleSubmit = async (e) => {
+
+if(errorEmail || errorPassword){
+  e.preventDefault();
+ Swal.fire({
+    position: 'center',
+    icon: 'error',
+    title: 'Oopssss....!',
+    text:'Por favor complete el formulario.'  
+  })
+}else{
+  e.preventDefault();    
+  const correo= e.target.email.value
+  const contraseña= e.target.password.value
+  // console.log(correo,contraseña)
+  const usuario = await signInWithEmailAndPassword(auth,correo,contraseña)
+
+  const action = {
+    type: type.login,
+    payload: {
+      name: usuario.user.email
+    }
+  }
+  dispatch(action)
+  // console.log(action)
+  Swal.fire({
+    position: 'center',
+    icon: 'success',
+    title: 'Bienvenido 🥰!',
+    showConfirmButton: false,
+    timer: 1500
+  })
+
+    setTimeout(function(){
+      navigate('/catalogo') 
+    }, 2000);
+ }
+};
 
   const handleSubmitGoogle =  async  (e) => {
     signInWithPopup(auth, googleProvider)
     .then((result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
+     
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       console.log(token, 'token....')
       console.log(result , 'resultado...de google.')
-      // The signed-in user info.
+      
       const user = result.user;
       const action = {
         type: type.login,
@@ -109,28 +137,14 @@ export const Login_comp =  () => {
       console.log(user, 'Usuario.')
     })
     .catch((error) => {
-      // Handle Errors here.
+      
       const errorCode = error.code;
       const errorMessage = error.message;
-      // The email of the user's account used.
       const email = error.customData.email;
-      // The AuthCredential type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
+      
     });
 
-    // const result = await getRedirectResult(auth);
-    // console.log(result)
-    // if (result) {
-    //   // This is the signed-in user
-    //   const user = result.user;
-    //   // This gives you a Facebook Access Token.
-    //   const credential = provider.credentialFromResult(auth, result);
-    //   const token = credential.accessToken;
-    // }
-
-  
-    // console.log(action)
     setTimeout(function(){
       Swal.fire({
         position: 'center',
@@ -146,6 +160,7 @@ export const Login_comp =  () => {
       }, 4500);
 
   };
+
 
 
 
@@ -176,6 +191,16 @@ export const Login_comp =  () => {
               margin="normal"
               required
               fullWidth
+              onChange={(e)=>{setEmail(e.target.value);
+                if(emailRegex.test(email)){
+                setErrorEmail(true)
+                setLeyendaEmail('Email no valido')
+              }else{
+                setErrorEmail(false)
+                setLeyendaEmail('')
+              }}}
+              error={errorEmail}
+              helperText={leyendaEmail}
               id="email"
               label="Email"
               name="email"
@@ -186,11 +211,14 @@ export const Login_comp =  () => {
               margin="normal"
               required
               fullWidth
+              onChange={(e) => validate(e.target.value)}
+              error={errorPassword}
+              helperText={leyendaPassword}
               name="password"
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              // autoComplete="current-password"
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
