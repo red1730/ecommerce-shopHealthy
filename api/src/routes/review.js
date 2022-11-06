@@ -1,6 +1,17 @@
 const { Router } = require("express");
 const { Review} = require("../db");
+const {check, validationResult}= require('express-validator');
 const router = Router();
+
+const validateResult =(req,res,next)=>{
+  try {
+    validationResult(req).throw()
+    return next()
+  } catch (error) {
+    res.status(403)
+    res.send({errors:error.array()})
+  }
+}
 
 router.get("/", async (req, res) => {
 
@@ -16,7 +27,29 @@ router.get("/", async (req, res) => {
   
   })
 
-router.post("/crear", async(req,res)=>{
+  router.get("/producto/:id", async (req, res) => {
+
+    const {id} = req.params
+    let todosLosReviews = await Review.findAll({
+      where: {
+        productoId: id
+      },
+    })  
+    
+      todosLosReviews.length ? 
+      res.status(200).send(todosLosReviews) : res.status(404).send('No existen reviews para el producto ingresado 😥')
+    
+  
+  })
+
+router.post("/crear", 
+                    check('titulo').exists().not().isEmpty(),
+                    check('comentario').exists().not().isEmpty().isLength({min:30, max:200}),
+                    check('puntaje').exists().isNumeric(), 
+                    (req,res,next)=>{
+                      validateResult(req,res,next)
+                   },
+                    async(req,res)=>{
     try {
         const { puntaje, titulo, comentario, productoId, usuarioId } = req.body;
     const review = await Review.create({
