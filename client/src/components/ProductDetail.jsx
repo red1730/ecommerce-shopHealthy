@@ -53,7 +53,7 @@ export const ProductDetail_comp = () => {
           {!isLoading? <CardMedia  
           component="img" 
           sx={{width:'auto', maxHeight:{xs:"300px", md:'400px', xl:"450px", margin:'0 auto'}}} 
-          src={!`https://dkndrd.com/pf-healthyShop/${img}`?NotFound:`https://dkndrd.com/pf-healthyShop/${img}`} 
+          src={!`https://res.cloudinary.com/dw8jw0zhx/image/upload/v1667676017/healthy_shop_default/${img}`?NotFound:`https://res.cloudinary.com/dw8jw0zhx/image/upload/v1667676017/healthy_shop_default/${img}`} 
           alt={nombre}/> : <Skeleton variant="rectangular" width={'350px'} height={'350px'} /> }
         </Box>
       </Grid>

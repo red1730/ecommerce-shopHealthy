@@ -8,7 +8,6 @@ import { RatingProduct } from './RatingProduct';
 import {Link as RouterLink} from 'react-router-dom'
 import { Contador } from './Contador';
 
-
 export const ProductCard = ({imgCard, prodName, prodPrice,id})=> {
 
   return (
@@ -17,7 +16,7 @@ export const ProductCard = ({imgCard, prodName, prodPrice,id})=> {
           {<CardMedia
             component="img"
             height="194"
-            image={`https://dkndrd.com/pf-healthyShop/${imgCard}`||<Skeleton height={194}/>}
+            image={`https://res.cloudinary.com/dw8jw0zhx/image/upload/v1667676017/healthy_shop_default/${imgCard}`||<Skeleton height={194}/>}
             alt={prodName}
             sx={{width:194, margin:"0 auto"}}
           /> }

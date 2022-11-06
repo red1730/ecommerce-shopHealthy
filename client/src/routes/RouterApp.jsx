@@ -36,6 +36,7 @@ export const RouterApp = () => {
         </Route>
         <Route path="/catalogo/*" element={<CatalogoRouter />} />
         <Route path="/acceso" element={<Login />} />
+        <Route path="/contacto" element={<Contact />} />
         <Route path="/registro" element={<Register />} />
         <Route path="/producto" element={<CrearProducto />} />
         <Route path="/*" element={<NotFound404 />} />

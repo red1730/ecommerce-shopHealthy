@@ -10,7 +10,6 @@ export const UserRoutes = () => {
         <Routes>
           <Route index element={<Shopping />} />
           <Route path="/:nombre/comprar" element={<Shopping />} />
-          <Route path="/:nombre/contacto" element={<Contact />} />
           <Route path="/:nombre/usuario" element={<User />} />
           <Route path="/:nombre/lpreferencias" element={<Preferencias />} />
         </Routes>
