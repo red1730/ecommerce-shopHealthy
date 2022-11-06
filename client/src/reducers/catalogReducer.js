@@ -11,7 +11,8 @@ const initialState = {
   categ: null,
   categName: ['TENTACION SALUDABLE', 'ALACENA SALUDABLE', 'ESTILO DE VIDA', 'BEBIDAS'],
   setBanner: true,
-  cart: [{ img:'ROTO', nombre:'cualquiera', precio:200, quantity:25}],
+  cart: [],
+  subtotal: 0
 };
 export const catalogReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -120,17 +121,19 @@ export const catalogReducer = (state = initialState, action) => {
       };
 
     case TYPES.ADD_TO_CART: {
-      let newItem = state.products.find((product) => product.id === action.payload);
+      let newItem = state.allProducts.find((product) => product.id === action.payload.id);
       // console.log(newItem, 'En el reducer.')
       let itemInCart = state.cart.find((item) => item.id === newItem.id);
       return itemInCart
         ? {
             ...state,
             cart: state.cart.map((item) => (item.id === newItem.id ? { ...item, quantity: item.quantity + 1 } : item)),
+            // subtotal: state.subtotal + action.payload.precio
           }
         : {
             ...state,
             cart: [...state.cart, { ...newItem, quantity: 1 }],
+            // subtotal: state.subtotal + action.payload.precio
           };
     }
 
@@ -161,12 +164,12 @@ export const catalogReducer = (state = initialState, action) => {
       return shoppingInitialState;
     }
 
-    // case TYPES.TOTAL_AMOUNT:{
-    //   return {
-    //       ...state,
-    //       cart: state.cart
-    //   }
-    // }
+    case TYPES.TOTAL_AMOUNT:{
+      return {
+          ...state,
+          subtotal:state.cart.reduce( (a,b)=> a + (b.precio * b.quantity),0 )
+      }
+    }
 
     default:
       return state;

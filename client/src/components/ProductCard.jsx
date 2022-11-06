@@ -3,15 +3,26 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Box, Skeleton } from '@mui/material';
+import { Box, Button, Skeleton } from '@mui/material';
 import { RatingProduct } from './RatingProduct';
 import {Link as RouterLink} from 'react-router-dom'
-import { Contador } from './Contador';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import {useDispatch, useSelector} from 'react-redux';
+import { TYPES } from '../actions/ShoppingCartActions'
+
 
 export const ProductCard = ({imgCard, prodName, prodPrice,id})=> {
 
+  const {allProducts, cart} = useSelector( s => s.catalogReducer)
+  const dispatch = useDispatch();
+
+  const hadleAddCart = e =>{
+      e.preventDefault();
+      dispatch({type: TYPES.ADD_TO_CART, payload: {id:id, precio:prodPrice}})
+  }
+  
   return (
-    <Card sx={{ width: 345, height:450, }} >
+    <Card sx={{ width: 345,  boxShadow:15 }}  >
       <Box component={RouterLink} to={`/catalogo/${id}`} >
           {<CardMedia
             component="img"
@@ -23,14 +34,21 @@ export const ProductCard = ({imgCard, prodName, prodPrice,id})=> {
       </Box>
       <CardContent>
             <RatingProduct sx={{alingItems:"center"}} />
-            <Typography variant="body2" color="text.primary" textTransform="uppercase" fontWeight="bold">
+            <Typography sx={{height:'50px'}} variant="body2" color="text.primary" textTransform="uppercase" fontWeight="bold">
                 {prodName}
             </Typography>
-            <Typography variant="body1" color="text.primary" textAlign='center' sx={{fontWeight:600, margin: "20px 0"}} >
+            <Typography variant="body1" color="text.primary" textAlign='center' sx={{fontWeight:600, margin: "10px 0"}} >
                 {prodPrice+'$'}
             </Typography>
-            <Box sx={{display:'flex', justifyContent:'center', alingItems:'center'}}>
-                <Contador sx={{marginTop:4}}  />
+            <Box sx={{display:'flex', justifyContent:'center', alingItems:'center',}}>
+            <Button 
+              variant="outlined" 
+              sx={{margin:"5px auto",width:'80%', mb:1}} 
+              startIcon={<AddShoppingCartIcon />}
+              onClick={hadleAddCart}
+              >
+                <Typography  sx={{fontSize:13.5}} >Agregar al carrito</Typography>
+            </Button>
             </Box>
       </CardContent>
       
