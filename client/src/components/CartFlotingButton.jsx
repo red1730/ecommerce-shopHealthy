@@ -15,6 +15,10 @@ import MailIcon from '@mui/icons-material/Mail';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { styled } from '@mui/material/styles';
 import { useState } from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import { catalogReducer } from '../reducers/catalogReducer';
+import CarritoCart from './CarritoCart';
+
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -25,6 +29,11 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 export const CartFlotingButton = ()=> {
+  const dispatch= useDispatch()
+  const {allProducts,cart}= useSelector(state => state.catalogReducer)
+
+  // const {products,cart}= state;
+
   const [state, setState] = useState({
     top: false,
     left: false,
@@ -52,24 +61,12 @@ export const CartFlotingButton = ()=> {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['producto', 'otro', 'mas', 'y asi'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
+        {cart.map((item, index) => (
+          <ListItem key={index} disablePadding>
+            <CarritoCart imgCard={item.img} name={item.nombre} price={item.precio} quantity={item.quantity}/>
           </ListItem>
         ))}
-        <ListItem>
-          <p>
-            Tarea: renderizar en este espacio los productos que el cliente vaya añadiendo
-            y guardar en el local storage. mirar <a href="https://almacensaludable.ar/"> almacen saludable </a> 
-            para más detalles.
-            En lo posible crear nuevos componente para cada cosa y no sobrecargar este componente
-          </p>
-        </ListItem>
+        
       </List>
     </Box>
   );

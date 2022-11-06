@@ -10,6 +10,7 @@ const initialState = {
   uid: '',
   adminId: 'cC0kgD9ykQW9o1jZvGH3OPXHuCl2',
   isAdmin:false
+  
 };
 
 
