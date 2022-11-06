@@ -131,7 +131,7 @@ router.get("/:id", async (req, res) => {
   });
 
     if (productodetalle) {
-      productodetalle.img = "dkndrd.com/pf-healthyShop/".concat(productodetalle.img) 
+      //productodetalle.img = "dkndrd.com/pf-healthyShop/".concat(productodetalle.img) 
       res.send(productodetalle) 
     }else{
       res.send("El producto no se encuentra activo")
