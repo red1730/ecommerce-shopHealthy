@@ -20,7 +20,8 @@ const {items, payer} = req.body
             "number": payer.identification.number
           },
         },
-        "notification_url": "https://9cee-2803-c080-d-f15c-8c4e-9ef5-f0e3-4ba0.sa.ngrok.io/tresmiluno/compra/notificacion",
+        "notification_url": "https://henryhealthy.shop/tresmiluno/compra/notificacion"
+        // "https://9cee-2803-c080-d-f15c-8c4e-9ef5-f0e3-4ba0.sa.ngrok.io/tresmiluno/compra/notificacion",
       }
       console.log('aca viene la preferencia......')
       console.log(preference)
