@@ -3,13 +3,9 @@ import Box from '@mui/material/Box';
 import {
         SwipeableDrawer,
         List,
-        ListItemButton,
         ListItem,
-        ListItemIcon,
-        ListItemText,
         Fab,
         Badge,
-        Divider,
         Typography,
         Button
        } from '@mui/material';
@@ -26,6 +22,7 @@ import { fCurrency } from '../dashboard/utils/formatNumber';
 import { Link as RouterLink } from 'react-router-dom';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { Stack } from '@mui/system';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -40,8 +37,6 @@ export const CartFlotingButton = ()=> {
   const dispatch= useDispatch()
   const {allProducts,cart, subtotal}= useSelector(state => state.catalogReducer)
 
-  // const {products,cart}= state;
-
   const [state, setState] = useState({
     top: false,
     left: false,
@@ -49,7 +44,6 @@ export const CartFlotingButton = ()=> {
     right: false,
   });
 
-  // var subtotal = 0;
   useEffect(() => {
     dispatch({type:TYPES.TOTAL_AMOUNT})
   }, [cart, dispatch])
@@ -70,12 +64,12 @@ export const CartFlotingButton = ()=> {
 
   const productList = (anchor) => (
     <Box
-      sx={{ width: 450, bgcolor: "whitesmoke" , height:"100%",overflowX:'hidden'}}
+      sx={{ width:{ xs: 320,md:450}, bgcolor: "whitesmoke" , height:"100%",overflowX:'hidden',}}
       role="presentation"
       // onClick={toggleDrawer(anchor, false)}
       // onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List sx={{mb:10}}>
+      <List sx={{mx:1, }}>
 
         <ListItem sx={{display:'flex', justifyContent:'center', alignItems:'center',}}>
           <ShoppingBagOutlinedIcon fontSize='large'  />
@@ -84,16 +78,15 @@ export const CartFlotingButton = ()=> {
           cart.length
             ?
             cart.map((item, index) => {
-            console.log(item.id);
             return <div key={index} >
             <ListItem  disablePadding>
               <CarritoCart id={item.id} imgCard={item.img} name={item.nombre} price={item.precio} quantity={item.quantity}/>
             </ListItem>
-            <Divider sx={{border:'1px solid black'}}/>
+            {/* <Divider sx={{border:'1px solid black'}}/> */}
             </div>
           })
-          :<Box sx={{m:'0 auto', color: t=>t.palette.error.main , textAlign:'center', }}>
-            <Typography  sx={{fontWeight:700, fontSize:'1.7rem', mt:20}} >
+          :<Box sx={{m:'0 auto', my:24, color: t=>t.palette.error.main , textAlign:'center', }}>
+            <Typography  sx={{fontWeight:700, fontSize:'1.7rem', userSelect:'none'}} >
             Tu carrito esta vacío!
             </Typography>
             <ShoppingCartOutlinedIcon fontSize='large'/>
@@ -101,20 +94,16 @@ export const CartFlotingButton = ()=> {
           </Box>
         
         }
-
-        <ListItem>
-          <Typography>
-            { subtotal?`Subtotal: ${fCurrency(subtotal)}`:'' }
-          </Typography>
-        </ListItem>
-        <ListItem sx={{display:'flex', justifyContent:'center', bottom:-100}}>
-          <Button onClick={toggleDrawer(anchor, false)} variant='outlined' >{ cart.length? 'Seguir Comprando': 'Iniciar Compra ' }</Button>
-        </ListItem>
-        <ListItem sx={{display:'flex', justifyContent:'center', bottom:-100}}>
-          {cart.length ? <Button component={RouterLink} to='/usuario/nombre/comprar' variant='outlined' >Finalizar Compra</Button>:''}
-        </ListItem>
           
       </List>
+        <Stack sx={{display:'flex', width:'100%',justifyContent:'center'}} >
+          <Typography sx={{textAlign:'center', fontWeight:700,my:1}} >
+            { subtotal?`Subtotal: ${fCurrency(subtotal)}`:'' }
+          </Typography>
+          <Button sx={{width:'90%', my:1,}}  onClick={toggleDrawer(anchor, false)} variant='outlined' >{ cart.length? 'Seguir Comprando': 'Iniciar Compra ' }</Button>
+          {cart.length ? <Button sx={{width:'90%', mt:1, mb:2}} component={RouterLink} to='/usuario/nombre/comprar' variant='outlined' >Finalizar Compra</Button>:''}
+        </Stack>
+
     </Box>
   );
 
@@ -130,12 +119,12 @@ export const CartFlotingButton = ()=> {
              },
             }}
           />
-          <Box sx={{position: 'fixed', bottom: 30, right: 30, overflowX:'hidden'}} >
+          <Box sx={{position: 'fixed', bottom: 30, right: 30, overflowX:'hidden',}} >
             <Fab
               color="white"
               aria-label="add"
               onClick={toggleDrawer('right', true)} >
-                <StyledBadge badgeContent={5} color="secondary">
+                <StyledBadge badgeContent={cart.length} color="secondary">
                   <ShoppingCartIcon />
                 </StyledBadge>
             </Fab>
