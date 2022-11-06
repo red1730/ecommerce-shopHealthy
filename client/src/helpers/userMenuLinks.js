@@ -4,7 +4,7 @@
     return [
       {
         label: 'Mi perfil',
-        link: `/usuario/${nombreToShow}`
+        link: `/usuario/${nombreToShow}/preferencias`
       },
       {
         label: `Lista de deseos`,
