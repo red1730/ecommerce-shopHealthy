@@ -1,12 +1,12 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { NavBar } from '../components/NavBar'
-import { Contact, Home, Preferencias, ProductDetail, Review, Shopping, User } from '../pages'
+import { Header_comp } from '../components/Header'
+import { Preferencias, Review, Shopping, User } from '../pages'
 
 export const UserRoutes = () => {
   return (
     <div>
-        <NavBar />
+        <Header_comp />
         <Routes>
           <Route index element={<Shopping />} />
           <Route path="/:nombre/comprar" element={<Shopping />} />
