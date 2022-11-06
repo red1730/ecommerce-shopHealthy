@@ -120,6 +120,11 @@ export const catalogReducer = (state = initialState, action) => {
         ...state,
       };
 
+      case 'CREATE_REVIEW':
+      return {
+        ...state,
+      };
+
     case TYPES.ADD_TO_CART: {
       let newItem = state.allProducts.find((product) => product.id === action.payload.id);
       // console.log(newItem, 'En el reducer.')

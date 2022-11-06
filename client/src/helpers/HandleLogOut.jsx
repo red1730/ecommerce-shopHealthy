@@ -17,6 +17,7 @@ function handleLogOut() {
         e.preventDefault();
         dispatch({ type: type.logout})
         signOut(auth)
+        localStorage.setItem("cart", [])
         navigate('/catalogo', { 
             replace: true
         })

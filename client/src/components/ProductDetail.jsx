@@ -1,3 +1,4 @@
+
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import NotFound from '../assets/notFount.jpg'
@@ -39,7 +40,7 @@ export const ProductDetail_comp = () => {
     getProduct();
   }, [id, dispatch, navigate]);
     
-  const { nombre, precio, img, stock } = product;
+  const { nombre, precio, img, stock, descripcion } = product;
   
 
   return (
@@ -66,7 +67,14 @@ export const ProductDetail_comp = () => {
         >
           {nombre}
           
+
+        
         </Typography>: <Skeleton height={'150px'} /> }
+        
+        <Typography>
+          {descripcion}
+        </Typography>
+        
         <Divider sx={{border:'1px solid black', my:2}} />
         {!isLoading?<Typography
           variant="body1"
