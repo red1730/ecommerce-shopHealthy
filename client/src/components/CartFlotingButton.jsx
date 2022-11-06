@@ -96,7 +96,7 @@ export const CartFlotingButton = ()=> {
         }
           
       </List>
-        <Stack sx={{display:'flex', width:'100%',justifyContent:'center'}} >
+        <Stack sx={{display:'flex', width:'100%',justifyContent:'center', alignItems:'center'}} >
           <Typography sx={{textAlign:'center', fontWeight:700,my:1}} >
             { subtotal?`Subtotal: ${fCurrency(subtotal)}`:'' }
           </Typography>

@@ -10,3 +10,4 @@ export * from './Review';
 export * from './CrearProducto';
 export * from './Preferencias';
 export * from './Review';
+export * from './Shopping';
