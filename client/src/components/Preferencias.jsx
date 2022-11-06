@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -150,7 +151,7 @@ export const Preferencias_comp = () => {
                 onChange={(e) => handleChange(e)}
               />
             </Box>
-            <Box sx={{ display: "flex", flexGrow: "grow" }}>
+            {/* <Box sx={{ display: "flex", flexGrow: "grow" }}>
               <FormControlLabel
                 sx={{ m: 1 }}
                 disabled
@@ -163,7 +164,7 @@ export const Preferencias_comp = () => {
                 control={<Switch />}
                 label="Sugerencias de Menus"
               />
-            </Box>
+            </Box> */}
           </Grid>
           <Button
             type="submit"

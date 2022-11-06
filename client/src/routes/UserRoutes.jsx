@@ -11,7 +11,7 @@ export const UserRoutes = () => {
           <Route index element={<Shopping />} />
           <Route path="/:nombre/comprar" element={<Shopping />} />
           <Route path="/:nombre/usuario" element={<User />} />
-          <Route path="/:nombre/lpreferencias" element={<Preferencias />} />
+          <Route path="/:nombre/preferencias" element={<Preferencias />} />
         </Routes>
     </div>
   )
