@@ -5,16 +5,13 @@ import Link from '@mui/material/Link';
 
 export const Footer_comp = () => {
   return (
-    // <Box sx={{ position: '-webkit-sticky', bottom: 0 }}
-    //   px={{ xs: 3, sm: 8 }}
-    //   py={{ xs: 5, sm: 3 }}
-    //   bgcolor="text.secondary" color="white" >
-      <Container maxWidth sx={{bgcolor: "text.secondary",color:'white', }}  >
-        <Grid container spacing={5}>
+  
+      <Container maxWidth  sx={{bgcolor: "text.secondary",color:'white', }}  >
+        <Grid mt={11} container spacing={5}>
           <Grid item xs={12} sm={4}>
             <Box borderBottom={1}>Ayuda</Box>
             <Box>
-              <Link href="/" color="inherit">
+              <Link href="/contacto" color="inherit">
                 Contacto
               </Link>
             </Box>
@@ -37,7 +34,7 @@ export const Footer_comp = () => {
               </Link>
             </Box>
             <Box>
-              <Link href="/" color="inherit">
+              <Link href="/registro" color="inherit">
                 Registrarce
               </Link>
             </Box>
@@ -45,12 +42,12 @@ export const Footer_comp = () => {
           <Grid item xs={12} sm={4}>
             <Box borderBottom={1}>Mensaje</Box>
             <Box>
-              <Link href="/" color="inherit">
+              <Link href="/historia" color="inherit">
                 Historia
               </Link>
             </Box>
             <Box>
-              <Link href="/" color="inherit">
+              <Link href="/contacto" color="inherit">
                 Contacto
               </Link>
             </Box>

@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -10,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
 import {Footer_comp} from "./Footer";
+import { Header_comp } from "./Header";
 
 import { postContactoMensaje } from '../actions/contactoMail'
 import { useDispatch } from 'react-redux';
@@ -72,6 +74,7 @@ export const Contact_comp = () => {
   return (
     // <ThemeProvider theme={theme}>
     <>
+    <Header_comp/>
       <Container component="main" maxWidth="md" sx={{marginTop:"100px"}}>
         <CssBaseline />
         <Box
@@ -144,7 +147,7 @@ export const Contact_comp = () => {
                   onChange={(e)=>{setMensaje(e.target.value);
                      if(mensaje.length < 10 || mensaje.length > 500){
                     setErrorMensaje(true)
-                    setLeyendaMensaje('Escribe al menos 5 palabras')
+                    setLeyendaMensaje('Escribe al menos 25 caracteres')
                   }else{
                     setErrorMensaje(false)
                     setLeyendaMensaje('')
@@ -152,6 +155,8 @@ export const Contact_comp = () => {
                 }}
                   error={errorMensaje}
                   helperText={leyendaMensaje}
+                  multiline
+          rows={4}
                   name="comment"
                   label="Mensaje..."
                   type="comment"
@@ -178,4 +183,3 @@ export const Contact_comp = () => {
       </>
   );
 }
-

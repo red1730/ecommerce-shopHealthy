@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -16,6 +17,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
+import { Footer_comp } from "./Footer";
 
 export const Preferencias_comp = () => {
   const dispatch = useDispatch();
@@ -49,6 +51,7 @@ export const Preferencias_comp = () => {
   };
 
   return (
+    <>
     <Container component="main" maxWidth="xs" sx={{ marginTop: "100px" }}>
       <CssBaseline />
       <Box
@@ -150,7 +153,7 @@ export const Preferencias_comp = () => {
                 onChange={(e) => handleChange(e)}
               />
             </Box>
-            <Box sx={{ display: "flex", flexGrow: "grow" }}>
+            {/* <Box sx={{ display: "flex", flexGrow: "grow" }}>
               <FormControlLabel
                 sx={{ m: 1 }}
                 disabled
@@ -163,7 +166,7 @@ export const Preferencias_comp = () => {
                 control={<Switch />}
                 label="Sugerencias de Menus"
               />
-            </Box>
+            </Box> */}
           </Grid>
           <Button
             type="submit"
@@ -179,5 +182,7 @@ export const Preferencias_comp = () => {
         </Box>
       </Box>
     </Container>
+      <Footer_comp/>
+      </>
   );
 };
