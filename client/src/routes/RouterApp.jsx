@@ -8,7 +8,7 @@ import {
   Admin,
   Contact,
   Home,
-  LandingPage,
+  
   Login,
   ProductDetail,
   Register,
