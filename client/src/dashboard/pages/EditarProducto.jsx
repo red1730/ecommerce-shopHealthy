@@ -12,6 +12,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductById } from '../../helpers/getProductById';
 import { useForm, Controller } from "react-hook-form";
+import { editarProducto } from '../../actions/editarProducto';
+
 
 // ----------------------------------------------------------------------
 import { categorias } from '../../helpers/categoriasPrueba';
@@ -94,8 +96,16 @@ export default function EditarProducto() {
 
 
   const onSubmit = (data)=>{
+    
+    console.log('console log data del onsubmit',data);
+                                                    //nombre
+    //nombre, precio, descripcion, imagen, stock, marcaId, activo */
+    console.log(id, 'id del useparams')
+   dispatch(editarProducto(data, id))
+     
+      
+    
 
-    console.log(data);
   }
 
   const uploadImage = async(e) =>{
@@ -116,6 +126,7 @@ export default function EditarProducto() {
     setImage(file.secure_url);
     setLoad(false);
 }
+
 
   if(!nombre) return <Typography variant='h3' m='0 auto' >Cargando...</Typography>
 
