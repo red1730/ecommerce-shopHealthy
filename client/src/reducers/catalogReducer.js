@@ -29,6 +29,7 @@ export const catalogReducer = (state = initialState, action) => {
         isLoading: false,
         categ: action.payload.cat,
         setBanner: true,
+        cart: action.payload.cart
       };
 
     case 'ERROR_FETCH_INIT_PRODUCTS':
@@ -80,7 +81,9 @@ export const catalogReducer = (state = initialState, action) => {
     case 'RESET_CATALOG':
       return {
         ...state,
-        products: state.allProducts,
+        products: state.allProducts.sort( (a,b) => (a['nombre'] > b['nombre'] ? 1 : a['nombre'] < b['nombre'] ? -1 : 0)),
+        order:true,
+        orderKey:'nombre',
         nestedFilter: [],
         filteredProducts: [],
         setBanner: true,
@@ -119,6 +122,20 @@ export const catalogReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+
+      case 'CREATE_REVIEW':
+      return {
+        ...state,
+      };
+      case 'MODIFICAR_PERFIL':
+        return{
+          ...state,
+        };
+        case 'MODIFICAR_PRODUCTO':
+        return{
+          ...state,
+        };
+
 
     case TYPES.ADD_TO_CART: {
       let newItem = state.allProducts.find((product) => product.id === action.payload.id);

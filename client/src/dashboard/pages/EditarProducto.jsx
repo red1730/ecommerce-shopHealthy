@@ -12,6 +12,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductById } from '../../helpers/getProductById';
 import { useForm, Controller } from "react-hook-form";
+import { editarProducto } from '../../actions/editarProducto';
+
 
 // ----------------------------------------------------------------------
 import { categorias } from '../../helpers/categoriasPrueba';
@@ -94,17 +96,25 @@ export default function EditarProducto() {
 
 
   const onSubmit = (data)=>{
+    
+    console.log('console log data del onsubmit',data);
+                                                    //nombre
+    //nombre, precio, descripcion, imagen, stock, marcaId, activo */
+    console.log(data)
 
-    console.log(data);
+    let dataToPut = {...data}
+    if (image) dataToPut = {...data, imagen: image.slice(83) }
+    dispatch(editarProducto(dataToPut, id))
+     
+
   }
+
   const uploadImage = async(e) =>{
     const files = e.target.files;
     const data = new FormData();
     data.append("file", files[0]);
     data.append("upload_preset", "ykaylnwx");
     setLoad(true);
-    console.log(data)
-    console.log(files)
     const res = await fetch(
         'https://api.cloudinary.com/v1_1/dw8jw0zhx/image/upload',
         {
@@ -113,10 +123,11 @@ export default function EditarProducto() {
         }
     )
     const file = await res.json();
+    console.log(file.secure_url)
     setImage(file.secure_url);
     setLoad(false);
 }
-console.log(image)
+
 
   if(!nombre) return <Typography variant='h3' m='0 auto' >Cargando...</Typography>
 
@@ -297,13 +308,13 @@ console.log(image)
                         name="activo"
                         control={control}
                         defaultValue={true}
-                        render={({ field }) =><Switch {...field} value={activo} />}
+                        render={({ field }) =><Switch {...field} value={activo} checked={check} />}
                         
                     />
 
             </Stack>
                 <Stack direction='row' spacing={1} >
-                    <Button type="submit" variant='contained' sx={{width:'50%'}} >
+                    <Button type="submit" disabled={load} variant='contained' sx={{width:'50%'}} >
                         Modificar
                     </Button>
                     {/* <input type="submit" /> */}

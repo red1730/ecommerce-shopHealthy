@@ -4,14 +4,14 @@
     return [
       {
         label: 'Mi perfil',
-        link: `/usuario/${nombreToShow}`
+        link: `/usuario/${nombreToShow}/preferencias`
       },
       {
         label: `Lista de deseos`,
         link: `/usuario/${nombreToShow}/lista-de-deseos`
       },{
         label: `Compras`,
-        link: `/usuario/${nombreToShow}/compras`
+        link: `/usuario/${nombreToShow}/comprar`
       },
     ]
   }  

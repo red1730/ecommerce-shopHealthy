@@ -11,12 +11,11 @@ const init = () => {
     //   name: 'JAVO probandoo',
     //   logged: true
     // }
-  let user = JSON.parse ( localStorage.getItem('user', 'cart') )  || {logged: false, cart:[]}
-
-  return user
+  let user = JSON.parse ( localStorage.getItem('user','cart') )  || {logged: false} 
+  // let carrito= JSON.parse(localStorage.getItem('cart') || '[]' )
+  // let result= {...user,carrito}
+  return user 
 }
-
-
 
 export const App = () => {
 
@@ -26,14 +25,13 @@ export const App = () => {
   useEffect(() =>{
     if (!user) return;
     localStorage.setItem('user',JSON.stringify(user))
-    if(!cart) return;
-    localStorage.setItem("cart", JSON.stringify(cart))
-  },[ user, cart ])
 
-//   useEffect(()=>{
-//     if(!cart) return;
-//     localStorage.setItem("cart", JSON.stringify(cart))
-// },[cart])
+  },[ user])
+
+   useEffect(()=>{
+    if(!cart.length) {localStorage.setItem("cart", []);return};
+    localStorage.setItem("cart", JSON.stringify(cart))
+ },[cart])
 
 // function updateState(value){
 //  return  setLogeado(value)

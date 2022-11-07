@@ -4,10 +4,12 @@ import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { fCurrency } from '../dashboard/utils/formatNumber';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
-import { useDispatch } from 'react-redux';
+import { useDispatch, } from 'react-redux';
 import {TYPES} from '../actions/ShoppingCartActions'
+import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 
 const CarritoCart = ({ imgCard, name, price, quantity, id }) => {
+  
   const dispatch = useDispatch();
 
   const delFromCart = (id,all=false)=>{
@@ -17,37 +19,46 @@ const CarritoCart = ({ imgCard, name, price, quantity, id }) => {
         dispatch({type:TYPES.REMOVE_ONE_FROM_CART, payload:id})
     }
 }
+  const addFromCart = ()=>{
+    dispatch({type: TYPES.ADD_TO_CART, payload: {id:id}})
+}
+
+
+
   return (
-    <Container >
-      <Grid container spacing={2} sx={{ m:'5px 2px', bgcolor:'#F4F6F8',  display: 'flex', alignItems:'center'}}>
+      <Grid container spacing={0} 
+        sx={{ p:2, m:'5px 2px', bgcolor:'#F4F6F8', borderRadius:2, boxShadow:7,  display: 'flex', alignItems:'center', }}>
         <Grid item xs={3}  >
-          <Box component={RouterLink} to={`/catalogo/`}   >
+          <Box  component={RouterLink} to={`/catalogo/${id}`}   >
             {
               <CardMedia
                 component="img"
                 height="90"
+                
                 image={`https://dkndrd.com/pf-healthyShop/${imgCard}` || <Skeleton height={90} />}
                 alt={name}
-                sx={{ width: 194, margin: '0 auto' }}
+                
               />
             }
           </Box>
         </Grid>
-        <Grid item xs={7} sx={{display:'flex',mt:-5}} >
-          <Box>
-            <Typography  sx={{color:'black', fontSize:'20px', fontWeight:900,}}>{capitalize(name)}</Typography>
-            <Stack direction='row' spacing={8}>
-              <Typography  sx={{color:'black', fontSize:'16px',}}>{`${fCurrency(price)} x ${quantity} = ${fCurrency( price * quantity )}`}</Typography>
-            </Stack>
-          </Box>
+        <Grid item xs={8} sx={{display:'flex',pl:1.5, alignItems:'center',}} >
+          <Stack>
+            <Typography  sx={{color:'black', fontSize:{xs:'14px',md:'16px'}, fontWeight:900,}}>{capitalize(name)}</Typography>
+            <Typography  sx={{color:'black', fontSize:{xs:'13px',md:'14px'},}}>{`${fCurrency(price)} x ${quantity} = ${fCurrency( price * quantity )}`}</Typography>
+          </Stack>
         </Grid>
-        <Grid item xs={1}>
-        <IconButton onClick={()=>delFromCart(id)  } >
-            <DeleteRoundedIcon  />
-          </IconButton>
+        <Grid item xs={1}  >
+          <Stack>
+            <IconButton onClick={()=>addFromCart() } sx={{right:6}} >
+                <AddCircleOutlinedIcon sx={{color:t=>t.palette.primary.main}} />
+            </IconButton>
+            <IconButton onClick={()=>delFromCart(id) } sx={{right:6}} >
+                <DeleteRoundedIcon />
+            </IconButton>
+          </Stack>
         </Grid>
       </Grid>
-    </Container>
   );
 };
 
