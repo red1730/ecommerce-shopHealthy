@@ -144,6 +144,7 @@ router.post("/crear",check('nombre').exists().not().isEmpty(),
 
 router.put("/modificar/:id", async (req, res) => {
     try {
+      console.log('entra a la ruta del back')
       const id = req.params.id;
       const usuario = await Usuario.findByPk(id);
       const {
@@ -158,6 +159,7 @@ router.put("/modificar/:id", async (req, res) => {
       } = req.body;
       console.log(req.body)
       let cambios=[]
+
       if (uid) {
         usuario.id = uid;
         usuario.save();
