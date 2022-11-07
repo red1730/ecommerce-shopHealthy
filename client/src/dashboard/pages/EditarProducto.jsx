@@ -102,10 +102,10 @@ export default function EditarProducto() {
     //nombre, precio, descripcion, imagen, stock, marcaId, activo */
     
     let dataToPut = {...data}
-    if (image) dataToPut = {...data, imagen: image.slice(83) }
+    if (image) dataToPut = {...data, imagen: image.slice(83), precio: parseInt(precio) }
     console.log(dataToPut)
     dispatch(editarProducto(dataToPut, id))
-    navigate(-1)
+    navigate('/admin/dashboard/products')
 
   }
 

@@ -18,6 +18,7 @@ import { fCurrency } from '../dashboard/utils/formatNumber';
 import { TYPES } from '../actions/ShoppingCartActions';
 import { useState } from 'react';
 import { Contador } from '../components/Contador';
+import { MercadoPagoCart } from '../components/MercadoPagoCart';
 
 
 export const Shopping = ()=> {
@@ -120,7 +121,7 @@ export const Shopping = ()=> {
         </Grid>
         <Grid item xs={4} >
             <Stack  spacing={3} >
-              <Typography sx={{border:'1px solid black'}} >stack1</Typography>
+              <MercadoPagoCart />
               <Typography sx={{border:'1px solid black'}} >stack2</Typography>
               <Typography sx={{border:'1px solid black'}} >stack2</Typography>
               <Typography sx={{border:'1px solid black'}} >stack2</Typography>

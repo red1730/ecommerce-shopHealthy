@@ -20,7 +20,8 @@ export const ProductCard = ({imgCard, prodName, prodPrice,id, stock})=> {
   const hadleAddCart = e =>{
       
       e.preventDefault(); 
-      if(!cart.length || cart.find(el => el.id == id ).quantity < stock) dispatch({type: TYPES.ADD_TO_CART, payload: {id:id, precio:prodPrice}})
+      if(!cart.length || !cart.find(el => el.id == parseInt(id) ) || cart.find(el => el.id == parseInt(id) ).quantity < stock) dispatch({type: TYPES.ADD_TO_CART, payload: {id:id, precio:prodPrice}})
+      console.log(cart.find(el => el.id == parseInt(id) ))
   }
   
   return (
