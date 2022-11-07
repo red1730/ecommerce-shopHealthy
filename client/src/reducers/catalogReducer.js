@@ -130,7 +130,12 @@ export const catalogReducer = (state = initialState, action) => {
       case 'MODIFICAR_PERFIL':
         return{
           ...state,
-        }
+        };
+        case 'MODIFICAR_PRODUCTO':
+        return{
+          ...state,
+        };
+
 
     case TYPES.ADD_TO_CART: {
       let newItem = state.allProducts.find((product) => product.id === action.payload.id);

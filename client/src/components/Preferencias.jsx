@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-
+import { useNavigate } from 'react-router-dom'
 import { modificarPerfil } from '../actions/perfil';
 
 import Swal from 'sweetalert2'
@@ -19,7 +19,7 @@ import { Footer_comp } from './Footer';
 
 export const Preferencias_comp = () => {
   const dispatch = useDispatch();
-
+const navigate = useNavigate();
   const [input, setInput] = React.useState({
     nombre: '',
     apellido: '',
@@ -42,7 +42,7 @@ export const Preferencias_comp = () => {
     dispatch(modificarPerfil(input));
     console.log(input)
     Swal.fire('se modifico el perfil con Exito');
-
+    navigate('/catalogo')
     setInput({
       // seteo a 0
       nombre: '',
