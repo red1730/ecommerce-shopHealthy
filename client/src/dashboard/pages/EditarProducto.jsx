@@ -105,7 +105,7 @@ export default function EditarProducto() {
     if (image) dataToPut = {...data, imagen: image.slice(83) }
     console.log(dataToPut)
     dispatch(editarProducto(dataToPut, id))
-     
+    navigate(-1)
 
   }
 
@@ -275,8 +275,8 @@ export default function EditarProducto() {
                       
                       )}
                 />
-                {errors?.stock?.type === 'required' &&  <Alert sx={{height:'40px', p:0, mb:2}} severity="error">La categoria 1 es requerida</Alert>}
-                {errors?.stock?.type === 'length' &&  <Alert sx={{height:'40px', p:0, mb:2}} severity="error">Maximo 30 caracteres </Alert>}
+                {errors?.categoria?.type === 'required' &&  <Alert sx={{height:'40px', p:0, mb:2}} severity="error">La categoria 1 es requerida</Alert>}
+                {errors?.categoria?.type === 'length' &&  <Alert sx={{height:'40px', p:0, mb:2}} severity="error">Maximo 30 caracteres </Alert>}
                 
                 <Controller 
                     name="categoriaDos"
@@ -307,8 +307,9 @@ export default function EditarProducto() {
                     <Controller
                         name="activo"
                         control={control}
-                        defaultValue={true}
-                        render={({ field }) =><Switch {...field} value={activo} checked={check} />}
+                        defaultValue={!!activo}
+                        // checked={check}
+                        render={({ field }) =><Checkbox {...field} />}
                         
                     />
 

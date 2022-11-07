@@ -76,6 +76,8 @@ function applySortFilter(array, comparator, query) {
 export default function UserPage() {
   const [open, setOpen] = useState(null);
 
+  const [first, setfirst] = useState('hola')
+
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -88,7 +90,8 @@ export default function UserPage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleOpenMenu = (event) => {
+  const handleOpenMenu = (event,d) => {
+    console.log(d)
     setOpen(event.currentTarget);
   };
 
@@ -152,7 +155,7 @@ export default function UserPage() {
         <title> Dashboard: Usuarios </title>
       </Helmet>
 
-      <Container>
+      <Container  >
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
             User
@@ -162,11 +165,11 @@ export default function UserPage() {
           </Button>
         </Stack>
 
-        <Card>
+        <Card sx={{border:'1px solid black', maxWidth:800}} > 
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
 
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
+            <TableContainer sx={{ minWidth: 800, }}>
               <Table>
                 <UserListHead
                   order={order}
@@ -208,7 +211,8 @@ export default function UserPage() {
                         </TableCell>
 
                         <TableCell align="right">
-                          <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
+                          <IconButton size="large" color="inherit" onClick={e=>handleOpenMenu(e, name)}>
+                            holi
                             <Iconify icon={'eva:more-vertical-fill'} />
                           </IconButton>
                         </TableCell>
@@ -265,6 +269,7 @@ export default function UserPage() {
         open={Boolean(open)}
         anchorEl={open}
         onClose={handleCloseMenu}
+        
         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         PaperProps={{
@@ -279,7 +284,7 @@ export default function UserPage() {
           },
         }}
       >
-        <MenuItem>
+        <MenuItem onClick={(e)=>console.log(e)} >
           <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
           Edit
         </MenuItem>
