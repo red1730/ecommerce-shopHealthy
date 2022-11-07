@@ -278,8 +278,13 @@ function UserPageContent({myUsers}) {
                         <TableCell align="left">{tokensValidAfterTime}</TableCell>
 
                         <TableCell align="right">
-                          <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                            <Iconify icon={'eva:more-vertical-fill'} />
+                          <IconButton size="large" color="inherit" onClick={alert('coso')}>
+                            <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
+                          </IconButton>
+                        </TableCell>
+                        <TableCell align="right">
+                          <IconButton size="large" color="inherit" onClick={alert('otro coso')}>
+                            <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }}  />                            
                           </IconButton>
                         </TableCell>
                       </TableRow>
@@ -334,34 +339,6 @@ function UserPageContent({myUsers}) {
         </Card>
       </Container>
 
-      <Popover
-        open={Boolean(open)}
-        anchorEl={open}
-        onClose={handleCloseMenu}
-        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        PaperProps={{
-          sx: {
-            p: 1,
-            width: 140,
-            '& .MuiMenuItem-root': {
-              px: 1,
-              typography: 'body2',
-              borderRadius: 0.75,
-            },
-          },
-        }}
-      >
-        <MenuItem>
-          <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-          Edit
-        </MenuItem>
-
-        <MenuItem onClick={(event) => handleClick(event,)} sx={{ color: 'error.main' }}>
-          <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }}  />
-          Delete
-        </MenuItem>
-      </Popover>
     </>
   );
 }
