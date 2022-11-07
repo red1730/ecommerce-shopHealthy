@@ -81,7 +81,9 @@ export const catalogReducer = (state = initialState, action) => {
     case 'RESET_CATALOG':
       return {
         ...state,
-        products: state.allProducts,
+        products: state.allProducts.sort( (a,b) => (a['nombre'] > b['nombre'] ? 1 : a['nombre'] < b['nombre'] ? -1 : 0)),
+        order:true,
+        orderKey:'nombre',
         nestedFilter: [],
         filteredProducts: [],
         setBanner: true,

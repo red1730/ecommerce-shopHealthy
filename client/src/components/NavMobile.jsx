@@ -4,6 +4,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { FilterAcordion } from './FilterAcordion';
 import logo from '../assets/logo.png';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { orderAsc, orderDesc } from '../actions/order';
 
 
 export const NavMobile = () => {
@@ -18,6 +20,8 @@ export const NavMobile = () => {
     const handleCloseNavMenu = () => {
     setAnchorElNav(null);
     };
+    const dispatch = useDispatch();
+    const {order, orderKey} = useSelector(s=>s.catalogReducer)
 
   return (
     <Grid container sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
@@ -61,7 +65,7 @@ export const NavMobile = () => {
                     component={RouterLink}
                     sx={{textDecoration:'none', color:'inherit'}}
                     to='/catalogo'
-                    onClick={()=> { dispatch({type:'RESET_CATALOG'})}}
+                    onClick={()=> { dispatch({type:'RESET_CATALOG'});}}
                     replace={true}
                     >Catálogo</Typography>
                 </MenuItem>
