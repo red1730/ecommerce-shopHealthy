@@ -80,7 +80,7 @@ function applySortFilter(array, comparator, query) {
 
 export default function UserPage() {
   // const [allUsers, setAllUsers] = useState(null)
-  const { isLoading, data } = useFetch("http://127.0.0.1:3001/tresmiluno/dashboard")
+  const { isLoading, data } = useFetch("https://henryhealthy.shop/tresmiluno/dashboard")
   // useEffect(
   //   () => {
   //     let ignore = false
