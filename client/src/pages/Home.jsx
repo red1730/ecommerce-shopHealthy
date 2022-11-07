@@ -24,17 +24,20 @@ export const Home = () => {
     dispatch(initProducts())
   }, [dispatch]);
 
-
   if(categ === 'All') dataToShow= allProducts;
   else dataToShow = products;
 
   const count = Math.ceil(dataToShow.length / PER_PAGE);
   const _DATA = usePagination(dataToShow, PER_PAGE);
-
   const handleChangePage = (e, p) => {
     setPage(p);
     _DATA.jump(p);
   };
+
+  useEffect(() => {
+    if (_DATA.currentPage == 0) {_DATA.setCurrentPage(1); console.log(_DATA.currentPage)}
+    
+  }, [_DATA.currentPage, _DATA.setCurrentPage])
   return (
     <>
     <Helmet>
@@ -66,7 +69,7 @@ export const Home = () => {
           shape="rounded"
           onChange={handleChangePage}
         />
-        <CartFlotingButton />
+        {/* <CartFlotingButton /> */}
         </Box>
     </Container>
     </>

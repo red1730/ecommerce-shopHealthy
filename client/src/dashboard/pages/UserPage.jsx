@@ -117,6 +117,8 @@ function UserPageContent({myUsers}) {
 
   const [open, setOpen] = useState(null);
 
+  const [first, setfirst] = useState('hola')
+
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -209,7 +211,7 @@ function UserPageContent({myUsers}) {
         <title> Dashboard: Usuarios </title>
       </Helmet>
 
-      <Container>
+      <Container  >
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
             User
@@ -219,11 +221,11 @@ function UserPageContent({myUsers}) {
           </Button>
         </Stack>
 
-        <Card>
+        <Card sx={{border:'1px solid black', maxWidth:800}} > 
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
           
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
+            <TableContainer sx={{ minWidth: 800, }}>
               <Table>
                 <UserListHead
                   order={order}
