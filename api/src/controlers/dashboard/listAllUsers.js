@@ -1,17 +1,42 @@
-const admin = require('firebase-admin')
-// const { UserRecord } = require('firebase-admin/lib/auth/user-record')
-const serviceAccount = require('./dukindroid-firebase-test-firebase-adminsdk-fwngu-6b6f69859f.json')
+const auth = require('./initFAdmin')
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://dukindroid-firebase-test.firebaseio.com'
-})
-const auth = admin.auth()
-
-const listAllUsers = (nextPageToken) => {
-  // List batch of users, 10 at a time.
+const listAllUsers = async (nextPageToken) => {
+  // List batch of users, 1000 at a time.
+  const listUsersResult = await auth.listUsers(1000, nextPageToken)
   const myUsers = []
-  auth.listUsers(10, nextPageToken).then((listUsersResult) => {
+  listUsersResult.users.forEach((userRecord) => {
+    const { photoURL, displayName, email, metadata, customClaims, tokensValidAfterTime, uid } = userRecord
+    // console.dir(metadata.creationTime)
+    // console.log(userRecord.creationTime)
+    const obj = {
+      uid,
+      photoURL,
+      displayName,
+      email,
+      created: metadata.creationTime,
+      role: (customClaims !== undefined) ? customClaims.role : 'Regular',
+      tokensValidAfterTime
+    }
+    myUsers.push(obj)
+  })
+  return myUsers
+// console.log(myUsers)
+// if (listUsersResult.pageToken) {
+//   // List next batch of users.
+//   listAllUsers(listUsersResult.pageToken)
+// }
+// })
+// .catch((error) => {
+//   console.log('Error listing users:', error)
+// })
+}
+
+module.exports = listAllUsers
+
+/*
+// List batch of users, 10 at a time.
+  const myUsers = []
+  await auth.listUsers(1000, nextPageToken).then((listUsersResult) => {
     listUsersResult.users.forEach((userRecord) => {
       // myUsers.push(userRecord.email)
       // console.log(JSON.stringify(userRecord))
@@ -30,10 +55,9 @@ const listAllUsers = (nextPageToken) => {
       // List next batch of users.
       listAllUsers(listUsersResult.pageToken)
     }
+    // console.log(myUsers)
     return myUsers
   }).catch((error) => {
     console.log('Error listing users:', error)
   })
-}
-
-module.exports = listAllUsers
+*/
