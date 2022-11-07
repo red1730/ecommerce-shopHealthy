@@ -43,7 +43,6 @@ export const CartFlotingButton = ()=> {
     bottom: false,
     right: false,
   });
-
   useEffect(() => {
     dispatch({type:TYPES.TOTAL_AMOUNT})
   }, [cart, dispatch])

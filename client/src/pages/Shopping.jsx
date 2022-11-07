@@ -7,10 +7,15 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Footer_comp } from '../components/Footer';
-import { Grid, Typography, Box, Container, Stack, Button } from '@mui/material';
+import { Grid, Typography, Box, Container, Stack, Button, CardMedia, Skeleton } from '@mui/material';
 import WarningIcon from '@mui/icons-material/Warning';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { initProducts } from '../actions/getInitProducts';
+import { fCurrency } from '../dashboard/utils/formatNumber';
+import { TYPES } from '../actions/ShoppingCartActions';
 // const TAX_RATE = 0.07;
 
 function ccyFormat(num) {
@@ -21,30 +26,32 @@ function priceRow(qty, unit) {
   return qty * unit;
 }
 
-function createRow(desc,img, qty, unit) {
-  const price = priceRow(qty, unit);
-  return { desc,img, qty, unit, price };
-}
 
-function subtotal(items) {
-  return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-}
 
-const rows = [
-  createRow('Nueces de Pecan', `https://res.cloudinary.com/dw8jw0zhx/image/upload/v1667676017/healthy_shop_default/DEC-MANI-HONEY-ROASTED-350G.jpg`, 100, 1.15),
-  createRow('harina de soja',`https://res.cloudinary.com/dw8jw0zhx/image/upload/v1667676017/healthy_shop_default/DEC-MANI-HONEY-ROASTED-350G.jpg`, 10, 45.99),
-  createRow('algo saludable',`https://res.cloudinary.com/dw8jw0zhx/image/upload/v1667676017/healthy_shop_default/DEC-MANI-HONEY-ROASTED-350G.jpg`, 2, 17.99),
-];
-
-const invoiceSubtotal = subtotal(rows);
-// const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-const invoiceTotal = 0 + invoiceSubtotal;
+// const invoiceSubtotal = subtotal(rows);
+// // const invoiceTaxes = TAX_RATE * invoiceSubtotal;
+// const invoiceTotal = 0 + invoiceSubtotal;
 
 export const Shopping = ()=> {
+
+  const dispatch = useDispatch()
   const navigate = useNavigate()
+
+
+  useEffect(() => {
+    dispatch(initProducts())
+  }, [dispatch]);
+
+  const {cart, isLoading, subtotal} = useSelector( s=>s.catalogReducer )
+
+  useEffect(() => {
+    dispatch({type:TYPES.TOTAL_AMOUNT})
+  }, [cart, dispatch])
+  
+
   return (
     <>
-    <Container>
+      <Container>
       <Box>
         <Button startIcon={<ChevronLeftIcon/>} onClick={()=>navigate(-1)}  > Volver a la tienda</Button>
         <Typography variant='subtitle2' sx={{fontSize:25, my:2}} > Finaliza tu compra </Typography>
@@ -54,7 +61,7 @@ export const Shopping = ()=> {
       <Grid container spacing={2} >
         <Grid item xs={8} >
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="spanning table">
+            <Table aria-label="spanning table">
               <TableHead  >
                 {/* <TableRow>
                   <TableCell align="center" colSpan={4}>
@@ -71,26 +78,49 @@ export const Shopping = ()=> {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => (
-                  <TableRow key={row.desc}>
-                    <TableCell>{row.desc}</TableCell>
-                    <TableCell sx={{maxWidth:'40px', }} > <img src={row.img} alt={row.desc} /></TableCell>
-                    <TableCell align="right" sx={{textAlign:'center'}} >{row.qty}</TableCell>
-                    <TableCell align="right" sx={{textAlign:'center'}} >{row.unit}</TableCell>
-                    <TableCell align="right" sx={{textAlign:'center'}} >{ccyFormat(row.price)}</TableCell>
+                
+                {
+                  isLoading
+                      ? 
+                      <>
+                      <TableRow >{/* esto es solo carga no le metas mucho cerebro.. son solo skeletons */}
+                        <TableCell> <Skeleton variant="rounded" width={210} height={60} /></TableCell>
+                        <TableCell ><Skeleton variant="rounded" width={100} height={60} /></TableCell>
+                        <TableCell ><Skeleton variant="rounded" width={100} height={60} /></TableCell>
+                        <TableCell ><Skeleton variant="rounded" width={100} height={60} /></TableCell>
+                        <TableCell ><Skeleton variant="rounded" width={100} height={60} /></TableCell>
+                      </TableRow>
+                      <TableRow >
+                        <TableCell > <Skeleton variant="rounded" width={210} height={60} /></TableCell>
+                        <TableCell ><Skeleton variant="rounded" width={100} height={60} /></TableCell>
+                        <TableCell ><Skeleton variant="rounded" width={100} height={60} /></TableCell>
+                        <TableCell ><Skeleton variant="rounded" width={100} height={60} /></TableCell>
+                        <TableCell ><Skeleton variant="rounded" width={100} height={60} /></TableCell>
+                      </TableRow>
+                      <TableRow >
+                        <TableCell><Skeleton variant="rounded" width={210} height={60} /></TableCell>
+                        <TableCell > <Skeleton variant="rounded" width={100} height={60} /></TableCell>
+                        <TableCell ><Skeleton variant="rounded" width={100} height={60} /></TableCell>
+                        <TableCell ><Skeleton variant="rounded" width={100} height={60} /></TableCell>
+                        <TableCell ><Skeleton variant="rounded" width={100} height={60} /></TableCell>
+                      </TableRow>
+                      </>
+                      :
+                  cart.map((row) => (
+                  <TableRow key={ row.id }>
+                    <TableCell>{ row.nombre }</TableCell>
+                    <TableCell sx={{maxHeight:'100px'}} > <img width="100px" src={`https://res.cloudinary.com/dw8jw0zhx/image/upload/v1667676017/healthy_shop_default/${row.img}`} alt={ row.nombre } /></TableCell>
+                    <TableCell align="right" sx={{textAlign:'center'}} >{row.quantity}</TableCell>
+                    <TableCell align="right" sx={{textAlign:'center'}} >{fCurrency(row.precio)}</TableCell>
+                    <TableCell align="right" sx={{textAlign:'center'}} >{fCurrency(row.precio * row.quantity)}</TableCell>
                   </TableRow>
-                ))}
-
-                {/* <TableRow>
-                  <TableCell rowSpan={3} />
-                  <TableCell colSpan={2}>Subtotal</TableCell>
-                  <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
-                </TableRow> */}
+                ))
+                }
 
                 <TableRow sx={{bgcolor:t=>t.palette.primary.light}} >
                   <TableCell rowSpan={4} />
                   <TableCell colSpan={3}>Total</TableCell>
-                  <TableCell align="right" sx={{textAlign:'center'}} >{ccyFormat(invoiceTotal)}</TableCell>
+                  <TableCell align="right" sx={{textAlign:'center'}} >{fCurrency(subtotal) }</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
@@ -107,7 +137,8 @@ export const Shopping = ()=> {
       </Grid>
 
 
-    </Container>
+      </Container>
+    
     <Footer_comp/>
     </>
   );
