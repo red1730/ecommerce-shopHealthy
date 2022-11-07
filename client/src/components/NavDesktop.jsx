@@ -1,12 +1,16 @@
 import { Avatar, Box, Button, IconButton, Typography } from '@mui/material'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link as RouterLink } from 'react-router-dom'
 import { Filters } from './Filters'
 import logo from '../assets/logo.png';
+import { orderAsc, orderDesc } from '../actions/order';
+
 
 export const NavDesktop = () => {
 
   const {categName, allProducts} = useSelector(state=> state.catalogReducer);
+  const dispatch = useDispatch()
+  const {order, orderKey} = useSelector(s=>s.catalogReducer)
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -43,7 +47,7 @@ export const NavDesktop = () => {
     spacing={0} 
     sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent:'space-around', p:0, }}>
       <Button
-        onClick={()=> {dispatch({type:'RESET_CATALOG'})}}
+        onClick={()=> { dispatch({type:'RESET_CATALOG'}); }}
         sx={{  color: 'white', '&:hover':{color:'#485446'},  }}
         component={RouterLink}
         to='/catalogo'

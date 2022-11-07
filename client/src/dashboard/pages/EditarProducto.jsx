@@ -100,11 +100,12 @@ export default function EditarProducto() {
     console.log('console log data del onsubmit',data);
                                                     //nombre
     //nombre, precio, descripcion, imagen, stock, marcaId, activo */
-    console.log(id, 'id del useparams')
-   dispatch(editarProducto(data, id))
+    console.log(data)
+
+    let dataToPut = {...data}
+    if (image) dataToPut = {...data, imagen: image.slice(83) }
+    dispatch(editarProducto(dataToPut, id))
      
-      
-    
 
   }
 
@@ -307,13 +308,13 @@ export default function EditarProducto() {
                         name="activo"
                         control={control}
                         defaultValue={true}
-                        render={({ field }) =><Switch {...field} value={activo} />}
+                        render={({ field }) =><Switch {...field} value={activo} checked={check} />}
                         
                     />
 
             </Stack>
                 <Stack direction='row' spacing={1} >
-                    <Button type="submit" variant='contained' sx={{width:'50%'}} >
+                    <Button type="submit" disabled={load} variant='contained' sx={{width:'50%'}} >
                         Modificar
                     </Button>
                     {/* <input type="submit" /> */}

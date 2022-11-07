@@ -239,7 +239,7 @@ router.put("/admin/:id", async (req, res) => {
       producto.save();
     }
     if (imagen) {
-      producto.imagen = imagen;
+      producto.img = imagen;
       producto.save();
     }
     if (stock) {
