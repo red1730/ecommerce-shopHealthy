@@ -100,10 +100,10 @@ export default function EditarProducto() {
     console.log('console log data del onsubmit',data);
                                                     //nombre
     //nombre, precio, descripcion, imagen, stock, marcaId, activo */
-    console.log(data)
-
+    
     let dataToPut = {...data}
     if (image) dataToPut = {...data, imagen: image.slice(83) }
+    console.log(dataToPut)
     dispatch(editarProducto(dataToPut, id))
      
 
@@ -162,7 +162,7 @@ export default function EditarProducto() {
             <PhotoCamera fontSize='large'/>
           </IconButton>
                 
-        {!load? <StyledProductImg alt={nombre} src={image || `https://dkndrd.com/pf-healthyShop/${img}`} />: <Skeleton sx={{zIndex:100, height:"140%", width:"80%", top:-60, position: 'absolute',}} />}
+        {!load? <StyledProductImg alt={nombre} src={image || `https://res.cloudinary.com/dw8jw0zhx/image/upload/v1667676017/healthy_shop_default/${img}`} />: <Skeleton sx={{zIndex:100, height:"140%", width:"80%", top:-60, position: 'absolute',}} />}
       </Box>
         <form onSubmit={handleSubmit(d=>onSubmit(d))}>
         <Stack spacing={1} sx={{m:2}} >
