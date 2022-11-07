@@ -29,7 +29,7 @@ export const App = () => {
   },[ user])
 
    useEffect(()=>{
-        if(!cart.length) return;
+    if(!cart.length) {localStorage.setItem("cart", []);return};
     localStorage.setItem("cart", JSON.stringify(cart))
  },[cart])
 

@@ -4,12 +4,14 @@ import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { fCurrency } from '../dashboard/utils/formatNumber';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
-import { useDispatch } from 'react-redux';
+import { useDispatch, } from 'react-redux';
 import {TYPES} from '../actions/ShoppingCartActions'
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 
 const CarritoCart = ({ imgCard, name, price, quantity, id }) => {
+  
   const dispatch = useDispatch();
+
   const delFromCart = (id,all=false)=>{
     if(all){
         dispatch({type:TYPES.REMOVE_ALL_FROM_CART, payload:id})
@@ -52,7 +54,7 @@ const CarritoCart = ({ imgCard, name, price, quantity, id }) => {
                 <AddCircleOutlinedIcon sx={{color:t=>t.palette.primary.main}} />
             </IconButton>
             <IconButton onClick={()=>delFromCart(id) } sx={{right:6}} >
-                <DeleteRoundedIcon   sx={{color:t=>t.palette.error.main}} />
+                <DeleteRoundedIcon />
             </IconButton>
           </Stack>
         </Grid>

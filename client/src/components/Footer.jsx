@@ -6,7 +6,7 @@ import Link from '@mui/material/Link';
 export const Footer_comp = () => {
   return (
   
-      <Container maxWidth  sx={{bgcolor: "black",color:'white', }}  >
+      <Container sx={{bgcolor: "black",color:'white', minWidth:'100%'}}  >
         <Grid mt={19} container spacing={5}>
           <Grid item xs={12} sm={4}>
             <Box borderBottom={1}>Ayuda</Box>
