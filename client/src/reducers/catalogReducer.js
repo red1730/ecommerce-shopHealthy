@@ -29,6 +29,7 @@ export const catalogReducer = (state = initialState, action) => {
         isLoading: false,
         categ: action.payload.cat,
         setBanner: true,
+        cart: action.payload.cart
       };
 
     case 'ERROR_FETCH_INIT_PRODUCTS':

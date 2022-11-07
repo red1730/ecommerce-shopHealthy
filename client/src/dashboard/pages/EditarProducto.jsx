@@ -97,14 +97,13 @@ export default function EditarProducto() {
 
     console.log(data);
   }
+
   const uploadImage = async(e) =>{
     const files = e.target.files;
     const data = new FormData();
     data.append("file", files[0]);
     data.append("upload_preset", "ykaylnwx");
     setLoad(true);
-    console.log(data)
-    console.log(files)
     const res = await fetch(
         'https://api.cloudinary.com/v1_1/dw8jw0zhx/image/upload',
         {
@@ -113,10 +112,10 @@ export default function EditarProducto() {
         }
     )
     const file = await res.json();
+    console.log(file.secure_url)
     setImage(file.secure_url);
     setLoad(false);
 }
-console.log(image)
 
   if(!nombre) return <Typography variant='h3' m='0 auto' >Cargando...</Typography>
 
