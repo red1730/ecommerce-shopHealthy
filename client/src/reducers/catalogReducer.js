@@ -17,7 +17,8 @@ const initialState = {
   categName: ['TENTACION SALUDABLE', 'ALACENA SALUDABLE', 'ESTILO DE VIDA', 'BEBIDAS'],
   setBanner: true,
   cart: [],
-  subtotal: 0
+  subtotal: 0,
+  cartInfo:{}
 };
 export const catalogReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -212,6 +213,14 @@ export const catalogReducer = (state = initialState, action) => {
           subtotal:state.cart.reduce( (a,b)=> a + (b.precio * b.quantity),0 )
       }
     }
+
+    case 'PAID_MERCADO_PAGO':
+      console.log(action.payload,'estamos en el REDUCER');
+      return {
+        ...state,
+       cartInfo: action.payload
+
+      } 
 
     default:
       return state;
