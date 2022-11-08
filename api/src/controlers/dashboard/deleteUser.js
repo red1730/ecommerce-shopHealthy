@@ -1,7 +1,11 @@
 const auth = require('./initFAdmin')
 
 const deleteUser = async (email) => {
-  // TODO: AGREGAR TRY CATCH!!!!
+  try {
+    
+  } catch (error) {
+    
+  }
   const myUser = await auth.getUserByEmail(email)
   auth.deleteUser(myUser.uid)
 }
