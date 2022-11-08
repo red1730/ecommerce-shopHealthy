@@ -9,6 +9,11 @@ const initialState = {
   orderKey: 'nombre',
   error: null,
   categ: null,
+  categAlert: {
+    categ:'',
+    subCateg:'',
+  },
+
   categName: ['TENTACION SALUDABLE', 'ALACENA SALUDABLE', 'ESTILO DE VIDA', 'BEBIDAS'],
   setBanner: true,
   cart: [],
@@ -55,6 +60,7 @@ export const catalogReducer = (state = initialState, action) => {
         products: action.payload.data,
         filteredProducts: action.payload.data,
         categ: action.payload.cat,
+        categAlert: {...state.categAlert, categ: action.payload.cat},
         setBanner: false,
       };
     case 'ADD':
@@ -63,11 +69,14 @@ export const catalogReducer = (state = initialState, action) => {
         filteredProducts: state.products,
       };
     case 'ADD_NESTED_FILTER':
+      let newSubCateg = action.payload.cat;
+      if (newSubCateg) newSubCateg = `${state.categAlert.subCateg ? state.categAlert.subCateg:''} ${action.payload.cat}`
       return {
         ...state,
         products: action.payload.data,
         nestedFilter: action.payload.data,
         categ: action.payload.cat,
+        categAlert: {...state.categAlert, subCateg: newSubCateg },
         setBanner: false,
       };
     case 'REMOVE_FILTER':
@@ -86,6 +95,10 @@ export const catalogReducer = (state = initialState, action) => {
         orderKey:'nombre',
         nestedFilter: [],
         filteredProducts: [],
+        categAlert: {
+          categ:'',
+          subCateg:'',
+        },
         setBanner: true,
       };
     case 'ORDER_ASC':
@@ -140,7 +153,7 @@ export const catalogReducer = (state = initialState, action) => {
     case TYPES.ADD_TO_CART: {
       let newItem = state.allProducts.find((product) => product.id === action.payload.id);
       // console.log(newItem, 'En el reducer.')
-      let itemInCart = state.cart.find((item) => item.id === newItem.id);
+      let itemInCart = state.cart.find((item) => item.id == newItem.id);
 
       return itemInCart
         ? {
