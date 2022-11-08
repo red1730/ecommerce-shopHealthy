@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2'
 import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
@@ -41,9 +42,10 @@ const TABLE_HEAD = [
   { id: 'email', label: 'Correo', alignRight: false },
   { id: 'created', label: 'Fecha de creación', alignRight: false },
   { id: 'role', label: 'Rol', alignRight: false },
-  { id: 'promover', label: 'Promover', alignRight: false },
+  { id: 'promover', label: 'Cambiar rol', alignRight: false },
   { id: 'tokensValidAfterTime', label: 'Token expira', alignRight: false },
-  { id: '' },
+  { id: 'chiringuito', label: 'Chiringuito', alignRight: false },
+  { id: 'nactzshi', label: 'Nactzshi', alignRight: false }
 ];
 
 // ----------------------------------------------------------------------
@@ -117,8 +119,6 @@ function UserPageContent({myUsers}) {
 
   const [open, setOpen] = useState(null);
 
-  const [first, setfirst] = useState('hola')
-
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -134,6 +134,7 @@ function UserPageContent({myUsers}) {
   const handlePromote = (event) => {
 
   }
+  
   const handleOpenMenu = (event) => {
     console.log(event.currentTarget)
     setOpen(event.currentTarget);
@@ -158,24 +159,51 @@ function UserPageContent({myUsers}) {
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    console.dir({"event":event, "name":name})
-
-    if (event.type === 'change') {
-      const selectedIndex = selected.indexOf(name);
-      let newSelected = [];
-      if (selectedIndex === -1) {
-        newSelected = newSelected.concat(selected, name);
-      } else if (selectedIndex === 0) {
-        newSelected = newSelected.concat(selected.slice(1));
-      } else if (selectedIndex === selected.length - 1) {
-        newSelected = newSelected.concat(selected.slice(0, -1));
-      } else if (selectedIndex > 0) {
-        newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-      }
-      setSelected(newSelected);
-    } else {
-      alert(`Seguro que quieres promover a ${name}?`)
+  const handleClick = (event, email) => {
+    // console.dir({"action":event, "email":email})
+    console.log(`${event.target.id} a ${email}`)
+    const key = event.action.target.name
+    switch (key) {
+      case 'change':
+        const selectedIndex = selected.indexOf(email);
+        let newSelected = [];
+        if (selectedIndex === -1) {
+          newSelected = newSelected.concat(selected, email);
+        } else if (selectedIndex === 0) {
+          newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+          newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+          newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+        }  
+        setSelected(newSelected);
+        break;
+      case 'promover':
+        alert(`Seguro que quieres hacer admin a ${email}?`)
+        Swal.fire({
+          title: `<strong>Nuevo <u>Admin</u>???</strong>`,
+          icon: 'info',
+          html: `Estás seguro que quieres hacer <b>Admin</b>, a  ${email}?`,
+          showCancelButton: true,
+          focusConfirm: false,
+          confirmButtonText: '<i class="fa fa-thumbs-up"></i> Sip!',
+          cancelButtonText: '<i class="fa fa-thumbs-down"></i> Douh! No!!!',
+        })
+        break;
+      case 'degradar':
+        alert(`Seguro que quieres hacer a ${email} usuario regular?`)
+        break;
+      case 'nada' :
+        alert('Nadie le cambia el rol a un super_admin loco! 😜')
+        break;
+      case 'editar':
+        alert(`No me parece correcto que fuear posible aquí editar los datos de ${email} 😤`)
+        break;
+      case 'eliminar':
+        alert(`Seguro que quieres ELIMINAR a ${email}?`)
+        break;
+      default:
+        break;
     }
   };
 
@@ -195,154 +223,113 @@ function UserPageContent({myUsers}) {
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - myUsers.length) : 0;
   
-  // if (!isLoading && (myUsers!==undefined)){
-    // console.log("Estafuncion: " + myUsers)
-    const filteredUsers = applySortFilter(myUsers, getComparator(order, orderBy), filterName);
+  const filteredUsers = applySortFilter(myUsers, getComparator(order, orderBy), filterName);
 
-    const isNotFound = !filteredUsers.length && !!filterName;
-  // debugger
-// }
+  const isNotFound = !filteredUsers.length && !!filterName;
 
+  return (<>
+    <Helmet>
+      <title> Dashboard: Usuarios </title>
+    </Helmet>
 
-  return (
-    <>
-    
-      <Helmet>
-        <title> Dashboard: Usuarios </title>
-      </Helmet>
+    <Container>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={8}>
+        <Typography variant="h1" gutterBottom>
+          Usuarios
+        </Typography>
+        <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+          Nuevo usuario
+        </Button>
+      </Stack>
+      <Card>
+        <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
+        <Scrollbar>
+          <TableContainer sx={{ minWidth: 800 }}>
+            <Table>
+              <UserListHead
+                order={order}
+                orderBy={orderBy}
+                headLabel={TABLE_HEAD}
+                rowCount={5}
+                numSelected={selected.length}
+                onRequestSort={handleRequestSort}
+                onSelectAllClick={handleSelectAllClick}
+              />
+              <TableBody>
+              { 
+                filteredUsers?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                  const { uid, photoURL, displayName, email, created, role, tokensValidAfterTime } = row
+                  const selectedUser = selected.indexOf(displayName) !== -1;
 
-      <Container  >
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4" gutterBottom>
-            User
-          </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New User
-          </Button>
-        </Stack>
-
-        <Card sx={{border:'1px solid black', maxWidth:800}} > 
-          <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
-          
-          <Scrollbar>
-            <TableContainer sx={{ minWidth: 800, }}>
-              <Table>
-                <UserListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={5}
-                  numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
-                />
-                <TableBody>
-                { 
-                  filteredUsers?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const {
-                      uid,
-                      photoURL,
-                      displayName,
-                      email,
-                      created,
-                      role,
-                      tokensValidAfterTime 
-                    } = row
-                    // const { id, name, role, status, company, avatarUrl, isVerified } = row;
-                    // (!metadata) && console.dir(metadata) 
-                    const selectedUser = selected.indexOf(displayName) !== -1;
-
-                    return (
-                      <TableRow hover key={uid} tabIndex={-1} role="checkbox" selected={selectedUser}>
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, email)} />
-                        </TableCell>
-
-                        <TableCell component="th" scope="row" padding="none">
-                          <Stack direction="row" alignItems="center" spacing={.5}>
-                            <Avatar alt={displayName} src={photoURL} />
-                            <Typography variant="subtitle2" noWrap>
-                              {displayName}
-                            </Typography>
-                          </Stack>
-                        </TableCell>
-
-                        <TableCell align="left">{email}</TableCell>
-
-                        <TableCell align="left">{created}</TableCell>
-
-                        <TableCell align="left">{role}</TableCell>
-
-                        <TableCell align="left">
-                          <Label onClick={(event) => handleClick(event, email)} color={(role === 'Regular' && 'secondary') || (role === 'super_admin' && 'error')|| 'warning'}>{sentenceCase(role)}</Label>
-                        </TableCell>
-                        
-                        <TableCell align="left">{tokensValidAfterTime}</TableCell>
-
-                        <TableCell align="right">
-                          <IconButton size="large" color="inherit" onClick={alert('coso')}>
-                            <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-                          </IconButton>
-                        </TableCell>
-                        <TableCell align="right">
-                          <IconButton size="large" color="inherit" onClick={alert('otro coso')}>
-                            <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }}  />                            
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })
-                }
-                {
-                  emptyRows > 0 && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={7} />
-                    </TableRow>
-                  )
-                }
-                </TableBody>
-
-                {isNotFound && (
-                  <TableBody>
-                    <TableRow>
-                      <TableCell align="center" colSpan={7} sx={{ py: 3 }}>
-                        <Paper
-                          sx={{
-                            textAlign: 'center',
-                          }}
-                        >
-                          <Typography variant="h6" paragraph>
-                            Not found
+                  return (
+                    <TableRow hover key={uid} tabIndex={-1} role="checkbox" selected={selectedUser}>
+                      <TableCell component="th" scope="row" padding="none">
+                        <Stack direction="row" alignItems="center" spacing={.5}>
+                          <Avatar alt={displayName} src={photoURL} />
+                          <Typography variant="subtitle2" noWrap>
+                            {displayName}
                           </Typography>
-
-                          <Typography variant="body2">
-                            No results found for &nbsp;
-                            <strong>&quot;{filterName}&quot;</strong>.
-                            <br /> Try checking for typos or using complete words.
-                          </Typography>
-                        </Paper>
+                        </Stack>
+                      </TableCell>
+                      <TableCell align="left">{email}</TableCell>
+                      <TableCell align="left">{created.split(' ').splice(1).splice(0,4).join(' ')}</TableCell>
+                      <TableCell align="left">{role}</TableCell>
+                      <TableCell align="left">
+                        <Label 
+                          id = {
+                            (role === 'Regular' && 'promover') || 
+                            (role === 'admin' && 'degradar') ||
+                            (role === 'super_admin' && 'nada') ||
+                            role} 
+                          onClick = {
+                            (event) => handleClick(event, email)
+                          } 
+                          color = {
+                            (role === 'Regular' && 'secondary') ||
+                            (role === 'super_admin' && 'error') ||
+                            'warning'} >
+                          {sentenceCase(role)}
+                        </Label>
+                      </TableCell>
+                      <TableCell align="left">{tokensValidAfterTime.split(' ').splice(1).splice(0,4).join(' ')}</TableCell>
+                      <TableCell align="right">
+                        <Label id="editar" onClick={(event) => handleClick(event, email)}>
+                          <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />Editar
+                        </Label>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Label id="borrar" onClick={(event) => handleClick(event, email)}>
+                          <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }}  />Borrar
+                        </Label>
                       </TableCell>
                     </TableRow>
-                  </TableBody>
-                )}
-              </Table>
-            </TableContainer>
-          </Scrollbar>
+                  );
+                })
+              }
+              {
+                emptyRows > 0 && (
+                  <TableRow style={{ height: 53 * emptyRows }}>
+                    <TableCell colSpan={7} />
+                  </TableRow>
+                )
+              }
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Scrollbar>
 
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={myUsers?.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Card>
-      </Container>
-
-    </>
-  );
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={myUsers?.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Card>
+    </Container>
+  </>);
 }
 
 /*
