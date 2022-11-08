@@ -6,19 +6,18 @@ import { useSelector } from 'react-redux';
 
 export const ActionAlerts = ({categoria}) => {
   const { categAlert } = useSelector( s=>s.catalogReducer )
-  console.log(categAlert)
   return (
-    <Box sx={{mt:15, display:'flex', justifyContent:'center', border:'1px solid black'}}>
+    <Box sx={{mt:15, display:'flex', justifyContent:'center'}}>
       <Alert sx={{ "& .MuiAlert-icon": {
       display:'none'
     }}}>
       {
-        (categAlert.categ && categAlert.subCateg)
+        (categAlert.categ && categAlert.subCateg.length)
               ? <Typography 
                   sx={{textAlign:'center', margin:"0", padding:"0", alignContent:"center"}} 
                 >
                   <VerifiedOutlinedIcon sx={{margin:'0 10px 2px 0 '}}/>
-                  { `${categAlert.categ.toUpperCase()} - ${categAlert.subCateg} ` }
+                  { `${categAlert.categ.toUpperCase()} ${categAlert.subCateg.join(' -')} ` }
                 </Typography>
               :(categAlert.categ )
                ?<Typography 
@@ -32,7 +31,7 @@ export const ActionAlerts = ({categoria}) => {
                   sx={{textAlign:'center', margin:"0", padding:"0", alignContent:"center"}} 
                 >
                   <VerifiedOutlinedIcon sx={{margin:'0 10px 2px 0 '}}/>
-                  { `${categAlert.subCateg} ` }
+                  { `${categAlert.subCateg.join(' -')} ` }
                 </Typography>
               :<p>caiste aqui</p>
       }

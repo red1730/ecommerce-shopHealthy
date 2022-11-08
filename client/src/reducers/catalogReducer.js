@@ -11,7 +11,7 @@ const initialState = {
   categ: null,
   categAlert: {
     categ:'',
-    subCateg:'',
+    subCateg:[],
   },
 
   categName: ['TENTACION SALUDABLE', 'ALACENA SALUDABLE', 'ESTILO DE VIDA', 'BEBIDAS'],
@@ -70,7 +70,7 @@ export const catalogReducer = (state = initialState, action) => {
       };
     case 'ADD_NESTED_FILTER':
       let newSubCateg = action.payload.cat;
-      if (newSubCateg) newSubCateg = `${state.categAlert.subCateg ? state.categAlert.subCateg:''} ${action.payload.cat}`
+      if (newSubCateg) newSubCateg = [...state.categAlert.subCateg, newSubCateg]
       return {
         ...state,
         products: action.payload.data,
@@ -85,6 +85,7 @@ export const catalogReducer = (state = initialState, action) => {
         products: action.payload.data,
         nestedFilter: action.payload.newNested,
         categ: action.payload.cat,
+        categAlert: {...state.categAlert, subCateg: state.categAlert.subCateg.filter(e=>e != action.payload.cat) },
         setBanner: false,
       };
     case 'RESET_CATALOG':
