@@ -22,14 +22,16 @@ import { MercadoPagoCart } from '../components/MercadoPagoCart';
 import ShieldIcon from '@mui/icons-material/Shield';
 import { Preferencias_comp } from '../components/Preferencias';
 import { FormCarrito } from '../components/FormCarrito';
+import { useForm, Controller } from 'react-hook-form';
+
+
 
 
 export const Shopping = ()=> {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
-  
+  const { handleSubmit, formState:{errors}, control, } = useForm();
   useEffect(() => {
     dispatch(initProducts())
   }, [dispatch]);
@@ -40,7 +42,10 @@ export const Shopping = ()=> {
   }, [cart, dispatch])
   
 
-  const onSubmit = (e,d)=>{
+  const onSubmit = (data)=>{
+    
+    let newData = {...data, id:parseInt(data.id), codPostal: parseInt(data.codPostal) }
+    console.log('console log data del onsubmit',newData);
 
   }
 
@@ -126,22 +131,26 @@ export const Shopping = ()=> {
             </Table>
           </TableContainer>
         </Grid>
+        
+        <Grid item xs={4} > <Typography>rellenar</Typography> </Grid>
+
+        <Grid item xs={8} >
+          <FormCarrito errors={errors} control={control} handleSubmit={handleSubmit} onSubmit={handleSubmit} />
+        </Grid>
         <Grid item xs={4} >
             <Stack  spacing={4} sx={{justifyContent:'center', alingItems:'center', display:'flex', }} >
               <MercadoPagoCart />
               <Button
                 startIcon={<ShieldIcon/>}
                 variant='contained'
-                onClick={onSubmit}
+                type='submit'
+                onClick={handleSubmit(d=>onSubmit(d))}
                 
               >
-                {`Total a pagar ${fCurrency(subtotal)} `}
+                {`Pagar ${fCurrency(subtotal)} `}
               </Button>
               <Typography variant='body2' sx={{fontSize:'0.75rem', opacity:'70%'}} > Al confirmar tu compra, te redirigiremos a tu cuenta de Mercado Pago </Typography>
             </Stack>
-        </Grid>
-        <Grid item xs={8} >
-          <FormCarrito onSubmit={onSubmit}/>
         </Grid>
       </Grid>
 
