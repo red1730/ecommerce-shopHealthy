@@ -221,7 +221,7 @@ function UserPageContent({myUsers}) {
           </Button>
         </Stack>
 
-        <Card sx={{border:'1px solid black', maxWidth:800}} > 
+        <Card sx={{border:'1px solid black', maxWidth:800, height:'auto' }} > 
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
           
           <Scrollbar>

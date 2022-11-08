@@ -19,6 +19,9 @@ import { TYPES } from '../actions/ShoppingCartActions';
 import { useState } from 'react';
 import { Contador } from '../components/Contador';
 import { MercadoPagoCart } from '../components/MercadoPagoCart';
+import ShieldIcon from '@mui/icons-material/Shield';
+import { Preferencias_comp } from '../components/Preferencias';
+import { FormCarrito } from '../components/FormCarrito';
 
 
 export const Shopping = ()=> {
@@ -37,9 +40,13 @@ export const Shopping = ()=> {
   }, [cart, dispatch])
   
 
+  const onSubmit = (e,d)=>{
+
+  }
+
   return (
     <>
-      <Container>
+      <Container sx={{ minWidth:'90%'}} >
       <Box>
         <Button startIcon={<ChevronLeftIcon/>} onClick={()=>navigate(-1)}  > Volver a la tienda</Button>
         <Typography variant='subtitle2' sx={{fontSize:25, my:2}} > Finaliza tu compra </Typography>
@@ -120,12 +127,21 @@ export const Shopping = ()=> {
           </TableContainer>
         </Grid>
         <Grid item xs={4} >
-            <Stack  spacing={3} >
+            <Stack  spacing={4} sx={{justifyContent:'center', alingItems:'center', display:'flex', }} >
               <MercadoPagoCart />
-              <Typography sx={{border:'1px solid black'}} >stack2</Typography>
-              <Typography sx={{border:'1px solid black'}} >stack2</Typography>
-              <Typography sx={{border:'1px solid black'}} >stack2</Typography>
+              <Button
+                startIcon={<ShieldIcon/>}
+                variant='contained'
+                onClick={onSubmit}
+                
+              >
+                {`Total a pagar ${fCurrency(subtotal)} `}
+              </Button>
+              <Typography variant='body2' sx={{fontSize:'0.75rem', opacity:'70%'}} > Al confirmar tu compra, te redirigiremos a tu cuenta de Mercado Pago </Typography>
             </Stack>
+        </Grid>
+        <Grid item xs={8} >
+          <FormCarrito onSubmit={onSubmit}/>
         </Grid>
       </Grid>
 

@@ -118,7 +118,7 @@ export const CartFlotingButton = ()=> {
              },
             }}
           />
-          <Box sx={{position: 'fixed', bottom: 30, right: 30, overflowX:'hidden',zIndex:500}} >
+          <Box sx={{position: 'fixed', bottom: 30, right: 30, zIndex:800}} >
             <Fab
               color="white"
               aria-label="add"
