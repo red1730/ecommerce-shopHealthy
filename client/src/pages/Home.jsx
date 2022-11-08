@@ -10,11 +10,10 @@ import {useDispatch, useSelector,} from 'react-redux'
 import { initProducts } from '../actions/getInitProducts';
 import { ActionAlerts } from '../components/AlertCategoria';
 import { OrderSelect } from '../components/OrderSelect';
-import { CartFlotingButton } from '../components/CartFlotingButton';
 
 export const Home = () => {
 
-  const {products, allProducts, categ, setBanner} = useSelector(state=> state.catalogReducer)
+  const { products, allProducts, categ, setBanner, categAlert } = useSelector(state=> state.catalogReducer)
   const dispatch = useDispatch();
   let dataToShow = [];
   let [page, setPage] = useState(1);
@@ -57,7 +56,11 @@ export const Home = () => {
             alt="Portada"
             height='400'
           />
-        </Box> : <ActionAlerts categoria={categ}/> }
+        </Box> : <ActionAlerts categoria={categ}/> 
+        }
+        {
+
+        }
 
         <OrderSelect setPage={setPage} jump={_DATA.jump} />
 
