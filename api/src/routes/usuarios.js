@@ -85,7 +85,7 @@ router.post("/crear",check('nombre').exists().not().isEmpty(),
                         }
                         return true
                       }),
-                      check('genero').exists().not().isEmpty().isLength({min:5,max:6}),
+                      check('genero').exists().not().isEmpty().isLength({min:5,max:10}),
                       (req,res,next)=>{
                         validateResult(req,res,next)
                       }
@@ -140,6 +140,40 @@ router.post("/crear",check('nombre').exists().not().isEmpty(),
     }
   
   });
+
+  router.post("/despacho", async (req, res) => {
+    try {
+
+      const { mail, direccion, num_dir, codPostal } = req.body
+      
+      
+      const transport = nodemailer.createTransport({
+        host: 'smtp-mail.outlook.com',
+        port: 587,   //con ssl o 25 sin ssl
+        secure: false,
+        auth: {
+            user:'healthyshophenry@outlook.com' ,
+            pass: 'proyectogripal7'
+        },
+        tls: {
+            rejectUnauthorized: false   //permite mandar mails desde otro lado q no sea el localhost
+        }
+    })
+    const info = await transport.sendMail({
+      from: '"Healthy Shop 🥗🍚" <healthyshophenry@outlook.com>', 
+      to: `${mail}`, 
+      subject: "Confirmación de envío.", 
+      
+      html: `<b>Su pedido ha sido despachado a la siguiente dirección: ${direccion} ${num_dir} ${codPostal}.</b>`, // html body
+    })
+    
+    console.log("Message sent: %s", info.messageId)
+
+      res.status(200).send(id);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }); 
   
 
 router.put("/modificar/:id", async (req, res) => {
