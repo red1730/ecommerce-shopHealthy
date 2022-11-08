@@ -23,6 +23,7 @@ import ShieldIcon from '@mui/icons-material/Shield';
 import { Preferencias_comp } from '../components/Preferencias';
 import { FormCarrito } from '../components/FormCarrito';
 import { useForm, Controller } from 'react-hook-form';
+import { PaidMercadoPago } from '../actions/pagoMercadoPago';
 
 
 
@@ -36,16 +37,48 @@ export const Shopping = ()=> {
     dispatch(initProducts())
   }, [dispatch]);
   
-  const {cart, isLoading, subtotal} = useSelector( s=>s.catalogReducer )
+  const {cart, isLoading, subtotal, cartInfo} = useSelector( s=>s.catalogReducer )
   useEffect(() => {
     dispatch({type:TYPES.TOTAL_AMOUNT})
   }, [cart, dispatch])
   
-
+ 
   const onSubmit = (data)=>{
-    
-    let newData = {...data, id:parseInt(data.id), codPostal: parseInt(data.codPostal) }
-    console.log('console log data del onsubmit',newData);
+   let newData = {...data, id:parseInt(data.id), codPostal: parseInt(data.codPostal) }
+    // console.log('console log data del onsubmit',newData);
+
+    let itemsToMercado = cart.map( producto=>(
+      {
+          "id": String(producto.id),
+          "title": String(producto.nombre),
+          "description": String(producto.descripcion),
+          "category_id": String(newData.id),
+          "quantity": String(producto.quantity),
+          "currency_id":"ARS",
+          "unit_price": producto.precio
+      }
+
+  ))
+
+        let info =  {
+            "items": itemsToMercado,
+            "payer": {
+              "name": newData.nombre,
+              "surname": newData.apellido,
+              "email": newData.email,
+              "identification": {
+              "type": "DNI",
+              "number": newData.id
+            }
+          }
+        } 
+    console.log( 'DATA QUE SE DESPACHA...') 
+    console.log(info) 
+
+    dispatch(PaidMercadoPago(info))
+    setTimeout(function(){
+      window.open(`${cartInfo.init_point}`, '_blank')
+  }, 2000);
 
   }
 
