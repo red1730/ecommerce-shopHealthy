@@ -164,7 +164,7 @@ router.post("/crear",check('nombre').exists().not().isEmpty(),
       to: `${mail}`, 
       subject: "Confirmación de envío.", 
       
-      html: `<b>Su pedido ha sido despachado a la siguiente dirección: ${direccion} ${num_dir} ${codPostal}.</b>`, // html body
+      html: `<b>Su pedido ha sido despachado a la siguiente dirección: ${direccion} ${codPostal}.</b>`, // html body
     })
     
     console.log("Message sent: %s", info.messageId)
