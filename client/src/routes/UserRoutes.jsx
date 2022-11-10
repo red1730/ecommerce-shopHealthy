@@ -11,8 +11,8 @@ export const UserRoutes = () => {
     <div>
         <Header_comp />
         <Routes>
-          <Route index element={<Shopping />} />
-          <Route path="/:nombre/comprar" element={<Shopping />} />
+          <Route index element={<Perfil />} />
+          {/* <Route path="/:nombre/comprar" element={<Shopping />} /> */}
           <Route path="/:nombre/mis_compras" element={<MisCompras />} />
           <Route path="/:nombre/usuario" element={<User />} />
           <Route path="/:nombre/preferencias" element={<Preferencias />} />
