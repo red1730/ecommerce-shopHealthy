@@ -3,13 +3,14 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import { Box, Button, CardActionArea, CardActions } from '@mui/material';
+import DoneIcon from '@mui/icons-material/Done';
 import MercadoLogo from '../assets/mercadopago.png'
 
 export const MercadoPagoCart = ()=> {
   return (
-    <Card sx={{ maxWidth: 345, bgcolor:'white' }}>
-      <CardActionArea>
+    <Box sx={{ maxWidth: 345, bgcolor:'transparent' }}>
+      <Box>
         <CardMedia
           component="img"
           height="140"
@@ -18,15 +19,23 @@ export const MercadoPagoCart = ()=> {
           
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Paga con mercado pago
+          <Typography gutterBottom variant="h6" component="div">
+            Paga más rápido con Mercado Pago
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
+          <Typography variant="body1" >
+          <DoneIcon sx={{color: t=>t.palette.primary.main , fontSize:'large', mr:1}}  />
+            Pago seguro
+          </Typography>
+          <Typography variant="body1" >
+          <DoneIcon sx={{color: t=>t.palette.primary.main , fontSize:'large', mr:1}} />
+            Sin carga de datos
+          </Typography>
+          <Typography variant="body1" >
+          <DoneIcon sx={{color: t=>t.palette.primary.main , fontSize:'large', mr:1}} />
+            Cuotas disponibles 
           </Typography>
         </CardContent>
-      </CardActionArea>
-    </Card>
+      </Box>
+    </Box>
   );
 }

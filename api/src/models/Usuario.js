@@ -6,6 +6,7 @@ module.exports = (sequelize) => {
   sequelize.define("usuario", {
     id: {
       type: DataTypes.BIGINT,
+        // defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
     },
@@ -17,17 +18,13 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    edad:{
-      type:DataTypes.INTEGER,
-      allowNull:false,
-    },
-    genero:{
-      type:DataTypes.STRING,
-      allowNull:false,
-    },
     telefono: {
       type: DataTypes.BIGINT,
       allowNull: true,
+    },
+    uid:{
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     mail: {
       type: DataTypes.STRING,
@@ -38,10 +35,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    num_dir: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+
     codPostal: {
       type: DataTypes.INTEGER,
       allowNull: false,

@@ -81,7 +81,6 @@ export const CartFlotingButton = ()=> {
             <ListItem  disablePadding>
               <CarritoCart stock={item.stock} id={item.id} imgCard={item.img} name={item.nombre} price={item.precio} quantity={item.quantity}/>
             </ListItem>
-            {/* <Divider sx={{border:'1px solid black'}}/> */}
             </div>
           })
           :<Box sx={{m:'0 auto', my:24, color: t=>t.palette.error.main , textAlign:'center', }}>
@@ -118,7 +117,7 @@ export const CartFlotingButton = ()=> {
              },
             }}
           />
-          <Box sx={{position: 'fixed', bottom: 30, right: 30, overflowX:'hidden',zIndex:500}} >
+          <Box sx={{position: 'fixed', bottom: 30, right: 30, zIndex:800}} >
             <Fab
               color="white"
               aria-label="add"

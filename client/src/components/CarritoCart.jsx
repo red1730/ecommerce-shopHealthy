@@ -7,6 +7,7 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import { useDispatch, } from 'react-redux';
 import {TYPES} from '../actions/ShoppingCartActions'
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 const CarritoCart = ({ imgCard, name, price, quantity, id, stock }) => {
   
@@ -26,6 +27,10 @@ const CarritoCart = ({ imgCard, name, price, quantity, id, stock }) => {
 
 
   return (
+    <>
+      <IconButton onClick={()=>delFromCart(id, true) } sx={{position:'absolute', zIndex:200, color:t=>t.palette.error.main }} >
+          <DeleteRoundedIcon />
+      </IconButton>
       <Grid container spacing={0} 
         sx={{ p:2, m:'5px 2px', bgcolor:'#F4F6F8', borderRadius:2, boxShadow:7,  display: 'flex', alignItems:'center', }}>
         <Grid item xs={3}  >
@@ -46,6 +51,7 @@ const CarritoCart = ({ imgCard, name, price, quantity, id, stock }) => {
           <Stack>
             <Typography  sx={{color:'black', fontSize:{xs:'14px',md:'16px'}, fontWeight:900,}}>{capitalize(name)}</Typography>
             <Typography  sx={{color:'black', fontSize:{xs:'13px',md:'14px'},}}>{`${fCurrency(price)} x ${quantity} = ${fCurrency( price * quantity )}`}</Typography>
+            <Typography  sx={{opacity:'90%',color:t=>t.palette.info.main, fontSize:{xs:'12px',md:'13px'},}}>{`Disponible: ${stock}u.`}</Typography>
           </Stack>
         </Grid>
         <Grid item xs={1}  >
@@ -54,11 +60,12 @@ const CarritoCart = ({ imgCard, name, price, quantity, id, stock }) => {
                 <AddCircleOutlinedIcon sx={{color:t=>t.palette.primary.main}} />
             </IconButton>
             <IconButton onClick={()=>delFromCart(id) } sx={{right:6}} >
-                <DeleteRoundedIcon />
+                <RemoveIcon />
             </IconButton>
           </Stack>
         </Grid>
       </Grid>
+    </>
   );
 };
 
