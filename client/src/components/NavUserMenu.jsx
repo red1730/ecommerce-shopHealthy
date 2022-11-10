@@ -47,11 +47,10 @@ export const NavUserMenu = ({user}) => {
             :
             <Box>
             {usuarioLogged(user.nombre).map( (el, i) => (
-            <MenuItem key={i} onClick={handleCloseUserMenu}>
+            <MenuItem key={i} onClick={handleCloseUserMenu} component={RouterLink} to={el.link} >
                 <Typography 
                 sx={{textDecoration:'none', color: '#64B98B',"&:hover":{color:'#64B98B' } }}
-                component={RouterLink}
-                to={el.link}
+
                 >
                 {el.label}
                 </Typography>
