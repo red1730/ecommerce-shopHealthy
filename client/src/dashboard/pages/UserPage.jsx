@@ -32,7 +32,6 @@ import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
 import USERLIST from '../_mock/user';
 // ----------------------------------------------------------------------
-
 const TABLE_HEAD = [
   { id: 'displayName', label: 'Nombre', alignRight: false },
   { id: 'email', label: 'Correo', alignRight: false },
@@ -42,7 +41,6 @@ const TABLE_HEAD = [
   { id: 'tokensValidAfterTime', label: 'Token expira', alignRight: false },
   { id: '' },
 ];
-
 // ----------------------------------------------------------------------
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -70,8 +68,6 @@ function applySortFilter(array, comparator, query) {
   }
   return stabilizedThis.map((el) => el[0]);
 }
-
-
 export default function UserPage() {
   // const [allUsers, setAllUsers] = useState(null)
   const { isLoading, data } = useFetch("https://henryhealthy.shop/tresmiluno/dashboard")
@@ -102,13 +98,10 @@ export default function UserPage() {
   return ('💩')
 
 }
-
-
 function UserPageContent({myUsers}) {
   // const {myUsers} = props.data
   // console.dir(myUsers)
   // console.log(typeof myUsers)
-
   const [open, setOpen] = useState(null);
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
@@ -136,6 +129,84 @@ function UserPageContent({myUsers}) {
     setSelected([]);
   };
   const handleClick = (event, name) => {
+    console.dir(event)
+    const accion = event.target.id
+    switch (accion) {
+      case 'promover':
+        Swal.fire({
+          title: `Realmente quieres hacer admin a ${name}???`,
+          showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonText: 'Si',
+          denyButtonText: `No lo se...`,
+        }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            const respuesta = useFetch(`https://henryhealth.shop/tresmiluno/dashboard/promover?email=${name}`)
+            Swal.fire(`Ahora ${name} es admin!`, '', 'success')
+          } else if (result.isDenied) {
+            Swal.fire('Pon en orden tu mente, entonces.', '', 'info')
+          }
+        })
+        break
+      case 'degradar':
+        // console.log(`Hay que useFetch(degradar a ${name})`)
+        Swal.fire({
+          title: `Realmente quieres quitarle su admin a ${name}???)`,
+          showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonText: 'Si',
+          denyButtonText: `No lo se...`,
+        }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            const respuesta = useFetch(`https://henryhealth.shop/tresmiluno/dashboard/degradar?email=${name}`)
+            Swal.fire(`Ahora ${name} es admin!`, '', 'success')
+          } else if (result.isDenied) {
+            Swal.fire('Pon en orden tu mente, entonces.', '', 'info')
+          }
+        })
+        break
+      case 'resetpwd':
+        // console.log(`Hay que useFetch(resetear pwd a ${name})`)
+        Swal.fire({
+          title: `Quieres resetear el password de ${name}???)`,
+          showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonText: 'Si',
+          denyButtonText: `No lo se...`,
+        }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            const respuesta = useFetch(`https://henryhealth.shop/tresmiluno/dashboard/resetpass?email=${name}&n=Health777!`)
+            Swal.fire(`Ok ahora tu password es 'Health777'! (sin las comillas) `, '', 'success')
+          } else if (result.isDenied) {
+            Swal.fire('Pon en orden tu mente, entonces.', '', 'info')
+          }
+        })
+        break
+      case 'eliminar':
+        // console.log(`Hay que useFetch(eliminar a ${name})`)
+        Swal.fire({
+          title: `Realmente quieres eliminar a ${name}???)`,
+          showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonText: 'Si',
+          denyButtonText: `No lo se...`,
+        }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            const respuesta = useFetch(`https://henryhealth.shop/tresmiluno/dashboard/eliminar?email=${name}`)
+            Swal.fire(`Volaste la cuenta de ${name} a la miercoles!!!`, '', 'success')
+          } else if (result.isDenied) {
+            Swal.fire('Pon en orden tu mente, entonces.', '', 'info')
+          }
+        })
+        break
+      default:
+        throw `Se recibió una acción desconocida: ${accion} -- ${name}.`
+    }
+
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
     if (selectedIndex === -1) {
@@ -164,7 +235,6 @@ function UserPageContent({myUsers}) {
   const filteredUsers = applySortFilter(myUsers, getComparator(order, orderBy), filterName);
   const isNotFound = !filteredUsers.length && !!filterName;
 
-
   return (<>
     <Helmet>
       <title> Dashboard: Usuarios </title>
@@ -180,9 +250,8 @@ function UserPageContent({myUsers}) {
         </Button>
       </Stack>
 
-        <Card sx={{border:'1px solid black', maxWidth:800, height:'auto' }} > 
+        <Card sx={{border:'1px solid black', minmWidth:800, height:'auto' }} > 
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
-          
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800, }}>
               <Table>
@@ -213,9 +282,6 @@ function UserPageContent({myUsers}) {
 
                     return (
                       <TableRow hover key={uid} tabIndex={-1} role="checkbox" selected={selectedUser}>
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, email)} />
-                        </TableCell>
 
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={.5}>
@@ -225,19 +291,26 @@ function UserPageContent({myUsers}) {
                             </Typography>
                           </Stack>
                         </TableCell>
-
                         <TableCell align="left">{email}</TableCell>
-
                         <TableCell align="left">{created}</TableCell>
-
                         <TableCell align="left">{role}</TableCell>
-
                         <TableCell align="left">
-                          <Label onClick={(event) => handleClick(event, email)} color={(role === 'Regular' && 'secondary') || (role === 'super_admin' && 'error')|| 'warning'}>{sentenceCase(role)}</Label>
-                        </TableCell>
-                        
-                        <TableCell align="left">{tokensValidAfterTime}</TableCell>
+                          <Label 
+                            onClick={(event) => handleClick(event, email)} 
+                            color= {
+                              (role === 'Regular' && 'secondary') || 
+                              (role === 'super_admin' && 'error')|| 
+                              'warning'
+                            }
+                            id = {
+                              (role === 'Regular' && 'promover') || 
+                              (role === 'admin' && 'degradar')
+                            }
 
+                            
+                          >{sentenceCase(role)}</Label>
+                        </TableCell>
+                        <TableCell align="left">{tokensValidAfterTime}</TableCell>
                         <TableCell align="right">
                           <IconButton size="large" color="inherit" >
                             <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
