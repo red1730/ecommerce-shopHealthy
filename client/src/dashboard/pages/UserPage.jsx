@@ -195,50 +195,71 @@ function UserPageContent({myUsers}) {
                 onRequestSort={handleRequestSort}
                 onSelectAllClick={handleSelectAllClick}
               />
-              <TableBody>
-                {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                  const { id, name, role, status, company, avatarUrl, isVerified } = row;
-                  const selectedUser = selected.indexOf(name) !== -1;
+                <TableBody>
+                { 
+                  filteredUsers?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                    const {
+                      uid,
+                      photoURL,
+                      displayName,
+                      email,
+                      created,
+                      role,
+                      tokensValidAfterTime 
+                    } = row
+                    // const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                    // (!metadata) && console.dir(metadata) 
+                    const selectedUser = selected.indexOf(displayName) !== -1;
 
-                  return (
-                    <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
-                      <TableCell padding="checkbox">
-                        <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
-                      </TableCell>
+                    return (
+                      <TableRow hover key={uid} tabIndex={-1} role="checkbox" selected={selectedUser}>
+                        <TableCell padding="checkbox">
+                          <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, email)} />
+                        </TableCell>
 
-                      <TableCell component="th" scope="row" padding="none">
-                        <Stack direction="row" alignItems="center" spacing={2}>
-                          <Avatar alt={name} src={avatarUrl} />
-                          <Typography variant="subtitle2" noWrap>
-                            {name}
-                          </Typography>
-                        </Stack>
-                      </TableCell>
+                        <TableCell component="th" scope="row" padding="none">
+                          <Stack direction="row" alignItems="center" spacing={.5}>
+                            <Avatar alt={displayName} src={photoURL} />
+                            <Typography variant="subtitle2" noWrap>
+                              {displayName}
+                            </Typography>
+                          </Stack>
+                        </TableCell>
 
-                      <TableCell align="left">{company}</TableCell>
+                        <TableCell align="left">{email}</TableCell>
 
-                      <TableCell align="left">{role}</TableCell>
+                        <TableCell align="left">{created}</TableCell>
 
-                      <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
+                        <TableCell align="left">{role}</TableCell>
 
-                      <TableCell align="left">
-                        <Label color={(status === 'banned' && 'error') || 'success'}>{sentenceCase(status)}</Label>
-                      </TableCell>
+                        <TableCell align="left">
+                          <Label onClick={(event) => handleClick(event, email)} color={(role === 'Regular' && 'secondary') || (role === 'super_admin' && 'error')|| 'warning'}>{sentenceCase(role)}</Label>
+                        </TableCell>
+                        
+                        <TableCell align="left">{tokensValidAfterTime}</TableCell>
 
-                      <TableCell align="right">
-                        <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                          <Iconify icon={'eva:more-vertical-fill'} />
-                        </IconButton>
-                      </TableCell>
+                        <TableCell align="right">
+                          <IconButton size="large" color="inherit" >
+                            <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
+                          </IconButton>
+                        </TableCell>
+                        <TableCell align="right">
+                          <IconButton size="large" color="inherit" >
+                            <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }}  />                            
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+                }
+                {
+                  emptyRows > 0 && (
+                    <TableRow style={{ height: 53 * emptyRows }}>
+                      <TableCell colSpan={7} />
                     </TableRow>
-                  );
-                })}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 53 * emptyRows }}>
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
-              </TableBody>
+                  )
+                }
+                </TableBody>
 
               {/*isNotFound && (
                 <TableBody>
