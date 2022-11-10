@@ -69,6 +69,7 @@ const {nombre, apellido, email, telefono, mensaje}=req.body;
 router.post("/crear",check('nombre').exists().not().isEmpty(),
                       check('apellido').exists().not().isEmpty(),
                       check('direccion').exists().not().isEmpty(),
+                      check('uid').exists().not().isEmpty(),
                       check('codPostal').exists().isNumeric().custom((value,{req})=>{
                         if(value < 1001 || value > 9431){
                           throw new Error('UPSSS valor no valido')
@@ -84,14 +85,17 @@ router.post("/crear",check('nombre').exists().not().isEmpty(),
 
 , async (req, res) => {
     try {
-      const {
-        id,nombre,apellido,direccion,codPostal,telefono,mail,isAdmin} = req.body;
+      let {
+        id,nombre,apellido,direccion,uid,codPostal,telefono,mail,isAdmin} = req.body;
       
-
+        console.log(id)
+        id = String(id)
+        console.log(id)
       
       const usuario = await Usuario.create({
         id: id,
         nombre: nombre,
+        uid:uid,
         apellido: apellido,  
         direccion: direccion,
         codPostal: codPostal,

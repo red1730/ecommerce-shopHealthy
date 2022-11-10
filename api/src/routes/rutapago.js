@@ -56,8 +56,9 @@ router.post('/notificacion', async (req,res)=>{
       console.log('OBTENIENDO EL MERCHAN ORDER..', orderId)
       merchantOrder= await mercadopago.merchant_orders.findById(orderId)  
       console.log('ACA VIENE LA DATA DEL MERCHANT ORDER.')
-      // console.log(merchantOrder.body)
-      if(merchantOrder.body.payments[0].status === 'approved'){
+      console.log(merchantOrder.body)
+      // if(merchantOrder.body.payments[0]?.status === 'approved'){
+      if(true){
 
         const venta = await Venta.create({
           id: merchantOrder.body.payments[0].id,
@@ -113,9 +114,9 @@ router.post('/notificacion', async (req,res)=>{
         
        
       }
-      else{
-        res.send("La venta no se pudo registrar")
-      }
+      // else{
+      //   res.send("La venta no se pudo registrar")
+      // }
 
       res.send("La venta se registró correctamente")
       break; 
