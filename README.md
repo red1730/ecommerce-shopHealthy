@@ -1,12 +1,5 @@
-1)- ESTRUCTURAR EL RESTO DEL TRABAJO, SI USAMOS REDUX TOOLKIT. 
-2)- FALTAN AGREGAR LAS DEPENDENCIAS DEL FRONT END QUE VAMOS A USAR.
-3)- ORGANIZAR EL README CON CIERTAS REGLAS SOBRE VARIABLES, IDIOMA DEL PROYECTO, FUNCIONES GLOBALES,ETC.
 
 
-Hola! Soy el javo desquiciado desde el readme :D
-
-Prueba Ceci readme rama!
-Hola soy el gabooo desde el readmeeeeeeeee!!!!
 
 # Comandos importantes de linux:
 
