@@ -35,26 +35,27 @@ Socket.IO | Cloudinary | Autoh0 | Sweet Alert | Ndemailer | MaterialUI
 🖤 Sobre Nosotros
 Somos un grupo de personas que se encontraron cursando la carrera de Full Stack Developer en el Bootcamp de Henry. Habernos elegido como compañeros y compartir mil horas de producción con un objetivo común, dieron como resultado una linda amistad y una idea novedosa. 
 El equipo se ensambló desde un inicio, la colaboración y el entusiasmo fueron pilares en el avance del proyecto. Estas cualidades sumadas a las grandes habilidades técnicas de cada integrante, fueron motivo no solo de un gran resultado sino también de las ganas de seguir creciendo juntos en nuevos desafíos.
+
 ⭐ Integrantes
-Christian Aguilar
+
 Christian Aguilar ⇢ linkedin ⇢ github
 
-Raúl Ducret
+
 Raúl Ducret ⇢ linkedin ⇢ github
 
-Luis Ceñal
+
 Luis Ceñal ⇢ linkedin ⇢ github
 
-Gabriel Pretel
+
 Gabriel Pretel ⇢ linkedin ⇢ github
 
-Matías Vega
+
 Matías Vega ⇢ linkedin ⇢ github
 
-Cecilia Sosa
+
 Cecilia Sosa ⇢ linkedin ⇢ github
 
-Javier Gutierrez
+
 Javier Gutierrez ⇢ linkedin ⇢ github
 
  
