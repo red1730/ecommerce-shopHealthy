@@ -47,8 +47,9 @@ router.post('/notificacion', async (req,res)=>{
   console.log({query})
   const topic = query.topic || query.type;
   
-  // console.log('ESTE DEBAJO ES EL TOPICC')
-  // console.log({topic})
+  console.log('ESTE DEBAJO ES EL TOPICC')
+  console.log(query)
+  console.log({topic})
 
   var merchantOrder;
   switch (topic) {

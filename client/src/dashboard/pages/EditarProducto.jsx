@@ -142,7 +142,7 @@ export default function EditarProducto() {
               textTransform: 'uppercase',
             }}
           >
-            {'inactivo'}
+            inactivo
           </Label>}
 
             
