@@ -103,8 +103,6 @@ useEffect(() => {
   }
 }, [dispatch, cartInfo]);
 
-
-
   
   return (
     <>
