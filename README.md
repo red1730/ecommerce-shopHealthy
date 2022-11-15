@@ -6,22 +6,34 @@ Healthy Food es nuestro Proyecto Final de carrera en el Bootcamp de Henry. En su
  
 La consigna era crear un e-commerce, quisimos ir un poco más allá y encontrar el diferencial dentro de los modelos de negocios tradicionales, aportando valor agregado. Sumamos estos objetivos a la premisa de lograr un funcionamiento del sitio intuitivo, rápido y simple para garantizar una buena experiencia del usuario.
 
-Para conocerlo, hacé cick en el siguiente enlace: html5  
+Para conocerlo, hacé cick en el siguiente enlace: 
 
 ✅ Objetivos Grupales
+
 ● Crear desde cero una aplicación en lenguaje JavaScript.
+
 ● Aplicar las habilidades aprendidas durante el bootcamp.
+
 ● Implementar el flujo de GIT en un entorno real de trabajo colaborativo.
+
 ● Utilizar la metodología ágil Scrum.
  
 💻 Objetivos Tech
+
 ● Auth de terceros integrada.
+
 ● Filtros y ordenamientos combinados.
+
 ● Utilizar servicios de almacenamiento multimedia basado en la nube.
+
 ● Notificaciones y mailing.
+
 ● Persistencia de datos a través de LocalStorage.
+
 ● Reviews / Puntuación.
+
 ● Dashboard administradores.
+
 ● Deploy.
  
 ⚙ Tecnologías
