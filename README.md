@@ -1,84 +1,64 @@
+Bienvenidos a Healthy Food
+ 
+🚀 El Proyecto
+Healthy Food es nuestro Proyecto Final de carrera en el Bootcamp de Henry. En su desarrollo aplicamos las tecnologías y conocimientos aprendidos durante las carrera de Full Stack Developer.
+
+ 
+La consigna era crear un e-commerce, quisimos ir un poco más allá y encontrar el diferencial dentro de los modelos de negocios tradicionales, aportando valor agregado. Sumamos estos objetivos a la premisa de lograr un funcionamiento del sitio intuitivo, rápido y simple para garantizar una buena experiencia del usuario.
+
+Para conocerlo, hacé cick en el siguiente enlace: html5  
+
+✅ Objetivos Grupales
+● Crear desde cero una aplicación en lenguaje JavaScript.
+● Aplicar las habilidades aprendidas durante el bootcamp.
+● Implementar el flujo de GIT en un entorno real de trabajo colaborativo.
+● Utilizar la metodología ágil Scrum.
+ 
+💻 Objetivos Tech
+● Auth de terceros integrada.
+● Filtros y ordenamientos combinados.
+● Utilizar servicios de almacenamiento multimedia basado en la nube.
+● Notificaciones y mailing.
+● Persistencia de datos a través de LocalStorage.
+● Reviews / Puntuación.
+● Dashboard administradores.
+● Deploy.
+ 
+⚙ Tecnologías
+・Front End:
+HTML | CSS | Javascript | React | Redux 
+・Back End:
+NodeJS | Express | PostgreSQL | Sequelize
+・Librerías
+Socket.IO | Cloudinary | Autoh0 | Sweet Alert | Ndemailer | MaterialUI
+ 
+🖤 Sobre Nosotros
+Somos un grupo de personas que se encontraron cursando la carrera de Full Stack Developer en el Bootcamp de Henry. Habernos elegido como compañeros y compartir mil horas de producción con un objetivo común, dieron como resultado una linda amistad y una idea novedosa. 
+El equipo se ensambló desde un inicio, la colaboración y el entusiasmo fueron pilares en el avance del proyecto. Estas cualidades sumadas a las grandes habilidades técnicas de cada integrante, fueron motivo no solo de un gran resultado sino también de las ganas de seguir creciendo juntos en nuevos desafíos.
+⭐ Integrantes
+Christian Aguilar
+Christian Aguilar ⇢ linkedin ⇢ github
+
+Raúl Ducret
+Raúl Ducret ⇢ linkedin ⇢ github
+
+Luis Ceñal
+Luis Ceñal ⇢ linkedin ⇢ github
+
+Gabriel Pretel
+Gabriel Pretel ⇢ linkedin ⇢ github
+
+Matías Vega
+Matías Vega ⇢ linkedin ⇢ github
+
+Cecilia Sosa
+Cecilia Sosa ⇢ linkedin ⇢ github
+
+Javier Gutierrez
+Javier Gutierrez ⇢ linkedin ⇢ github
+
+ 
+📌 Contacto
 
 
 
-# Comandos importantes de linux:
-
-## Los más basicos:
-```bash
-# ip de TruquitosDeployer: 31.220.49.30
-mkdir # Crear directorio
-systemctl status postgresql # Ver si postgres está corriendo
-sudo systemctl enable postgresql --now # Habilitar postgres
-sudo systemctl start postgresql # Encender proceso postgres
-sudo systemctl stop postgresql # Apagar proceso postgres
-sudo systemctl restart postgresql # Reiniciar proceso postgres
-```
-
-## Configurar SSH
-
-Viene de https://code.visualstudio.com/docs/remote/ssh 
-
-y https://code.visualstudio.com/docs/remote/troubleshooting
-
-
-```bash
-# Archivo de configuración de vscode:
-Host *
-    ForwardAgent yes
-    # Esto todavia no lo probamos...
-    #ControlMaster auto
-    #ControlPath  ~/.ssh/sockets/%r@%h-%p
-    #ControlPersist  600
-Host name-of-ssh-host-here
-    User your-user-name-on-host
-    HostName host-fqdn-or-ip-goes-here
-    IdentityFile ~/.ssh/id_ed25519-remote-ssh
-
-# Config. de extension ssh de vscode:
-"remote.SSH.showLoginTerminal": true,
-"remote.SSH.useLocalServer": false
-
-#Generamos keygen
-ssh-keygen -t rsa -b 4096 
-
-# Copiamos llave a remoto  
-export USER_AT_HOST="your-user-name-on-host@hostname"
-export PUBKEYPATH="$HOME/.ssh/id_ed25519.pub"
-ssh-copy-id -i "$PUBKEYPATH" "$USER_AT_HOST"
-
-# Autorizamos a local 
-$USER_AT_HOST="your-user-name-on-host@hostname"
-$PUBKEYPATH="$HOME\.ssh\id_ed25519.pub"
-$pubKey=(Get-Content "$PUBKEYPATH" | Out-String); ssh "$USER_AT_HOST" "mkdir -p ~/.ssh && chmod 700 ~/.ssh && echo '${pubKey}' >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
-```
-
-## Configurar DB's de postgres
-
-```bash
-sudo -i -u postgres
-sudo su - postgres -c "createuser <name>"
-sudo su - postgres -c "createdb <namedb>"
-sudo -u postgres psql
-GRANT ALL PRIVILEGES ON DATABASE <usernamedb> TO <name>;
-exit
-``` 
-
-Todo esto vino de https://es.linuxcapable.com/how-to-install-and-configure-postgresql-on-ubuntu-20-04
-
-## Listar todos los procesos activos y con puerto asociado:
-
-```bash
-sudo lsof -i -P -n | grep LISTEN
-```
-## SSH ... permisos de archivos en carpeta .ssh 
-
-```bash
-chmod 400 ~/.ssh/id_rsa
-chmod 700 ~/.ssh
-chmod 600 ~/.ssh/authorized_keys
-```
-
-## Listar users:
-```bash
-awk -F: '{ print $1}' /etc/passwd
-```
