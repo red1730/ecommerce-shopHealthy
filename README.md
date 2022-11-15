@@ -37,12 +37,18 @@ Para conocerlo, hacé cick en el siguiente enlace:
 ● Deploy.
  
 ⚙ Tecnologías
+
 ・Front End:
+
 HTML | CSS | Javascript | React | Redux 
+
 ・Back End:
+
 NodeJS | Express | PostgreSQL | Sequelize
+
 ・Librerías
-Socket.IO | Cloudinary | Autoh0 | Sweet Alert | Ndemailer | MaterialUI
+
+| Cloudinary | Firebase | Sweet Alert | Nodemailer | MaterialUI | Express-validator | React-router-Dom
  
 🖤 Sobre Nosotros
 Somos un grupo de personas que se encontraron cursando la carrera de Full Stack Developer en el Bootcamp de Henry. Habernos elegido como compañeros y compartir mil horas de producción con un objetivo común, dieron como resultado una linda amistad y una idea novedosa. 
