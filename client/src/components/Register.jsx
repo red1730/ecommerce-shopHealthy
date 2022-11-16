@@ -174,7 +174,7 @@ export const Register_comp = () => {
       {
         !loadRegister 
             ?
-        <Container component="main" sx={{p:5, width:'60%'}} >
+        <Container component="main" sx={{p:{xs:0, md:5}, width:{sx:'100%', md:'60%'},}} >
             <Avatar sx={{ m: '5px auto',}}>
               <LockOutlinedIcon />
             </Avatar>
@@ -184,11 +184,11 @@ export const Register_comp = () => {
 
           <FormularioPreferencias control={control} errors={errors} Controller={Controller} />
 
-            <Stack direction='row' spacing={2} >
+            <Stack direction={{xs:'column', md:'row'}} spacing={2} >
               <Button
                 onClick={handleSubmit(d=>onSubmit(d))}
                 variant="contained"
-                sx={{ width:'50%',}}
+                sx={{ width:{xs:'100%', md:'50%'},}}
               >
                 Registrarse
               </Button>
@@ -196,18 +196,16 @@ export const Register_comp = () => {
               <Button
                 onClick={handleSubmitGoogle} 
                 variant="contained"
-                sx={{ width:'50%',  }}
+                sx={{ width:{xs:'100%', md:'50%'},}}
               >
               Registrate con Google
               </Button>
             </Stack>
 
             <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link component={RouterLink} to = '/acceso' variant="body2">
+                <Link component={RouterLink} to = '/acceso' variant="body2" sx={{pr:2, pt:1}} >
                   Ya tenes una cuenta? Has click aquí
                 </Link>
-              </Grid>
             </Grid>
         {/* <Copyright /> */}
       </Container>

@@ -68,8 +68,6 @@ export const Filters = ({categTitle, handleCloseNavMenu}) => {
       };
       const handleChangeMultiple = e => {
 
-        console.log(e.target.checked)
-        console.log(e.target.name)
         if(e.target.checked) dispatch(addNestedFilter(e.target.name))
         else if (!e.target.checked) dispatch(removeNestedFilter(e.target.name))
 

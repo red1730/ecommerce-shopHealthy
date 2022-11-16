@@ -25,7 +25,7 @@ export const ProductCard = ({imgCard, prodName, prodPrice,id, stock, activo})=> 
     <>
     <Card sx={{ width: 345,  boxShadow:15, pt:4 }}  >
       <Box component={RouterLink} to={`/catalogo/${id}`} >
-        {stock < 5 && <Label
+        {stock < 5 &&activo && <Label
           variant="filled"
           color='error'
           sx={{

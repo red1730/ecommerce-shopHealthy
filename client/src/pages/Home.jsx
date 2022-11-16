@@ -70,7 +70,7 @@ export const Home = () => {
 
         <Box  sx={{width:'98%',justifyContent:'center', alignItems:'center', display:'flex', my:4}}>
           <Pagination
-          sx={{margin:'0 auto'}}
+          sx={{margin:'0 auto', mb:4}}
           count={count}
           size="large"
           page={page}

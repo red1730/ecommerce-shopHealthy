@@ -70,6 +70,7 @@ export const Login_comp =  () => {
   }, [])
   
   let navigate = useNavigate();
+
   if(user.logged){
     Swal.fire({
       position: 'center',
@@ -79,7 +80,6 @@ export const Login_comp =  () => {
       timer: 2000
     });
     return <Navigate to='/catalogo' />
-
     }
 
   const validate = (value) => {
@@ -100,50 +100,88 @@ export const Login_comp =  () => {
 
 const handleSubmit = async (e) => {
 
-if(errorEmail || errorPassword){
+if(errorEmail && errorPassword){
   e.preventDefault();
  Swal.fire({
     position: 'center',
     icon: 'error',
     title: 'Oopssss....!',
-    text:'Por favor complete el formulario.'  
+    text:'Verifique sus datos por favor...'  
   })
-}else{
+}
   e.preventDefault();    
   const correo= e.target.email.value
   const contraseña= e.target.password.value
-  // console.log(correo,contraseña)
-  const usuario = await signInWithEmailAndPassword(auth,correo,contraseña)
+  let usuario;
+  try {
+      usuario = await signInWithEmailAndPassword(auth,correo,contraseña)
+      const result = user.usuarios.find( el=> el.uid == usuario.user.uid)
+      const action = {
+        type: type.login,
+        payload: {
+          nombre: result.nombre || '',
+          uid: result.uid, 
+          mail: usuario.user.email,
+          apellido: result.apellido,
+          direccion: result.direccion,
+          codPostal: result.codPostal,
+          telefono: result.telefono,
+          dni: result.id
+        }
+      }
+      console.log(action)
+     dispatch(action)
 
-  const result = user.usuarios.find( el=> el.uid == usuario.user.uid)
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Bienvenido 🥰!',
+        showConfirmButton: false,
+        timer: 1500
+      })
 
-  const action = {
-    type: type.login,
-    payload: {
-      nombre: result.nombre || '',
-      uid: result.uid, 
-      mail: usuario.user.email,
-      apellido: result.apellido,
-      direccion: result.direccion,
-      codPostal: result.codPostal,
-      telefono: result.telefono,
-      dni: result.id
+      setTimeout(function(){
+        navigate('/catalogo') 
+      }, 2000);
+
+  } catch (error){
+    const errorCode = error.code;
+    console.log(errorCode)
+    const errorMessage = error.message;
+    console.log(errorMessage)
+    if (errorCode == 'auth/invalid-email'){
+      setErrorEmail(true)
+      setLeyendaEmail('emain incorrecto')
+      
+    }else if(errorCode == 'auth/wrong-password'){
+      setErrorPassword(true);
+      setLeyendaPassword('Contraseña incorrecta')
+      
+    }else if(errorCode == 'auth/user-not-found'){
+      setErrorEmail(true)
+      setLeyendaEmail('usuario no encontrado')
+      
+    }else if(errorCode == 'auth/too-many-requests'){
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Oopssss....!',
+        text:'Demasiados intentos para este usuario'  
+      })
+      
     }
-  }
-  console.log(action)
-  dispatch(action)
-}
-  Swal.fire({
-    position: 'center',
-    icon: 'success',
-    title: 'Bienvenido 🥰!',
-    showConfirmButton: false,
-    timer: 1500
-  })
+    else {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Oopssss....!',
+        text:'Algo salio mal'  
+      })
+    }
 
-    setTimeout(function(){
-      navigate('/catalogo') 
-    }, 2000);
+  }
+
+ 
  
 };
 

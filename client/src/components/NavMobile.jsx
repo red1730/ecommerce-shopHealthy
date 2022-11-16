@@ -1,4 +1,4 @@
-import { Avatar, Grid, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import { Avatar, Box, Grid, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import { FilterAcordion } from './FilterAcordion';
@@ -21,7 +21,7 @@ export const NavMobile = () => {
     setAnchorElNav(null);
     };
     const dispatch = useDispatch();
-    const {order, orderKey} = useSelector(s=>s.catalogReducer)
+    const {categName} = useSelector(s=>s.catalogReducer)
 
   return (
     <Grid container sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
@@ -60,25 +60,39 @@ export const NavMobile = () => {
             >
               
                 <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography 
-                    textAlign="center"
+                  <Box
                     component={RouterLink}
-                    sx={{textDecoration:'none', color:'inherit'}}
-                    to='/catalogo'
                     onClick={()=> { dispatch({type:'RESET_CATALOG'});}}
-                    replace={true}
-                    >Catálogo</Typography>
+                    to='/catalogo'
+                    sx={{textDecoration:'none', color:'inherit'}}
+
+                  >
+                    <Typography 
+                      textAlign="center"
+                      sx={{fontWeight:600}}
+                      >CATÁLOGO
+                    </Typography>
+                  </Box>
                 </MenuItem>
-                
-                <FilterAcordion />   
+                {
+                  categName.map( (el,i)=>(
+                      <FilterAcordion  categTitle={el} key={i} id={i} handleCloseNavMenu={handleCloseNavMenu} />   
+                  ) )
+                }
 
                 <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography 
-                    textAlign="center"
+                <Box
                     component={RouterLink}
-                    sx={{textDecoration:'none', color:'inherit'}}
                     to='/contacto'
-                    >Contacto</Typography>
+                    sx={{textDecoration:'none', color:'inherit'}}
+
+                  >
+                    <Typography 
+                      textAlign="center"
+                      sx={{fontWeight:600}}
+                      >CONTÁCTO
+                    </Typography>
+                  </Box>
                 </MenuItem>      
               
 
