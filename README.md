@@ -74,7 +74,7 @@ Matías Vega ⇢ linkedin ⇢ github
 Cecilia Sosa ⇢ linkedin ⇢ github
 
 
-Javier Gutierrez ⇢ linkedin ⇢ github
+[Javier Gutierrez](https://dkndrd.com) ⇢ [linkedin](https://www.linkedin.com/in/dukindroid) ⇢ [github](https://github.com/dukindroid)
 
  
 📌 Contacto
