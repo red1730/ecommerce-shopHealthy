@@ -71,7 +71,7 @@ export const FormularioPreferencias = (  {Controller, control, errors} ) => {
         {errors.direccion?.type === 'required' &&  <Alert sx={{ p:0, mb:2}} severity="error">El apellido es requerido</Alert>}
 
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
         <Controller 
             name="mail"
             defaultValue={''}

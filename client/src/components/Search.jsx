@@ -49,7 +49,7 @@ export const SearchBar = ()=> {
     }
 
   return (
-    <Toolbar sx={{display:'flex', justifyContent:'center', alingItems:'center', mb:{xs:0, md:-0.9}, mt:{xs:0,md:-3}, p:0, } } >
+    <Toolbar sx={{display:'flex', justifyContent:'center', alingItems:'center', mb:{xs:0, md:-0.9}, mt:{xs:0,md:-3}, p:0, pl:2 } } >
       <Search >
           <Autocomplete
             freeSolo
