@@ -65,7 +65,7 @@ Raúl Ducret ⇢ linkedin ⇢ github
 Luis Ceñal ⇢ linkedin ⇢ github
 
 
-Alan Gabriel ⇢[linkedin](https://www.linkedin.com/in/gabriel-pretel-2ab1551b7/) ⇢ [github](https://github.com/Gabipretel)
+Alan Gabriel Pretel ⇢[linkedin](https://www.linkedin.com/in/gabriel-pretel-2ab1551b7/) ⇢ [github](https://github.com/Gabipretel)
 
 Matías Vega ⇢ linkedin ⇢ github
 
