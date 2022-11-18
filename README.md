@@ -56,13 +56,13 @@ El equipo se ensambló desde un inicio, la colaboración y el entusiasmo fueron 
 
 ⭐ Integrantes
 
-Christian Aguilar ⇢ linkedin ⇢ github
+Christian Aguilar ⇢[linkedin](https://www.linkedin.com/in/christian-aguilar-rojas-5917b9237/) ⇢ [github](https://github.com/xchristx)
 
 
 Raúl Ducret ⇢ linkedin ⇢ github
 
 
-Luis Ceñal ⇢ linkedin ⇢ github
+Luis Ceñal ⇢[linkedin](https://www.linkedin.com/in/luis-ce%C3%B1al-35051b51/) ⇢ [github](https://github.com/luchocenial)
 
 
 Alan Gabriel Pretel ⇢[linkedin](https://www.linkedin.com/in/gabriel-pretel-2ab1551b7/) ⇢ [github](https://github.com/Gabipretel)
