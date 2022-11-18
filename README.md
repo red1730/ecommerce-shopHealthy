@@ -6,7 +6,7 @@ Healthy Food es nuestro Proyecto Final de carrera en el Bootcamp de Henry. En su
  
 La consigna era crear un e-commerce, quisimos ir un poco más allá y encontrar el diferencial dentro de los modelos de negocios tradicionales, aportando valor agregado. Sumamos estos objetivos a la premisa de lograr un funcionamiento del sitio intuitivo, rápido y simple para garantizar una buena experiencia del usuario.
 
-Para conocerlo, hacé cick en el siguiente enlace: 
+Para conocerlo, hacé cick en el siguiente enlace: https://henryhealthy.shop/catalogo
 
 ✅ Objetivos Grupales
 
