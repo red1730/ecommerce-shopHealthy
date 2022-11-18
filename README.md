@@ -59,19 +59,15 @@ El equipo se ensambló desde un inicio, la colaboración y el entusiasmo fueron 
 Christian Aguilar ⇢[linkedin](https://www.linkedin.com/in/christian-aguilar-rojas-5917b9237/) ⇢ [github](https://github.com/xchristx)
 
 
-Raúl Ducret ⇢ linkedin ⇢ github
-
+Raúl Ducret ⇢[linkedin](https://www.linkedin.com/in/raulducret/) ⇢ [github](https://github.com/red1730)
 
 Luis Ceñal ⇢[linkedin](https://www.linkedin.com/in/luis-ce%C3%B1al-35051b51/) ⇢ [github](https://github.com/luchocenial)
 
-
 Alan Gabriel Pretel ⇢[linkedin](https://www.linkedin.com/in/gabriel-pretel-2ab1551b7/) ⇢ [github](https://github.com/Gabipretel)
 
-Matías Vega ⇢ linkedin ⇢ github
+Matías Vega  ⇢[linkedin](https://www.linkedin.com/in/mat%C3%ADas-vega-98a527239/) ⇢ [github](https://github.com/ElMatiVega)
 
-
-Cecilia Sosa ⇢ linkedin ⇢ github
-
+Cecilia Sosa ⇢[linkedin](https://www.linkedin.com/in/cecilia-sosa-56702b94/) ⇢ [github](https://github.com/mcecisosa)
 
 [Javier Gutierrez](https://dkndrd.com) ⇢ [linkedin](https://www.linkedin.com/in/dukindroid) ⇢ [github](https://github.com/dukindroid)
 
