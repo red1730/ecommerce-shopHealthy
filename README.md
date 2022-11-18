@@ -65,8 +65,7 @@ Raúl Ducret ⇢ linkedin ⇢ github
 Luis Ceñal ⇢ linkedin ⇢ github
 
 
-Gabriel Pretel ⇢ linkedin ⇢ github
-
+[Alan Gabriel] ⇢[linkedin](https://www.linkedin.com/in/gabriel-pretel-2ab1551b7/) ⇢ [github](https://github.com/Gabipretel)
 
 Matías Vega ⇢ linkedin ⇢ github
 
@@ -76,8 +75,7 @@ Cecilia Sosa ⇢ linkedin ⇢ github
 
 [Javier Gutierrez](https://dkndrd.com) ⇢ [linkedin](https://www.linkedin.com/in/dukindroid) ⇢ [github](https://github.com/dukindroid)
 
- 
-📌 Contacto
+
 
 
 
