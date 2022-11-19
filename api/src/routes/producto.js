@@ -23,7 +23,7 @@ const router = Router();
 
     const {nombre} = req.query
     let todosLosProductos = await Producto.findAll({
-      where: {activo: true},
+      // where: {activo: true},
       include: [{ 
         model: Categoria,
         attributes: ['nombre']
@@ -39,9 +39,9 @@ const router = Router();
     }else{
       
       Producto.findAll({
-        where: {
-          activo: true
-        },
+        // where: {
+        //   activo: true
+        // },
         include: [{ 
           model: Categoria,
           attributes: ['nombre']
@@ -135,8 +135,7 @@ router.get("/:id", async (req, res) => {
 
   try {
     let productodetalle = await Producto.findOne({
-      where:{ id: id,
-              activo: true},
+      where:{ id: id},
       include: [Categoria,Marca],
   });
 
@@ -234,6 +233,7 @@ router.put("/admin/:id", async (req, res) => {
     let id = req.params.id;  
     const producto = await Producto.findByPk(id);
     const { nombre, precio, descripcion, imagen, stock, marca, activo } = req.body;
+    console.log(activo)
     const mar = await Marca.findOne({ where: { nombre: marca } })
 
     if (nombre) {
@@ -260,7 +260,7 @@ router.put("/admin/:id", async (req, res) => {
       producto.marcaId = mar.id;
       producto.save();
     }
-    if (activo) {
+    if (activo !== null) {
       producto.activo = activo;
       producto.save();
     }

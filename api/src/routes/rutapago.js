@@ -47,8 +47,9 @@ router.post('/notificacion', async (req,res)=>{
   console.log({query})
   const topic = query.topic || query.type;
   
-  // console.log('ESTE DEBAJO ES EL TOPICC')
-  // console.log({topic})
+  console.log('ESTE DEBAJO ES EL TOPICC')
+  console.log(query)
+  console.log({topic})
 
   var merchantOrder;
   switch (topic) {
@@ -71,7 +72,7 @@ router.post('/notificacion', async (req,res)=>{
         console.log(merchantOrder)
         let idmp = merchantOrder.body.payments[0].id 
         let vta = await Venta.findOne({ where: { id: idmp } })
-      if(merchantOrder.body.payments[0]?.status === 'approved' && !vta){
+      if(merchantOrder.body.payments[0]?.status === 'approved' && vta===null){
       // if(true){
 
         const venta = await Venta.create({
@@ -119,7 +120,7 @@ router.post('/notificacion', async (req,res)=>{
           subject: "Confirmación de Compra", 
           
           html: (`<b><h1>Hola! Tu compra ha sido registrada con el número ${merchantOrder.body.payments[0].id}, 
-                  con fecha ${merchantOrder.body.payments[0].date_approved}.
+                  con fecha ${merchantOrder.body.payments[0].date_approved.slice(0,10)}.
                   Gracias por confiar en nuestros productos.</h1></b>`), 
         })
         

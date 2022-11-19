@@ -1,91 +1,78 @@
-1)- ESTRUCTURAR EL RESTO DEL TRABAJO, SI USAMOS REDUX TOOLKIT. 
-2)- FALTAN AGREGAR LAS DEPENDENCIAS DEL FRONT END QUE VAMOS A USAR.
-3)- ORGANIZAR EL README CON CIERTAS REGLAS SOBRE VARIABLES, IDIOMA DEL PROYECTO, FUNCIONES GLOBALES,ETC.
+Bienvenidos a Healthy Food! 🍚🥗🥑
+<p align="center"><img alt="Shows an illustrated sun in light mode and a moon with stars in dark mode." src="https://almacensaludable.ar/wp-content/uploads/2021/07/banner-presentacion-web.jpg" style='width:60%' >  </p>
+ 
+🚀 El Proyecto
+Healthy Food es nuestro Proyecto Final de carrera en el Bootcamp de Henry. En su desarrollo aplicamos las tecnologías y conocimientos aprendidos durante las carrera de Full Stack Developer.
+
+ 
+La consigna era crear un e-commerce, quisimos ir un poco más allá y encontrar el diferencial dentro de los modelos de negocios tradicionales, aportando valor agregado. Sumamos estos objetivos a la premisa de lograr un funcionamiento del sitio intuitivo, rápido y simple para garantizar una buena experiencia del usuario.
+
+Para conocerlo, hacé cick en el siguiente enlace: https://henryhealthy.shop/catalogo
+
+✅ Objetivos Grupales
+
+● Crear desde cero una aplicación en lenguaje JavaScript.
+
+● Aplicar las habilidades aprendidas durante el bootcamp.
+
+● Implementar el flujo de GIT en un entorno real de trabajo colaborativo.
+
+● Utilizar la metodología ágil Scrum.
+ 
+💻 Objetivos Tech
+
+● Auth de terceros integrada.
+
+● Filtros y ordenamientos combinados.
+
+● Utilizar servicios de almacenamiento multimedia basado en la nube.
+
+● Notificaciones y mailing.
+
+● Persistencia de datos a través de LocalStorage.
+
+● Reviews / Puntuación.
+
+● Dashboard administradores.
+
+● Deploy.
+ 
+⚙ Tecnologías
+
+・Front End:
+
+HTML | CSS | Javascript | React | Redux 
+
+・Back End:
+
+NodeJS | Express | PostgreSQL | Sequelize
+
+・Librerías
+
+| Cloudinary | Firebase | Sweet Alert | Nodemailer | MaterialUI | Express-validator | React-router-Dom
+ 
+🖤 Sobre Nosotros
+Somos un grupo de personas que se encontraron cursando la carrera de Full Stack Developer en el Bootcamp de Henry. Habernos elegido como compañeros y compartir mil horas de producción con un objetivo común, dieron como resultado una linda amistad y una idea novedosa. 
+El equipo se ensambló desde un inicio, la colaboración y el entusiasmo fueron pilares en el avance del proyecto. Estas cualidades sumadas a las grandes habilidades técnicas de cada integrante, fueron motivo no solo de un gran resultado sino también de las ganas de seguir creciendo juntos en nuevos desafíos.
+
+⭐ Integrantes
+
+Christian Aguilar ⇢[linkedin](https://www.linkedin.com/in/christian-aguilar-rojas-5917b9237/) ⇢ [github](https://github.com/xchristx)
 
 
-Hola! Soy el javo desquiciado desde el readme :D
+Raúl Ducret ⇢[linkedin](https://www.linkedin.com/in/raulducret/) ⇢ [github](https://github.com/red1730)
 
-Prueba Ceci readme rama!
-Hola soy el gabooo desde el readmeeeeeeeee!!!!
+Luis Ceñal ⇢[linkedin](https://www.linkedin.com/in/luis-ce%C3%B1al-35051b51/) ⇢ [github](https://github.com/luchocenial)
 
-# Comandos importantes de linux:
+Alan Gabriel Pretel ⇢[linkedin](https://www.linkedin.com/in/gabriel-pretel-2ab1551b7/) ⇢ [github](https://github.com/Gabipretel)
 
-## Los más basicos:
-```bash
-# ip de TruquitosDeployer: 31.220.49.30
-mkdir # Crear directorio
-systemctl status postgresql # Ver si postgres está corriendo
-sudo systemctl enable postgresql --now # Habilitar postgres
-sudo systemctl start postgresql # Encender proceso postgres
-sudo systemctl stop postgresql # Apagar proceso postgres
-sudo systemctl restart postgresql # Reiniciar proceso postgres
-```
+Matías Vega  ⇢[linkedin](https://www.linkedin.com/in/mat%C3%ADas-vega-98a527239/) ⇢ [github](https://github.com/ElMatiVega)
 
-## Configurar SSH
+Cecilia Sosa ⇢[linkedin](https://www.linkedin.com/in/cecilia-sosa-56702b94/) ⇢ [github](https://github.com/mcecisosa)
 
-Viene de https://code.visualstudio.com/docs/remote/ssh 
-
-y https://code.visualstudio.com/docs/remote/troubleshooting
+[Javier Gutierrez](https://dkndrd.com) ⇢ [linkedin](https://www.linkedin.com/in/dukindroid) ⇢ [github](https://github.com/dukindroid)
 
 
-```bash
-# Archivo de configuración de vscode:
-Host *
-    ForwardAgent yes
-    # Esto todavia no lo probamos...
-    #ControlMaster auto
-    #ControlPath  ~/.ssh/sockets/%r@%h-%p
-    #ControlPersist  600
-Host name-of-ssh-host-here
-    User your-user-name-on-host
-    HostName host-fqdn-or-ip-goes-here
-    IdentityFile ~/.ssh/id_ed25519-remote-ssh
 
-# Config. de extension ssh de vscode:
-"remote.SSH.showLoginTerminal": true,
-"remote.SSH.useLocalServer": false
 
-#Generamos keygen
-ssh-keygen -t rsa -b 4096 
 
-# Copiamos llave a remoto  
-export USER_AT_HOST="your-user-name-on-host@hostname"
-export PUBKEYPATH="$HOME/.ssh/id_ed25519.pub"
-ssh-copy-id -i "$PUBKEYPATH" "$USER_AT_HOST"
-
-# Autorizamos a local 
-$USER_AT_HOST="your-user-name-on-host@hostname"
-$PUBKEYPATH="$HOME\.ssh\id_ed25519.pub"
-$pubKey=(Get-Content "$PUBKEYPATH" | Out-String); ssh "$USER_AT_HOST" "mkdir -p ~/.ssh && chmod 700 ~/.ssh && echo '${pubKey}' >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
-```
-
-## Configurar DB's de postgres
-
-```bash
-sudo -i -u postgres
-sudo su - postgres -c "createuser <name>"
-sudo su - postgres -c "createdb <namedb>"
-sudo -u postgres psql
-GRANT ALL PRIVILEGES ON DATABASE <usernamedb> TO <name>;
-exit
-``` 
-
-Todo esto vino de https://es.linuxcapable.com/how-to-install-and-configure-postgresql-on-ubuntu-20-04
-
-## Listar todos los procesos activos y con puerto asociado:
-
-```bash
-sudo lsof -i -P -n | grep LISTEN
-```
-## SSH ... permisos de archivos en carpeta .ssh 
-
-```bash
-chmod 400 ~/.ssh/id_rsa
-chmod 700 ~/.ssh
-chmod 600 ~/.ssh/authorized_keys
-```
-
-## Listar users:
-```bash
-awk -F: '{ print $1}' /etc/passwd
-```

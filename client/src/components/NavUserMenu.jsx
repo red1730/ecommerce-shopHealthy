@@ -44,13 +44,16 @@ export const NavUserMenu = ({user}) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
+//console.log("el user: " + user)
+//console.dir(user)
   return (
     <Box sx={{ flexGrow: 0, position:'relative' }}>
         <Tooltip title={(!user.logged)? 'Iniciar Sesión': 'Mi perfil'}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, mr:2}}>
+
               {user.logged?<Avatar {...stringAvatar(`${user.nombre} ${user.apellido}`)} sx={{width: 30, height: 30, fontSize:'1rem'}}  src={`https://res.cloudinary.com/dw8jw0zhx/image/upload/v1668870177/healthy_shop_users/${user.img}`} />
               :<AccountCircleIcon/>}
+
             </IconButton>
         </Tooltip>
         <Menu
