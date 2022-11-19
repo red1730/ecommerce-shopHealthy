@@ -49,7 +49,8 @@ export const NavUserMenu = ({user}) => {
     <Box sx={{ flexGrow: 0, position:'relative' }}>
         <Tooltip title={(!user.logged)? 'Iniciar Sesión': 'Mi perfil'}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, mr:2}}>
-              <Avatar {...stringAvatar(`${user.nombre} ${capitalize(user.apellido)}`)} src='https://res.cloudinary.com/dw8jw0zhx/image/upload/v1668001762/healthy_shop_default/HARINA-INTEGRAL-AGROECOLOGICO-DON-PAISA-1-kg.jpg-romper' />
+              {user.logged?<Avatar {...stringAvatar(`${user.nombre} ${user.apellido}`)} sx={{width: 30, height: 30, fontSize:'1rem'}}  src={`https://res.cloudinary.com/dw8jw0zhx/image/upload/v1668870177/healthy_shop_users/${user.img}`} />
+              :<AccountCircleIcon/>}
             </IconButton>
         </Tooltip>
         <Menu

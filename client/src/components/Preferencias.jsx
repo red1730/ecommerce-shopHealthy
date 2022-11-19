@@ -63,7 +63,7 @@ export const Preferencias_comp = () => {
 
   return (
     <>
-      <Container component="main" sx={{ marginTop: '100px', width:'60%', alignItems:'center' }}>
+      <Container component="main" sx={{ marginTop: '100px', width:{xs:'90%', md:'60%'}, alignItems:'center' }}>
           <Avatar sx={{bgcolor: 'secondary.main', m:'0 auto' }}>
             <AccountCircleIcon fontSize="large" />
           </Avatar>
