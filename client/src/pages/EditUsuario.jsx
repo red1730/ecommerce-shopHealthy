@@ -78,6 +78,7 @@ export const EditarUsuario = () => {
         uid: newData.uid,
         dni: newData.id,
         img:image.slice(81)
+        
       }
     }
     dispatch(action);
