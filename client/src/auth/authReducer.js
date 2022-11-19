@@ -12,6 +12,7 @@ const initialState = {
   codPostal:0,
   telefono:0,
   dni:0,
+  img:'',
   usuarios:[]
 };
 
@@ -31,6 +32,7 @@ export const authReducer = (state = initialState, action) => {
         dni: action.payload.dni,
         telefono: action.payload.telefono,
         codPostal: action.payload.codPostal,
+        img: action.payload.img
       };
 
     case type.logout:
@@ -47,13 +49,18 @@ export const authReducer = (state = initialState, action) => {
         telefono:0,
         dni:0,
         usuarios: state.usuarios,
+        img: ''
       };
     case'LOAD_USERS':
       return {
         ...state,
         usuarios: action.payload
       }
-    
+    case 'SET_IMG':
+      return {
+        ...state,
+        img: action.payload
+      }
     
 
     default:

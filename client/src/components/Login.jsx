@@ -126,7 +126,8 @@ if(errorEmail && errorPassword){
           direccion: result.direccion,
           codPostal: result.codPostal,
           telefono: result.telefono,
-          dni: result.id
+          dni: result.id,
+          img: result.img || '',
         }
       }
       console.log(action)
@@ -188,36 +189,49 @@ if(errorEmail && errorPassword){
   const handleSubmitGoogle =  async  (e) => {
     signInWithPopup(auth, googleProvider)
     .then((result) => {
-     
+
       const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      // console.log(token, 'token....')
-      // console.log(result , 'resultado...de google.')
-      
+      const token = credential.accessToken;   
       const usuario = result.user;
-
-      const resultLocal = user.usuarios.find( el=> el.uid == usuario.uid)
-
-      const action = {
-        type: type.login,
-        payload: {
-          nombre: resultLocal.nombre,
-          uid: usuario.uid, 
-          mail: usuario.email,
-          apellido: resultLocal.apellido,
-          direccion: resultLocal.direccion,
-          codPostal: resultLocal.codPostal,
-          telefono: resultLocal.telefono,
-          dni: resultLocal.id
+console.log(usuario)
+      try {
+        const resultLocal = user.usuarios.find( el=> el.uid == usuario.uid)
+        console.log(usuario)
+        const action = {
+          type: type.login,
+          payload: {
+            nombre: resultLocal.nombre,
+            uid: usuario.uid, 
+            mail: usuario.email,
+            apellido: resultLocal.apellido,
+            direccion: resultLocal.direccion,
+            codPostal: resultLocal.codPostal,
+            telefono: resultLocal.telefono,
+            dni: resultLocal.id,
+            img: resultLocal.img || ''
+          }
         }
-      }
-      dispatch(action)
+        dispatch(action)
+        
+      } catch (error) {
+        console.log(error)
+        Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: 'Usuario no registrado',
+            showConfirmButton: false,
+            timer: 1500
+        });
+        return
+        
+      }  
+
     }) 
     .catch((error) => {
-      
+      console.log(error)
       const errorCode = error.code;
       const errorMessage = error.message;
-      const email = error.customData.email;
+      // const email = error.customData.email;
       const credential = GoogleAuthProvider.credentialFromError(error);
       
     });

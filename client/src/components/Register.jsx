@@ -57,7 +57,7 @@ export const Register_comp = () => {
 
   const { handleSubmit, formState:{errors}, control, } = useForm();
 
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch, user } = useContext(AuthContext);
 
   const [loadRegister, setLoadRegister] = useState(false)
   
@@ -128,32 +128,42 @@ export const Register_comp = () => {
           // This gives you a Google Access Token. You can use it to access the Google API.
           const credential = GoogleAuthProvider.credentialFromResult(result);
           const token = credential.accessToken;
-          // console.log(token, 'token....')
-          // console.log(result , 'resultado...de google.')
-          // The signed-in user info.
-          const user = result.user;
+
+          const userGoogle = result.user;
+
+          if(user.usuarios.find( el=> el.uid == userGoogle.uid)) {
+            Swal.fire({
+              position: 'center',
+              icon: 'warning',
+              title: 'Ya estas registrado',
+              showConfirmButton: false,
+              timer: 2000
+            });
+            return
+          }
+
           const action = {
             type: type.login,
             payload: {
-              nombre: user.displayName? user.displayName.toLocaleLowerCase() : '',
-              mail: user.email,
-              uid: user.uid
+              nombre: userGoogle.displayName? userGoogle.displayName.toLocaleLowerCase() : '',
+              mail: userGoogle.email,
+              uid: userGoogle.uid
             }
           }
           dispatch(action)
 
+          navigate(`/usuario/user/preferencias`)
         })
         .catch((error) => {
           // Handle Errors here.
           const errorCode = error.code;
           const errorMessage = error.message;
           // The email of the user's account used.
-          const email = error.customData.mail;
+          
           // The AuthCredential type that was used.
-          const credential = GoogleAuthProvider.credentialFromError(error);
+          //const credential = GoogleAuthProvider.credentialFromError(error);
           // ...
         });      
-        navigate('/usuario/user/preferencias')
 
     } catch (error) {
       Swal.fire({

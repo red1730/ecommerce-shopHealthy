@@ -6,35 +6,14 @@ import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { useNavigate } from 'react-router-dom';
 import defaultUser from '../assets/default-user.png'
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { useState } from 'react';
 
 export const Perfil = () => {
 
     const {dispatch, user} = useContext(AuthContext); 
-    console.log(user)
     const navigate = useNavigate();
-    const [load, setLoad] = useState(null);
-    const [image, setImage] = useState('');
 
-    const uploadImage = async(e) =>{
-        const files = e.target.files;
-        const data = new FormData();
-        data.append("file", files[0]);
-        data.append("upload_preset", "hs_users");
-        setLoad(true);
-        const res = await fetch(
-            'https://api.cloudinary.com/v1_1/dw8jw0zhx/image/upload',
-            {
-                method:"POST",
-                body:data
-            }
-        )
-        const file = await res.json();
-        console.log(file.secure_url)
-        setImage(file.secure_url);
-        setLoad(false);
-    }
+
 
 
   return (
@@ -43,26 +22,14 @@ export const Perfil = () => {
             <Grid item xs={12}  >
 
                 <Stack direction={{sx:'column',md:'row'}} sx={{ position:'relative', display:'flex'}}  mb={1} >
-                    {
-                       !load?
+
                         <CardMedia 
                         component='img'
-                        image={image || defaultUser}
+                        image={user.img? `https://res.cloudinary.com/dw8jw0zhx/image/upload/v1668870177/healthy_shop_users/${user.img}`: defaultUser}
                         sx={{height:250, width:250}}
                         alt={user.nombre}
                         />
-                        :<Skeleton sx={{zIndex:200, height:250, width:250,}} />
-                    }
-                    <IconButton color="primary" aria-label="upload picture" component="label" sx={{
-                        zIndex: 100,
-                        top: -5,
-                        left: -5,
-                        position: 'absolute',
-                        textTransform: 'uppercase',
-                        }}>
-                        <input hidden accept="image/*" type="file" name='file' onChange={uploadImage} />
-                        <PhotoCamera fontSize='large'/>
-                    </IconButton>
+
                     <Stack spacing={0} >
                         <Typography variant='h5' sx={{pt:5, pl:3}} >
                             {`${user.nombre}`}
