@@ -86,7 +86,7 @@ router.post("/crear",check('nombre').exists().not().isEmpty(),
 , async (req, res) => {
     try {
       let {
-        id,nombre,apellido,direccion,uid,codPostal,telefono,mail,isAdmin} = req.body;
+        id,nombre,apellido,direccion,uid,codPostal,telefono,mail,isAdmin, img} = req.body;
       
         console.log(id)
         id = String(id)
@@ -102,7 +102,8 @@ router.post("/crear",check('nombre').exists().not().isEmpty(),
         telefono: telefono,
         mail: mail,
         isAdmin: isAdmin,
-        activo:true
+        activo:true,
+        img:img
       });
       
       const transport = nodemailer.createTransport({
@@ -183,6 +184,7 @@ router.put("/modificar/:id", async (req, res) => {
         telefono,
         mail,
         isAdmin,
+        img
       } = req.body;
       console.log(req.body)
       let cambios=[]
@@ -206,6 +208,11 @@ router.put("/modificar/:id", async (req, res) => {
         usuario.direccion = direccion;
         usuario.save();
         cambios.push("dirección")
+      }
+      if (img) {
+        usuario.img = img;
+        usuario.save();
+        cambios.push("img");
       }
       if (codPostal) {
         usuario.codPostal = codPostal;
