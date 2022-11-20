@@ -57,8 +57,7 @@ El equipo se ensambló desde un inicio, la colaboración y el entusiasmo fueron 
 
 ⭐ Integrantes
 
-Christian Aguilar ⇢[linkedin](https://www.linkedin.com/in/christian-aguilar-rojas-5917b9237/) ⇢ [github](https://github.com/xchristx)
-
+Christian Aguilar => <span style="margin-top:5px" >[![Linkedin](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/christian-aguilar-rojas-5917b9237/) => [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat&logo=GitHub&logoColor=white)](https://github.com/xchristx) </span>
 
 Raúl Ducret ⇢[linkedin](https://www.linkedin.com/in/raulducret/) ⇢ [github](https://github.com/red1730)
 
