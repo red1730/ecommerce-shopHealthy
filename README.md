@@ -59,17 +59,17 @@ El equipo se ensambló desde un inicio, la colaboración y el entusiasmo fueron 
 
 Christian Aguilar => <span style="margin-top:5px" >[![Linkedin](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/christian-aguilar-rojas-5917b9237/) => [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat&logo=GitHub&logoColor=white)](https://github.com/xchristx) </span>
 
-Raúl Ducret ⇢[linkedin](https://www.linkedin.com/in/raulducret/) ⇢ [github](https://github.com/red1730)
+Raúl Ducret => <span style="margin-top:5px" >[![Linkedin](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/raulducret/) => [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat&logo=GitHub&logoColor=white)](https://github.com/red1730) </span> 
 
-Luis Ceñal ⇢[linkedin](https://www.linkedin.com/in/luis-ce%C3%B1al-35051b51/) ⇢ [github](https://github.com/luchocenial)
+Luis Ceñal => <span style="margin-top:5px" >[![Linkedin](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/luis-ce%C3%B1al-35051b51/) => [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat&logo=GitHub&logoColor=white)](https://github.com/luchocenial) </span>
 
-Alan Gabriel Pretel ⇢[linkedin](https://www.linkedin.com/in/gabriel-pretel-2ab1551b7/) ⇢ [github](https://github.com/Gabipretel)
+Alan Gabriel Pretel => <span style="margin-top:5px" >[![Linkedin](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/gabriel-pretel-2ab1551b7/)  => [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat&logo=GitHub&logoColor=white)](https://github.com/Gabipretel) </span>
 
-Matías Vega  ⇢[linkedin](https://www.linkedin.com/in/mat%C3%ADas-vega-98a527239/) ⇢ [github](https://github.com/ElMatiVega)
+Matías Vega  => <span style="margin-top:5px" >[![Linkedin](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/mat%C3%ADas-vega-98a527239/)  => [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat&logo=GitHub&logoColor=white)](https://github.com/ElMatiVega) </span>
 
-Cecilia Sosa ⇢[linkedin](https://www.linkedin.com/in/cecilia-sosa-56702b94/) ⇢ [github](https://github.com/mcecisosa)
+Cecilia Sosa => <span style="margin-top:5px" >[![Linkedin](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/cecilia-sosa-56702b94/)  => [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat&logo=GitHub&logoColor=white)](https://github.com/mcecisosa) </span>
 
-[Javier Gutierrez](https://dkndrd.com) ⇢ [linkedin](https://www.linkedin.com/in/dukindroid) ⇢ [github](https://github.com/dukindroid)
+[Javier Gutierrez](https://dkndrd.com) => <span style="margin-top:5px" >[![Linkedin](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/dukindroid)  => [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat&logo=GitHub&logoColor=white)](https://github.com/dukindroid) </span>
 
 
 
