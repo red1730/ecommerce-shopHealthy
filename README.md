@@ -1,5 +1,8 @@
 Bienvenidos a Healthy Food! 🍚🥗🥑
-<p align="center"><img alt="Shows an illustrated sun in light mode and a moon with stars in dark mode." src="https://almacensaludable.ar/wp-content/uploads/2021/07/banner-presentacion-web.jpg" style='width:60%' >  </p>
+<p align="center">
+ <img alt="Shows an illustrated sun in light mode and a moon with stars in dark mode." src="https://henryhealthy.shop/assets/banner.6a969144.png" style='width:50%' > 
+</p>
+
  
 🚀 El Proyecto
 Healthy Food es nuestro Proyecto Final de carrera en el Bootcamp de Henry. En su desarrollo aplicamos las tecnologías y conocimientos aprendidos durante las carrera de Full Stack Developer.
