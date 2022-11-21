@@ -13,10 +13,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProductById } from '../../helpers/getProductById';
 import { useForm, Controller } from "react-hook-form";
 import { editarProducto } from '../../actions/editarProducto';
+import { categPrueba as categorias } from '../../helpers/categoriasData';
 
 
 // ----------------------------------------------------------------------
-import { categorias } from '../../helpers/categoriasPrueba';
 
 const ITEM_HEIGHT = 60;
 const ITEM_PADDING_TOP = 0;
@@ -75,6 +75,8 @@ export default function EditarProducto() {
   const dispatch = useDispatch ();
 
   const navigate = useNavigate ();
+  // const {categorias} = useSelector(s=>s.catalogReducer)
+  
 
   useEffect(() => {
     const getProduct = async () => {
@@ -92,13 +94,12 @@ export default function EditarProducto() {
     
   const { nombre, precio, img, stock, activo, descripcion, marca, categoria } = product;
   const { handleSubmit, formState:{errors}, control, } = useForm();
-  console.log(activo)
   const [check, setCheck] = useState(!!!activo)
 
 
   const onSubmit = (data)=>{
     
-    let dataToPut = {...data, activo: check }
+    let dataToPut = {...data, activo: check, categorias:[data.categoria, data.categoriaDos] }
     if (image) dataToPut = {...data, imagen: image.slice(83), precio: parseInt(precio) }
     console.log(dataToPut)
     dispatch(editarProducto(dataToPut, id))

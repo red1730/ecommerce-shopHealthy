@@ -10,6 +10,8 @@ import {useDispatch, useSelector,} from 'react-redux'
 import { initProducts } from '../actions/getInitProducts';
 import { ActionAlerts } from '../components/AlertCategoria';
 import { OrderSelect } from '../components/OrderSelect';
+import Busqueda404 from './Busqueda404';
+
 
 export const Home = () => {
 
@@ -42,6 +44,10 @@ export const Home = () => {
     if(page < 1) setPage(1)
     if(page > count ) {setPage(1);_DATA.jump(1);}
   }, [_DATA.currentPage, _DATA.setCurrentPage, page, setPage, count])
+
+  if (categ && dataToShow.length < 1){
+    return <Busqueda404 producto={categAlert.categ} />
+  }
 
   return (
     <>

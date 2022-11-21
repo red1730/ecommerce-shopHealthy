@@ -4,6 +4,7 @@ const initialState = {
   filteredProducts: [],
   nestedFilter: [],
   allProducts: [],
+  categorias:[],
   isLoading: null,
   order: true,
   orderKey: 'nombre',
@@ -36,6 +37,7 @@ export const catalogReducer = (state = initialState, action) => {
         categ: action.payload.cat,
         setBanner: true,
         cart: action.payload.cart,
+        categorias: action.payload.categorias,
       };
 
     case 'ERROR_FETCH_INIT_PRODUCTS':
@@ -74,6 +76,16 @@ export const catalogReducer = (state = initialState, action) => {
         categAlert: {...state.categAlert, categ: action.payload.cat},
         setBanner: false,
       };
+    case 'SET_CATEG':
+      return {
+        ...state,
+        categ: action.payload,
+        setBanner: true,
+        categAlert:{
+          categ:'',
+          subCateg:[],
+        }
+      }
     case 'ADD':
       return {
         ...state,
@@ -129,7 +141,11 @@ export const catalogReducer = (state = initialState, action) => {
       return {
         ...state,
         products: action.payload.data,
-        categ: action.payload.search,
+        categ: "busqueda",
+        categAlert: {
+          categ: action.payload.search,
+          subCateg:[],
+        },
         setBanner: false,
       };
     case 'SET_ORDER':

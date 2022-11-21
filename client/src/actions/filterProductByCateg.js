@@ -47,7 +47,10 @@ export const removeNestedFilter = categName => (dispatch, getState) =>{
     }
     else if ( dataToShow.length < 1 && filteredProducts.length < 1 ) dataToShow = allProducts;
 
-
+    if (dataToShow.length < 1){
+        dispatch({type:'SET_CATEG', payload:'All'});
+        return
+    }
     dispatch( {type: 'REMOVE_FILTER', payload: { data: dataToShow, newNested: newNestedFilter, cat: categName }});
     if (order){
         dispatch(orderAsc(orderKey))
