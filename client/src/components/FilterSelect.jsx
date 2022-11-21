@@ -4,7 +4,6 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import {categorias} from '../helpers/categoriasPrueba'
 import { useDispatch, useSelector } from 'react-redux';
 import { addNestedFilter, filterByCateg, removeNestedFilter } from '../actions/filterProductByCateg';
 import {  useLocation, useNavigate } from "react-router-dom";
@@ -12,8 +11,6 @@ import Checkbox from '@mui/material/Checkbox';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import ListItemText from '@mui/material/ListItemText';
-import { Menu } from '@mui/material';
-
 
 
 const StyledSelect = styled(Select)(({ theme }) => ({
@@ -68,6 +65,8 @@ export const FilterSelect = ({categTitle})=> {
   const [len, setLen] = useState(1);
   const [valueUnchecked, setValueUnchecked] = useState([]);
   const [checked, setChecked] = useState({check: null, unCheck: null});
+  const {categorias} = useSelector(s=>s.catalogReducer)
+
   
   useEffect(() => {
     const getCategs = ()=>{

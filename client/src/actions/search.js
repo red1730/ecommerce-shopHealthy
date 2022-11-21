@@ -5,6 +5,5 @@ export const generalSearch = string => (dispatch, getState) => {
     dispatch({
         type: 'SEARCH', 
         payload: {data: result, search:`resultado de la busqueda "${string}"`},
-        
     })
 }

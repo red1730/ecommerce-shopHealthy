@@ -1,4 +1,4 @@
-import { getAllProducts } from "../helpers/index";
+import { getAllProducts, getCategorias } from "../helpers/index";
 import { orderAsc, orderDesc } from "./order";
 
 export const initProducts = ()=>{
@@ -17,9 +17,11 @@ export const initProducts = ()=>{
         }
         try {
             const allProducts = await getAllProducts();
+            const categs = await getCategorias(); 
+            console.log(categs)
             dispath({
                 type: 'SUCCESS_FETCH_INIT_PRODUCTS',
-                payload: {data: allProducts, cat: 'All', cart:cart},
+                payload: {data: allProducts, cat: 'All', cart:cart, categorias: categs},
             })
             if(order) dispath(orderAsc(orderKey));
             else dispath(orderDesc(orderKey))

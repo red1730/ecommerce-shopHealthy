@@ -2,9 +2,8 @@ import { Box, Button, FormControlLabel, FormGroup, Grid, IconButton, Menu, MenuI
 import queryString from 'query-string';
 import { useEffect } from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import {categorias} from '../helpers/categoriasPrueba';
 import Checkbox from '@mui/material/Checkbox';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Stack } from "@mui/system";
@@ -12,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import { addNestedFilter, filterByCateg, removeNestedFilter } from "../actions/filterProductByCateg";
 import {capitalize} from '../helpers/capitalize'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-
+import { categPrueba as categorias} from '../helpers/categoriasData'
 
 
 export const Filters = ({categTitle, handleCloseNavMenu}) => {
@@ -21,6 +20,8 @@ export const Filters = ({categTitle, handleCloseNavMenu}) => {
     const location = useLocation();
     const { q = '' } = queryString.parse( location.search );
     const dispatch = useDispatch();
+    // const {categorias} = useSelector(s=>s.catalogReducer)
+
 
     let categGroup ={
         'TENTACION SALUDABLE':[2,3,4,5,6],
@@ -31,6 +32,7 @@ export const Filters = ({categTitle, handleCloseNavMenu}) => {
     let nestedFilter = ['estilo de vida'];
 
     const [subCategoria, setSubCategoria] = useState([]); 
+    const [allCategorias, setAllCategorias] = useState([])
     const [isChecked, setIsChecked] = useState({
       'sin tacc': false,
       'sin azucar': false,
@@ -48,18 +50,18 @@ export const Filters = ({categTitle, handleCloseNavMenu}) => {
     const [anchorElUser, setAnchorElUser] = useState(null);
 
     useEffect(() => {
-        const getCategs = ()=>{
-          let categToShow = []
-          for (const categ in categGroup) {
-            if (categTitle.toLowerCase() === categ.toLocaleLowerCase()) categToShow = categGroup[categ].map(el=> {
-              let index = 0;
-              if(categorias.find((ele, i) => {index = i; return ele.id == el})) return {nombre:categorias[index].nombre, id: categorias[index].id}
-            });
-          }
-          setSubCategoria( categToShow );
+      const getCategs = ()=>{
+        let categToShow = []
+        for (const categ in categGroup) {
+          if (categTitle.toLowerCase() === categ.toLocaleLowerCase()) categToShow = categGroup[categ].map(el=> {
+            let index = 0;
+            if(categorias.find((ele, i) => {index = i; return ele.id == el})) return {nombre:categorias[index].nombre, id: categorias[index].id}
+          });;
         }
-        getCategs()
-      }, [])
+        setSubCategoria( categToShow );
+      }
+      getCategs()
+    }, [])
 
       const handleChange = (event) => {
         dispatch(filterByCateg(event.target.innerText));

@@ -6,7 +6,7 @@ import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import { useDispatch, useSelector } from 'react-redux';
-import {categorias} from '../helpers/categoriasPrueba'
+import { categPrueba as categorias} from '../helpers/categoriasData'
 import { addNestedFilter, filterByCateg, removeNestedFilter } from "../actions/filterProductByCateg";
 import { Button, capitalize, Checkbox, FormControlLabel, FormGroup, Typography  } from '@mui/material';
 

@@ -232,9 +232,12 @@ router.put("/admin/:id", async (req, res) => {
     
     let id = req.params.id;  
     const producto = await Producto.findByPk(id);
-    const { nombre, precio, descripcion, imagen, stock, marca, activo } = req.body;
+    const { nombre, precio, descripcion, imagen, stock, marca, activo,categorias } = req.body;
     console.log(activo)
     const mar = await Marca.findOne({ where: { nombre: marca } })
+    let category = await Categoria.findAll({
+      where: { nombre: categorias}
+    })
 
     if (nombre) {
       producto.nombre = nombre;
@@ -260,10 +263,16 @@ router.put("/admin/:id", async (req, res) => {
       producto.marcaId = mar.id;
       producto.save();
     }
+
+    if(category){
+      producto.setCategoria(category, { through: { started: false }})
+    }
+
     if (activo !== null) {
       producto.activo = activo;
       producto.save();
     }
+
 
     res.status(200).send(id);
   } catch (error) {
