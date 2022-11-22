@@ -1,6 +1,6 @@
 Bienvenidos a Healthy Food! 🍚🥗🥑
 <p align="center">
- <img alt="Shows an illustrated sun in light mode and a moon with stars in dark mode." src="https://henryhealthy.shop/assets/banner.6a969144.png" style='width:50%' > 
+ <img alt="Shows an illustrated sun in light mode and a moon with stars in dark mode." src="https://henryhealthy.shop/assets/banner.c316223d.png" style='width:50%' > 
 </p>
 
  
@@ -68,7 +68,7 @@ Luis Ceñal <span style="margin-top:5px" >[![Linkedin](https://img.shields.io/ba
 
 Alan Gabriel Pretel <span style="margin-top:5px" >[![Linkedin](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/gabriel-pretel-2ab1551b7/) [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat&logo=GitHub&logoColor=white)](https://github.com/Gabipretel) </span>
 
-Matías Vega <span style="margin-top:5px" >[![Linkedin](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/mat%C3%ADas-vega-98a527239/) [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat&logo=GitHub&logoColor=white)](https://github.com/ElMatiVega) </span>
+Matías Vega <span style="margin-top:5px" >[![Linkedin](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/mat%C3%ADas-vega-dev/) [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat&logo=GitHub&logoColor=white)](https://github.com/ElMatiVega) </span>
 
 Cecilia Sosa <span style="margin-top:5px" >[![Linkedin](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/cecilia-sosa-56702b94/) [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat&logo=GitHub&logoColor=white)](https://github.com/mcecisosa) </span>
 
