@@ -7,8 +7,7 @@ import RouterDashBoard from "../dashboard/routes";
 import {
   Admin,
   Contact,
-  Home,
-  
+  Home,  
   Login,
   ProductDetail,
   Register,
